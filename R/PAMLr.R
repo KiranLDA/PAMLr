@@ -10,4 +10,5 @@
 #' @name PAMLr
 #'
 #' @import lubridate
+#' @import MASS
 NULL
