@@ -3,7 +3,7 @@
 #' @param pathname path where files are stored
 #' @param measurements a series of measurements logged by the PAM logger which are to be imported. Currently supports these file extentions: .pressure", ".glf", ".gle",".acceleration", ".temperature" and ".magnetic"
 #'
-#' @return a list of measurements for the individual measured
+#' @return a list of measurements for the one individual
 #'
 #' @examples
 #' pathname = "R:/40 Data/20 Geolocator/10 Raw data/UpuEpoCH16/16AJ_20170809"

@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-These packages need to be installed for it to work (none for the time being)
+These packages used by this package are `utils`
 
 ```r
 install.packages("utils") # usually already in base r
@@ -29,7 +29,6 @@ Once devtools is installed, type:
 library(devtools)
 devtools::install_github("KiranLDA/PAMLr")
 ```
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Load and test
 
@@ -38,6 +37,16 @@ To make sure the package works run the following
 ```r
 # load library
 library(PAMLr)
+
+#specify the data location
+data(PAM_data)
+str(PAM_data)
+
+#plot the raw light data
+plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
+        type="o", xlab="Date", ylab="Light Intensity", 
+        col=ifelse(PAM_data$light$obs[3000:5000]>0,"darkgoldenrod1","azure3"))
+
 
 ```
 

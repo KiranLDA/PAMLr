@@ -13,7 +13,7 @@ Import_PAM(pathname = pathname, measurements = c(".pressure", ".glf",
 \item{measurements}{a series of measurements logged by the PAM logger which are to be imported. Currently supports these file extentions: .pressure", ".glf", ".gle",".acceleration", ".temperature" and ".magnetic"}
 }
 \value{
-a list of measurements for the individual measured
+a list of measurements for the one individual
 }
 \description{
 Import PAM data
