@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 These packages need to be installed for it to work (none for the time being)
 
 ```r
-install.packages("")
+install.packages("utils") # usually already in base r
 
 ```
 
@@ -37,7 +37,7 @@ To make sure the package works run the following
 
 ```r
 # load library
-# library(PAMLr)
+library(PAMLr)
 
 ```
 

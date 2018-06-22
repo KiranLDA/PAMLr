@@ -10,11 +10,12 @@
 #' measurements = c(".pressure", ".glf")
 #' PAM_data = Import_PAM(pathname, measurements)
 #' str(PAM_data)
+#' plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
+#' type="l", xlab="Date", ylab="Light Intensity")
 #'
 #'
 #' @export
-Import_PAM <- function(pathname,
-                   measurements = c (".pressure", ".glf", ".acceleration", ".temperature", ".magnetic")){
+Import_PAM <- function(pathname = pathname,measurements = c(".pressure", ".glf", ".acceleration", ".temperature", ".magnetic")){
 
   id = substring(list.files(pathname,pattern=".pressure",full.names=F),1,4)
 
