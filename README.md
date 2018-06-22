@@ -37,7 +37,7 @@ To make sure the package works run the following
 
 ```r
 # load library
-library(PAMLr)
+# library(PAMLr)
 
 ```
 

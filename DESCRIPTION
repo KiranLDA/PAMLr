@@ -1,14 +1,14 @@
 Package: PAMLr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Suite of functions for manipulating Pressure, Activity, Magnetism and Light data in R
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: Kiran Dhanjal-Adams
+Maintainer: Kiran Dhanjal-Adams <kiran.dhanjaladams@uqconnect.edu.au>
 Description: This package manipulates data from SOI-GDL3pam loggers (developped by the Swiss Ornithological Institute). These measure Pressure, Activity, Magnetism and Light.
-License: Apache-2.0
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
-Import:
-    lubridate,
-    MASS
 RoxygenNote: 6.0.1
+Imports:
+    utils
+    
