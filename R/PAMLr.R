@@ -8,4 +8,5 @@
 #'
 #' @name PAMLr
 #' @import utils
+#' @import stats
 NULL
