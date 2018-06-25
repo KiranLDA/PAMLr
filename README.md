@@ -48,6 +48,12 @@ plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
         col=ifelse(PAM_data$light$obs[3000:5000]>0,"darkgoldenrod1","azure3"))
 
 
+#plot the activity data with daylight periods in yellow and nightime periods in grey
+plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000],
+        type="o", xlab="Date", ylab="Light Intensity", pch=20,
+        col=ifelse(PAM_data$light$obs[6000:9000]>0,"darkgoldenrod1","azure3"))
+
+
 ```
 
 ## Authors
