@@ -78,4 +78,4 @@ Kiran Dhanjal-Adams
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE](https://github.com/KiranLDA/PAMLr/blob/master/LICENSE) file for details
+This project is licensed under the GNU General Public License version 3.0 - see the [LICENSE](https://github.com/KiranLDA/PAMLr/blob/master/LICENSE) file for details

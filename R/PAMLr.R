@@ -7,6 +7,7 @@
 #' @author Kiran Dhanjal-Adams \email{kiran.dhanjal.adams@gmail.com}
 #'
 #' @name PAMLr
+#'
 #' @import utils
 #' @import stats
 NULL
