@@ -11,7 +11,7 @@
 #' str(PAM_data)
 #'
 #' #plot the activity to see if it looks ok
-#' plot(PAM_data$acceleration$date, PAM_data$acceleration$act)
+#' plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="activity")
 #'
 #' # at first glance it looks like the logger was removed off a birds and left in arucksack
 #  # so remove un-needed data
@@ -21,7 +21,8 @@
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
-#' plot(dta$date[1000:4000],dta$act[1000:4000],col=col[behaviour$classification][1000:4000], type="o", pch=20)
+#' plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
+#' col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
 #'
 #' behaviour$timetable
 #'
@@ -41,7 +42,8 @@ classify_flapping <- function(dta = PAM_data$acceleration, flapping_duration = 3
   Duration_table$`Duration (h)` = as.numeric(Duration_table$`Duration (h)`)
 
   # now we take high activity, partition it into magration or not based on duration
-  high_activity <- as.numeric(which(table(dta$clust) == min(table(dta$clust))))#-1
+  high_activity = as.numeric(which(table(dta$clust) == min(table(dta$clust))))#-1
+  low_activity = as.numeric(which(table(dta$clust) == max(table(dta$clust))))
 
   for (i in 2:nrow(dta)){
     if(dta$clust[i] == high_activity & dta$clust[i-1] != high_activity){
@@ -67,6 +69,11 @@ classify_flapping <- function(dta = PAM_data$acceleration, flapping_duration = 3
   Duration_table[,3] = as.numeric(Duration_table[,2] - Duration_table[,1])/(60*60)
   Duration_table = Duration_table[-1,]
   dta$clust[dta$act == 0] = 4
-  return(list(timetable = Duration_table, classification = dta$clust))
+  return(list(timetable = Duration_table,
+              classification = dta$clust,
+              low_activity = low_activity,
+              high_activity = high_activity,
+              migration = 3,
+              no_activity = 4))
 }
 

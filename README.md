@@ -53,7 +53,21 @@ plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000]
         type="o", xlab="Date", ylab="Light Intensity", pch=20,
         col=ifelse(PAM_data$light$obs[6000:9000]>0,"darkgoldenrod1","azure3"))
 
+# at first glance it looks like the logger was removed off a birds and left in arucksack
+#  # so remove un-needed data
+PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
 
+# classify bird's behaviour based on  activity, assume that if a bird is active for more than 
+# 3x5 minutes = 15 minutes, then the bird is migration
+behaviour = classify_flapping(dta = PAM_data$acceleration, flapping_duration = 3)
+
+# check the classification
+col=col=c("brown","cyan4","black","gold")
+plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
+col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
+
+# look at timetable
+behaviour$timetable
 ```
 
 ## Authors
