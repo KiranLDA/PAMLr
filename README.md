@@ -1,6 +1,6 @@
 # Package PAMLr
 
-Pamela. This packages provides a set of functions to analyse data collected by SOI-GDL3pam loggers (developped by the Swiss Ornithological Institute www.vogelwarte.ch/en ). These measure atmospheric pressure (P), activity (A), magnetisim (M) and light (L) in R.
+Pamela. This packages provides a set of functions to analyse data collected by SOI-GDL3pam loggers (developped by the Swiss Ornithological Institute www.vogelwarte.ch/en ). These measure atmospheric pressure (P), activity (A), magnetisim (M) and light (L) for analysis in R.
 
 ## Getting Started
 
@@ -62,7 +62,7 @@ PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "20
 behaviour = classify_flapping(dta = PAM_data$acceleration, flapping_duration = 3)
 
 # check the classification
-col=col=c("brown","cyan4","black","gold")
+col=col=c("brown","cyan4","gold","black")
 plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
   col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
 legend( PAM_data$acceleration$date[2000],60 , c("No activity", "Low activity", "High activity", "Migration" ) ,
