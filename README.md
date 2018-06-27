@@ -64,9 +64,13 @@ behaviour = classify_flapping(dta = PAM_data$acceleration, flapping_duration = 3
 # check the classification
 col=col=c("brown","cyan4","gold","black")
 plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
-  col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
-legend( PAM_data$acceleration$date[2000],60 , c("No activity", "Low activity", "High activity", "Migration" ) ,
-  col = col[c(behaviour$no_activity, behaviour$low_activity,behaviour$high_activity, behaviour$migration)], pch=20)
+  col=col[behaviour$classification][2000:4000], 
+  type="o", pch=20, xlab="Date", ylab="Activity")
+legend( PAM_data$acceleration$date[2000],60 , 
+        c("No activity", "Low activity", "High activity", "Migration" ) ,
+        col = col[c(behaviour$no_activity, behaviour$low_activity,
+                    behaviour$high_activity, behaviour$migration)],
+        pch=20)
 
 # look at timetable
 behaviour$timetable

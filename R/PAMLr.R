@@ -8,6 +8,8 @@
 #'
 #' @name PAMLr
 #'
+#' @import graphics
+#' @import grDevices
 #' @import utils
 #' @import stats
 NULL

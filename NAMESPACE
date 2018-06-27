@@ -2,5 +2,7 @@
 
 export(Import_PAM)
 export(classify_flapping)
+import(grDevices)
+import(graphics)
 import(stats)
 import(utils)

@@ -4,7 +4,7 @@
 \alias{classify_flapping}
 \title{Make timetable}
 \usage{
-classify_flapping(dta = PAM_data$acceleration, flapping_duration = 3)
+classify_flapping(dta, flapping_duration = 3)
 }
 \arguments{
 \item{dta}{data stored as a list see str(data(PAM_data)) for example format}
@@ -26,7 +26,8 @@ str(PAM_data)
 plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="activity")
 
 # at first glance it looks like the logger was removed off a birds and left in arucksack
-PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
+PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
+& (PAM_data$acceleration$date <= "2017-06-01")),]
 
 behaviour = classify_flapping(dta = PAM_data$acceleration, flapping_duration = 3)
 

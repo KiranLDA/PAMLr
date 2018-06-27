@@ -15,7 +15,8 @@
 #'
 #' # at first glance it looks like the logger was removed off a birds and left in arucksack
 #  # so remove un-needed data
-#' PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
+#' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
+#' & (PAM_data$acceleration$date <= "2017-06-01")),]
 #'
 #' behaviour = classify_flapping(dta = PAM_data$acceleration, flapping_duration = 3)
 #'
@@ -27,9 +28,25 @@
 #' behaviour$timetable
 #'
 #' @export
-classify_flapping <- function(dta = PAM_data$acceleration, flapping_duration = 3){
+classify_flapping <- function(dta , flapping_duration = 3){
   km = kmeans(dta$act,centers=2)
   dta$clust = km$cluster
+
+  par(mar=c(4,4,1,1))
+  hist(dta$act[dta$act != 0],  breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])), xlab="Activity",
+       main ="Initial High / Low activity Classification", border=F)
+  plot(hist(dta$act[dta$clust==1 & dta$act != 0],
+            breaks = (max(dta$act[dta$clust==1 & dta$act != 0])-min(dta$act[dta$clust==1 & dta$act != 0])), plot=F),
+       col=rgb(1,0,0,1/4), add=T, border=F)
+  plot(hist(dta$act[dta$clust==2 & dta$act != 0],
+            breaks = (max(dta$act[dta$clust==2 & dta$act != 0])-min(dta$act[dta$clust==2 & dta$act != 0])), plot=F),
+       col=rgb(0,0,0,1/4), add=T, border=F)
+  # abline(v=min(max(dta$act[dta$clust==1 & dta$act != 0]), max(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
+  # abline(v=max(min(dta$act[dta$clust==1 & dta$act != 0]), min(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
+  abline(v=sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
+                 max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2)
+
+
 
   # Count the length of each category
   start=0
