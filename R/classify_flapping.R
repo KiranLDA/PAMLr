@@ -43,8 +43,15 @@ classify_flapping <- function(dta , flapping_duration = 3){
        col=rgb(0,0,0,1/4), add=T, border=F)
   # abline(v=min(max(dta$act[dta$clust==1 & dta$act != 0]), max(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
   # abline(v=max(min(dta$act[dta$clust==1 & dta$act != 0]), min(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
-  abline(v=sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
-                 max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2)
+  threshold = sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
+                  max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2
+  abline(v=threshold, lty=2)
+  text(x = threshold,  (max((hist(dta$act[dta$act != 0],
+                               breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
+                               plot=F)$counts)) - min((hist(dta$act[dta$act != 0],
+                                                            breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
+                                                            plot=F)$counts)))/2,
+       paste0("threshold = ",threshold), pos=4)
 
 
 
