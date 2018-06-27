@@ -98,6 +98,7 @@ classify_flapping <- function(dta , flapping_duration = 3){
               low_activity = low_activity,
               high_activity = high_activity,
               migration = 3,
-              no_activity = 4))
+              no_activity = 4,
+              threshold = threashold))
 }
 
