@@ -19,6 +19,7 @@ dygraphPAM <- function(dta,
                        from = dta$light$date[1],
                        to = dta$light$date[length(dta$light$date)],
                        toPLOT = names(dta)) {
+  backup_options <- options()
   len = ifelse( ("id" %in% toPLOT) , length(names(dta))-1, length(names(dta)))
 
   dy_graph = list()
@@ -76,8 +77,9 @@ dygraphPAM <- function(dta,
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#A6D854")
   }
-
+  options(viewer=NULL)
   htmltools::browsable(htmltools::tagList(dy_graph))
+  options(backup_options)
 }
 
 
