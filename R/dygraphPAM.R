@@ -92,7 +92,9 @@ dygraphPAM <- function(dta,
       dyLegend(hideOnMouseOut = TRUE, width = 600)
   }
 
-  # htmltools::browsable(htmltools::tagList(dy_graph))
+  # htmlwidgets::
+  # rmarkdown::render(htmltools::browsable(htmltools::tagList(dy_graph)))
+  htmltools::browsable(htmltools::tagList(dy_graph))
 }
 
 
