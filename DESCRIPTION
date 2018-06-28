@@ -10,6 +10,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 Imports:
+Depends: R (>= 2.10),
     dygraphs,
     graphics,
     grDevices,
@@ -18,4 +19,3 @@ Imports:
     stats,
     tcltk,
     xts
-Depends: R (>= 2.10)
