@@ -11,6 +11,7 @@
 #' @import dygraphs
 #' @import graphics
 #' @import grDevices
+#' @import htmltools
 #' @import utils
 #' @import stats
 #' @import tcltk

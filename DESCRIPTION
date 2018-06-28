@@ -13,6 +13,7 @@ Imports:
     dygraphs,
     graphics,
     grDevices,
+    htmltools,
     utils,
     stats,
     tcltk,

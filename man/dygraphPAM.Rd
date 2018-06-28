@@ -2,31 +2,29 @@
 % Please edit documentation in R/dygraphPAM.R
 \name{dygraphPAM}
 \alias{dygraphPAM}
-\title{Plot PAM data}
+\title{Plot PAM data with dygraphs}
 \usage{
 dygraphPAM(dta, from = dta$light$date[1],
   to = dta$light$date[length(dta$light$date)], toPLOT = names(dta))
 }
 \arguments{
 \item{dta}{PAM data to be plotted}
+
+\item{from}{date that plotting starts}
+
+\item{to}{date that plotting ends}
+
+\item{toPLOT}{names of the variables to plot. For now this includes "light", "pressure", "acceleration" and "temperature}
 }
 \value{
 a plot of all the measurements
 }
 \description{
-Plot PAM data
+This opens a java application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 }
 \examples{
 #specify the data location
 data(PAM_data)
-str(PAM_data)
-
-#plot the activity to see if it looks ok
-plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="activity")
-
-# at first glance it looks like the logger was removed off a birds and left in arucksack
-PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
-& (PAM_data$acceleration$date <= "2017-06-01")),]
-
+dygraphPAM(dta = PAM_data)
 
 }

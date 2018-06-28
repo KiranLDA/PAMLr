@@ -1,22 +1,18 @@
-#' Plot PAM data
+#' Plot PAM data with dygraphs
+#'
+#' @description This opens a java application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 #'
 #' @param dta PAM data to be plotted
+#' @param from date that plotting starts
+#' @param to date that plotting ends
+#' @param toPLOT names of the variables to plot. For now this includes "light", "pressure", "acceleration" and "temperature
 #'
 #' @return a plot of all the measurements
 #'
 #' @examples
 #' #specify the data location
 #' data(PAM_data)
-#' str(PAM_data)
-#'
-#' #plot the activity to see if it looks ok
-#' plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="activity")
-#'
-#' # at first glance it looks like the logger was removed off a birds and left in arucksack
-#  # so remove un-needed data
-#' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
-#' & (PAM_data$acceleration$date <= "2017-06-01")),]
-#'
+#' dygraphPAM(dta = PAM_data)
 #'
 #' @export
 dygraphPAM <- function(dta,
@@ -24,23 +20,7 @@ dygraphPAM <- function(dta,
                        to = dta$light$date[length(dta$light$date)],
                        toPLOT = names(dta)) {
   len = ifelse( ("id" %in% toPLOT) , length(names(dta))-1, length(names(dta)))
-#
-#
-#   x11()     #Use X11() or quartz() if on linux or mac.
-#   par(mfrow=c(len,1))
-#   prompt  = "Hit spacebar to close plots"
-#   extra   = "Use left mouse click to zoom in and double click to zoom out"
-#   # capture = tk_messageBox(message = prompt, detail = extra)
-#
-#   library(htmltools)
-#   dy_graph <- list(
-#     dygraphs::dygraph(temperature, group="temp_rain", main="temperature"),
-#     dygraphs::dygraph(rainfall, group="temp_rain", main="rainfall")
-#   )  # end list
-#
-#   # render the dygraphs objects using htmltools
-#   htmltools::browsable(htmltools::tagList(dy_graph))
-#
+
   dy_graph = list()
 
   if ("light" %in% toPLOT ){
@@ -92,8 +72,6 @@ dygraphPAM <- function(dta,
       dyLegend(hideOnMouseOut = TRUE, width = 600)
   }
 
-  # htmlwidgets::
-  # rmarkdown::render(htmltools::browsable(htmltools::tagList(dy_graph)))
   htmltools::browsable(htmltools::tagList(dy_graph))
 }
 
