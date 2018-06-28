@@ -29,8 +29,6 @@ Once devtools is installed, type:
 library(devtools)
 devtools::install_github("KiranLDA/PAMLr")
 
-# load library
-library(PAMLr)
 ```
 
 ## Load and test
@@ -38,6 +36,9 @@ library(PAMLr)
 To make sure the package works run the following
 
 ```r
+# load library
+library(PAMLr)
+
 #specify the data location
 data(PAM_data)
 str(PAM_data)
