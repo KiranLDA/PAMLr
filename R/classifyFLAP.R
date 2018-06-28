@@ -18,7 +18,7 @@
 #' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 #' & (PAM_data$acceleration$date <= "2017-06-01")),]
 #'
-#' behaviour = classify_flapping(dta = PAM_data$acceleration, flapping_duration = 3)
+#' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3)
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
@@ -28,7 +28,7 @@
 #' behaviour$timetable
 #'
 #' @export
-classify_flapping <- function(dta , flapping_duration = 3){
+classifyFLAP <- function(dta , flapping_duration = 3){
   km = kmeans(dta$act,centers=2)
   dta$clust = km$cluster
 

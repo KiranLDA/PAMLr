@@ -8,8 +8,11 @@
 #'
 #' @name PAMLr
 #'
+#' @import dygraphs
 #' @import graphics
 #' @import grDevices
 #' @import utils
 #' @import stats
+#' @import tcltk
+#' @import xts
 NULL

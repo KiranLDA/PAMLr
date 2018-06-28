@@ -59,7 +59,7 @@ PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "20
 
 # classify bird's behaviour based on  activity, assume that if a bird is active for more than 
 # 3x5 minutes = 15 minutes, then the bird is migration
-behaviour = classify_flapping(dta = PAM_data$acceleration, flapping_duration = 3)
+behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3)
 
 # check the classification
 col=col=c("brown","cyan4","gold","black")
