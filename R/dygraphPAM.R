@@ -29,7 +29,7 @@ dygraphPAM <- function(dta,
                              ylab = "Light",
                              group = dta$light$date, #This is useful for synchronosing multiple graphs
                              main="Light as a function of time") %>%
-      # dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600)
   }
@@ -37,9 +37,9 @@ dygraphPAM <- function(dta,
     dy_graph$pressure = dygraph(xts(x = dta$pressure$obs, order.by = dta$pressure$date),
                              xlab = "Time",
                              ylab = "Pressure (hPa)",
-                             group = dta$pressure$date, #This is useful for synchronosing multiple graphs
+                             group = dta$light$date,#dta$pressure$date, #This is useful for synchronosing multiple graphs
                              main="Pressure as a function of time") %>%
-      # dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600)
   }
@@ -47,17 +47,17 @@ dygraphPAM <- function(dta,
     dy_graph$activity = dygraph(xts(x = dta$acceleration$act, order.by = dta$acceleration$date),
                                 xlab = "Time",
                                 ylab = "Activity",
-                                group = dta$acceleration$date, #This is useful for synchronosing multiple graphs
+                                group = dta$light$date,#dta$acceleration$date, #This is useful for synchronosing multiple graphs
                                 main="Activity as a function of time") %>%
-      # dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600)
     dy_graph$pitch = dygraph(xts(x = dta$acceleration$pit, order.by = dta$acceleration$date),
                                     xlab = "Time",
                                     ylab = "Pitch",
-                                    group = dta$acceleration$date, #This is useful for synchronosing multiple graphs
+                                    group = dta$light$date,#dta$acceleration$date, #This is useful for synchronosing multiple graphs
                                     main="Pitch as a function of time") %>%
-      # dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600)
   }
@@ -65,9 +65,9 @@ dygraphPAM <- function(dta,
     dy_graph$temperature = dygraph(xts(x = dta$temperature$obs, order.by = dta$temperature$date),
                                     xlab = "Time",
                                     ylab = "Temperature (C)",
-                                    group = dta$temperature$date, #This is useful for synchronosing multiple graphs
+                                    group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
                                     main="Temperature as a function of time") %>%
-      # dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600)
   }
