@@ -19,7 +19,7 @@
 #' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 #' & (PAM_data$acceleration$date <= "2017-06-01")),]
 #'
-#' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 4)
+#' behaviour = classifyFLAP(dta = PAM_data$pressure, flapping_duration = 4)
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
@@ -29,17 +29,17 @@
 #' behaviour$timetable
 #'
 #' @export
-classifyFLAP <- function(dta , flapping_duration = 3, toPLOT = T, method = "kmeans"){
+classifySOAR <- function(dta , toPLOT = T, method = "kmeans"){
   if (method == "kmeans"){
-    km = stats::kmeans(dta$act,centers=2)
-    dta$clust = km$cluster
+    km = kmeans(abs(diff(dta$obs)),centers=2)
+    dta$clust = c(1,km$cluster)
   }
 
-  type = "flapping"
-  threshold = sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
-                  max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2
+  type = "soarglide"
+  threshold = sum(min(max(dta$obs[dta$clust==1]), max(dta$obs[dta$clust==2])),
+                  max(min(dta$obs[dta$clust==1]), min(dta$obs[dta$clust==2])))/2
 
-  if(toPLOT == T) plotTHLD(dta$act, type , classification = km$cluster,threshold = threshold)
+  if(toPLOT == T) plotTHLD(dta$obs, type , classification = km$cluster,threshold = threshold)
 
   # Count the length of each category
   start=0

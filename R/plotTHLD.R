@@ -16,7 +16,7 @@
 #'
 #' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3, toPLOT = F)
 #'
-#' plotTHLD(dta = PAM_data$acceleration,
+#' plotTHLD(dta = PAM_data$acceleration$act,
 #'      type = behaviour$type,
 #'      classification = behaviour$classification,
 #'      threshold = behaviour$threshold)
@@ -26,19 +26,19 @@ plotTHLD <- function(dta , type = "flapping", classification, threshold ){
   if (type == "flapping"){
   dev.new()
   par(mar=c(4,4,1,1))
-  hist(dta$act[dta$act != 0],
-       breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
+  hist(dta[dta != 0],
+       breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
        xlab="Activity",
        main ="Initial High / Low activity Classification", border=F)
-  plot(hist(dta$act[classification==1 & dta$act != 0],
-            breaks = (max(dta$act[classification==1 & dta$act != 0])-min(dta$act[classification==1 & dta$act != 0])),
+  plot(hist(dta[classification==1 & dta != 0],
+            breaks = (max(dta[classification==1 & dta != 0])-min(dta[classification==1 & dta != 0])),
             plot=F),col = rgb(1,0,0,1/4), add=T, border=F)
-  plot(hist(dta$act[classification==2 & dta$act != 0],
-                                breaks = (max(dta$act[classification==2 & dta$act != 0])-min(dta$act[classification==2 & dta$act != 0])), plot=F),
+  plot(hist(dta[classification==2 & dta != 0],
+                                breaks = (max(dta[classification==2 & dta != 0])-min(dta[classification==2 & dta != 0])), plot=F),
                  col = rgb(0,0,0,1/4), add=T, border=F)
   abline(v=threshold, lty=2)
-  text(x = threshold,  (max((hist(dta$act[dta$act != 0],breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
-                                  plot=F)$counts)) - min((hist(dta$act[dta$act != 0],breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
+  text(x = threshold,  (max((hist(dta[dta != 0],breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
+                                  plot=F)$counts)) - min((hist(dta[dta != 0],breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
                                                                plot=F)$counts)))/2, paste0("threshold = ",threshold), pos=4)
   }
 }
