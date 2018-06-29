@@ -7,4 +7,12 @@
 #' @author Kiran Dhanjal-Adams \email{kiran.dhanjal.adams@gmail.com}
 #'
 #' @name PAMLr
+#' @import dygraphs
+#' @import graphics
+#' @import grDevices
+#' @import htmltools
+#' @import utils
+#' @import stats
+#' @import tcltk
+#' @import xts
 NULL

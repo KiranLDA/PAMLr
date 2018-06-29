@@ -29,26 +29,26 @@
 #'
 #' @export
 classifyFLAP <- function(dta , flapping_duration = 3){
-  km = kmeans(dta$act,centers=2)
+  km = stats::kmeans(dta$act,centers=2)
   dta$clust = km$cluster
 
-  par(mar=c(4,4,1,1))
-  hist(dta$act[dta$act != 0],  breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])), xlab="Activity",
+  graphics::par(mar=c(4,4,1,1))
+  graphics::hist(dta$act[dta$act != 0],  breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])), xlab="Activity",
        main ="Initial High / Low activity Classification", border=F)
-  plot(hist(dta$act[dta$clust==1 & dta$act != 0],
+  graphics::plot(graphics::hist(dta$act[dta$clust==1 & dta$act != 0],
             breaks = (max(dta$act[dta$clust==1 & dta$act != 0])-min(dta$act[dta$clust==1 & dta$act != 0])), plot=F),
-       col=rgb(1,0,0,1/4), add=T, border=F)
-  plot(hist(dta$act[dta$clust==2 & dta$act != 0],
+       col = grDevices::rgb(1,0,0,1/4), add=T, border=F)
+  graphics::plot(graphics::hist(dta$act[dta$clust==2 & dta$act != 0],
             breaks = (max(dta$act[dta$clust==2 & dta$act != 0])-min(dta$act[dta$clust==2 & dta$act != 0])), plot=F),
-       col=rgb(0,0,0,1/4), add=T, border=F)
+       col = grDevices::rgb(0,0,0,1/4), add=T, border=F)
   # abline(v=min(max(dta$act[dta$clust==1 & dta$act != 0]), max(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
   # abline(v=max(min(dta$act[dta$clust==1 & dta$act != 0]), min(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
   threshold = sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
                   max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2
-  abline(v=threshold, lty=2)
-  text(x = threshold,  (max((hist(dta$act[dta$act != 0],
+  graphics::abline(v=threshold, lty=2)
+  graphics::text(x = threshold,  (max((graphics::hist(dta$act[dta$act != 0],
                                breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
-                               plot=F)$counts)) - min((hist(dta$act[dta$act != 0],
+                               plot=F)$counts)) - min((graphics::hist(dta$act[dta$act != 0],
                                                             breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
                                                             plot=F)$counts)))/2,
        paste0("threshold = ",threshold), pos=4)
