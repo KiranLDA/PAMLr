@@ -17,9 +17,9 @@
 #' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3, toPLOT = F)
 #'
 #' plotTHLD(dta = PAM_data$acceleration,
-#' type = behaviour$type,
-#' classification = behaviour$classification,
-#' threshold = behaviour$threshold)
+#'      type = behaviour$type,
+#'      classification = behaviour$classification,
+#'      threshold = behaviour$threshold)
 #'
 #' @export
 plotTHLD <- function(dta , type = "flapping", classification, threshold ){
@@ -30,7 +30,6 @@ plotTHLD <- function(dta , type = "flapping", classification, threshold ){
        breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
        xlab="Activity",
        main ="Initial High / Low activity Classification", border=F)
-
   plot(hist(dta$act[classification==1 & dta$act != 0],
             breaks = (max(dta$act[classification==1 & dta$act != 0])-min(dta$act[classification==1 & dta$act != 0])),
             plot=F),col = rgb(1,0,0,1/4), add=T, border=F)

@@ -28,11 +28,11 @@ data(PAM_data)
 PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 & (PAM_data$acceleration$date <= "2017-06-01")),]
 
-behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3)
+behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3, toPLOT = F)
 
 plotTHLD(dta = PAM_data$acceleration,
-type = behaviour$type,
-classification = behaviour$classification,
-threshold = behaviour$threshold)
+     type = behaviour$type,
+     classification = behaviour$classification,
+     threshold = behaviour$threshold)
 
 }
