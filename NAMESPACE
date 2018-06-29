@@ -3,6 +3,7 @@
 export(classifyFLAP)
 export(dygraphPAM)
 export(importPAM)
+export(plotTHLD)
 import(dygraphs)
 import(grDevices)
 import(graphics)

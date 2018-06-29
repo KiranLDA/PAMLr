@@ -2,6 +2,7 @@
 #'
 #' @param dta data stored as a list see str(data(PAM_data)) for example format
 #' @param flapping_duration number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 3x5min = 15 minutes of intense activity is considered a migratory flight
+#' @param toPLOT can be true or false. If true then threshold is plotted according to plotTHLD()
 #'
 #' @return a timetable for when the species was migrating or not
 #'
@@ -18,7 +19,7 @@
 #' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 #' & (PAM_data$acceleration$date <= "2017-06-01")),]
 #'
-#' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3)
+#' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 4)
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
@@ -28,31 +29,37 @@
 #' behaviour$timetable
 #'
 #' @export
-classifyFLAP <- function(dta , flapping_duration = 3){
+classifyFLAP <- function(dta , flapping_duration = 3, toPLOT = T){
   km = stats::kmeans(dta$act,centers=2)
   dta$clust = km$cluster
 
-  graphics::par(mar=c(4,4,1,1))
-  graphics::hist(dta$act[dta$act != 0],  breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])), xlab="Activity",
-       main ="Initial High / Low activity Classification", border=F)
-  graphics::plot(graphics::hist(dta$act[dta$clust==1 & dta$act != 0],
-            breaks = (max(dta$act[dta$clust==1 & dta$act != 0])-min(dta$act[dta$clust==1 & dta$act != 0])), plot=F),
-       col = grDevices::rgb(1,0,0,1/4), add=T, border=F)
-  graphics::plot(graphics::hist(dta$act[dta$clust==2 & dta$act != 0],
-            breaks = (max(dta$act[dta$clust==2 & dta$act != 0])-min(dta$act[dta$clust==2 & dta$act != 0])), plot=F),
-       col = grDevices::rgb(0,0,0,1/4), add=T, border=F)
-  # abline(v=min(max(dta$act[dta$clust==1 & dta$act != 0]), max(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
-  # abline(v=max(min(dta$act[dta$clust==1 & dta$act != 0]), min(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
+  type = "flapping"
   threshold = sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
                   max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2
-  graphics::abline(v=threshold, lty=2)
-  graphics::text(x = threshold,  (max((graphics::hist(dta$act[dta$act != 0],
-                               breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
-                               plot=F)$counts)) - min((graphics::hist(dta$act[dta$act != 0],
-                                                            breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
-                                                            plot=F)$counts)))/2,
-       paste0("threshold = ",threshold), pos=4)
 
+  if(toPLOT == T) plotTHLD(dta, type , classification = km$cluster,threshold = threshold)
+
+  # x11()
+  # graphics::par(mar=c(4,4,1,1))
+  # graphics::hist(dta$act[dta$act != 0],  breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])), xlab="Activity",
+  #      main ="Initial High / Low activity Classification", border=F)
+  # graphics::plot(graphics::hist(dta$act[dta$clust==1 & dta$act != 0],
+  #           breaks = (max(dta$act[dta$clust==1 & dta$act != 0])-min(dta$act[dta$clust==1 & dta$act != 0])), plot=F),
+  #      col = grDevices::rgb(1,0,0,1/4), add=T, border=F)
+  # graphics::plot(graphics::hist(dta$act[dta$clust==2 & dta$act != 0],
+  #           breaks = (max(dta$act[dta$clust==2 & dta$act != 0])-min(dta$act[dta$clust==2 & dta$act != 0])), plot=F),
+  #      col = grDevices::rgb(0,0,0,1/4), add=T, border=F)
+  # # abline(v=min(max(dta$act[dta$clust==1 & dta$act != 0]), max(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
+  # # abline(v=max(min(dta$act[dta$clust==1 & dta$act != 0]), min(dta$act[dta$clust==2 & dta$act != 0])), lty=2)
+  #
+  # graphics::abline(v=threshold, lty=2)
+  # graphics::text(x = threshold,  (max((graphics::hist(dta$act[dta$act != 0],
+  #                              breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
+  #                              plot=F)$counts)) - min((graphics::hist(dta$act[dta$act != 0],
+  #                                                           breaks = (max(dta$act[dta$act != 0])-min(dta$act[dta$act != 0])),
+  #                                                           plot=F)$counts)))/2,
+  #      paste0("threshold = ",threshold), pos=4)
+  #
 
 
   # Count the length of each category
@@ -69,31 +76,49 @@ classifyFLAP <- function(dta , flapping_duration = 3){
   high_activity = as.numeric(which(table(dta$clust) == min(table(dta$clust))))#-1
   low_activity = as.numeric(which(table(dta$clust) == max(table(dta$clust))))
 
-  for (i in 2:nrow(dta)){
-    if(dta$clust[i] == high_activity & dta$clust[i-1] != high_activity){
-      start=i
-    }
-    if(dta$clust[i] != high_activity & dta$clust[i-1] == high_activity){
-      end=(i-1)
-    }
-    if(end>start){
-      duration = end - start
-      if(duration > flapping_duration){
-        dta$clust[start:end] = 3
-        dur = difftime(dta$date[end], dta$date[start], tz= "UTC", units = "hours")
-        # dur = (dta$date[end]-dta$date[start])/(60*60)
-        info = data.frame(dta$date[start], dta$date[end], dur)
-        names(info) = c("start","end","Duration (h)")
-        Duration_table = rbind(Duration_table, info)
-      }
-    }
-  }
+  x = c(low_activity,high_activity)
+  start = which(dta$clust == x[1])
+  start = start[sapply(start, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  x = c(high_activity, low_activity)
+  end = which(dta$clust == x[1])
+  end = end[sapply(end, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
 
-  Duration_table= unique(Duration_table)
-  Duration_table[,3] = as.numeric(Duration_table[,2] - Duration_table[,1])/(60*60)
-  Duration_table = Duration_table[-1,]
+  if(end[1]< start[1]) end = end[-1] #if the series starts with an end not a start, remove the first ending
+  if (length(end)>length(start)) start= start[1:length(end)]
+  if (length(end)<length(start)) end= end[1:length(start)]
+
+  # make sure only periods where birds is flying longer than the flapping duration are stored
+  index = which((end-start) >= flapping_duration)
+  start = start[index]
+  end = end[index]
+
+  index = unlist(sapply(1:length(start), function(i) start[i]:end[i]))
+  dta$clust[index] = 3
+
+
+  # get rid of 1-off missclassifications
+  x = c(3,low_activity,3)
+  idx = which(dta$clust == x[1])
+  idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  dta$clust[idx+1] = 3
+
+  #look for start and end of migration
+  end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
+  start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
+
+  dur = difftime(dta$date[end], dta$date[start], tz= "UTC", units = "hours")
+  info = data.frame(dta$date[start], dta$date[end], dur)
+  names(info) = c("start","end","Duration (h)")
+  Duration_table = rbind(Duration_table, info)
+
+
+
+  # Duration_table= unique(Duration_table)
+  # Duration_table[,3] = as.numeric(Duration_table[,2] - Duration_table[,1])/(60*60)
+  Duration_table = Duration_table[-c(1,2),]
   dta$clust[dta$act == 0] = 4
-  return(list(timetable = Duration_table,
+  return(list(type = type,
+              timetable = Duration_table,
               classification = dta$clust,
               low_activity = low_activity,
               high_activity = high_activity,

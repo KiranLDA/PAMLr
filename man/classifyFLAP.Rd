@@ -4,12 +4,14 @@
 \alias{classifyFLAP}
 \title{Make timetable}
 \usage{
-classifyFLAP(dta, flapping_duration = 3)
+classifyFLAP(dta, flapping_duration = 3, toPLOT = T)
 }
 \arguments{
 \item{dta}{data stored as a list see str(data(PAM_data)) for example format}
 
 \item{flapping_duration}{number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 3x5min = 15 minutes of intense activity is considered a migratory flight}
+
+\item{toPLOT}{can be true or false. If true then threshold is plotted according to plotTHLD()}
 }
 \value{
 a timetable for when the species was migrating or not
@@ -29,7 +31,7 @@ plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="a
 PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 & (PAM_data$acceleration$date <= "2017-06-01")),]
 
-behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3)
+behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 4)
 
 
 col=col=c("brown","cyan4","black","gold")
