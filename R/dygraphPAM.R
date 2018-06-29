@@ -5,16 +5,23 @@
 #' @param dta PAM data to be plotted
 #' @param from date that plotting starts
 #' @param to date that plotting ends
-#' @param toPLOT names of the variables to plot. For now this includes "light", "pressure", "acceleration" and "temperature
+#' @param toPLOT names of the variables to plot. For now this includes `light`, `pressure`, `acceleration` and `temperature`
 #'
 #' @return a plot of all the measurements
 #'
 #' @examples
-#' #specify the data location
+#' #load dummy data
 #' data(PAM_data)
+#'
+#' # This bit is for Rstudio users to prevent html from opening in Viewer pane and crashing
+#' # It opens in web browser instead
 #' backup_options <- options()
 #' options(viewer=NULL)
+#'
+#' # Plot interactive graphics
 #' dygraphPAM(dta = PAM_data)
+#'
+#' # restore Rstudio settings from before plot
 #' options(backup_options)
 #'
 #' @export

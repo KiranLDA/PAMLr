@@ -14,7 +14,7 @@ dygraphPAM(dta, from = dta$light$date[1],
 
 \item{to}{date that plotting ends}
 
-\item{toPLOT}{names of the variables to plot. For now this includes "light", "pressure", "acceleration" and "temperature}
+\item{toPLOT}{names of the variables to plot. For now this includes `light`, `pressure`, `acceleration` and `temperature`}
 }
 \value{
 a plot of all the measurements
@@ -23,8 +23,18 @@ a plot of all the measurements
 This opens a java application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 }
 \examples{
-#specify the data location
+#load dummy data
 data(PAM_data)
+
+# This bit is for Rstudio users to prevent html from opening in Viewer pane and crashing
+# It opens in web browser instead
+backup_options <- options()
+options(viewer=NULL)
+
+# Plot interactive graphics
 dygraphPAM(dta = PAM_data)
+
+# restore Rstudio settings from before plot
+options(backup_options)
 
 }
