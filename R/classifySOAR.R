@@ -21,12 +21,12 @@
 #' PAM_data$pressure = PAM_data$pressure[((PAM_data$pressure$date >= "2016-07-30")
 #' & (PAM_data$pressure$date <= "2017-06-01")),]
 #'
-#' behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2)
+#' behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2, toPLOT = F)
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
-#' plot(PAM_data$pressure$date[2000:3000], PAM_data$pressure$obs[2000:3000],
-#' col=col[behaviour$classification][2000:3000], type="o", pch=20, xlab="Date", ylab="Pressure")
+#' plot(PAM_data$pressure$date[2700:3000], PAM_data$pressure$obs[2700:3000],
+#' col=col[behaviour$classification][2700:3000], type="o", pch=20, xlab="Date", ylab="Pressure")
 #'
 #' behaviour$timetable
 #'
@@ -55,10 +55,14 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   x = c(low_change,high_change)
   start = which(dta$clust == x[1])
   start = start[sapply(start, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  start = start[!is.na(start)]
+  start = start + 1
+
   x = c(high_change, low_change)
   end = which(dta$clust == x[1])
   end = end[sapply(end, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
-  end = end #+ 1 # to make sure it indexes the last value as the end
+  end = end[!is.na(end)]
+  end = end + 1 # to make sure it indexes the last value as the end
 
   if(end[1] < start[1]) end = end[-1] #if the series starts with an end not a start, remove the first ending
   if (length(end)>length(start)) start = start[1:length(end)]
@@ -69,8 +73,10 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   start = start[index]
   end = end[index]#+1
 
-  index = unlist(sapply(1:length(start), function(i) start[i]:(end[i]+1)))
+  index = unlist(sapply(1:length(start), function(i) start[i]:(end[i])))
   dta$clust[index] = 3
+
+  plot(dta$date[2700:3000],dta$obs[2700:3000], col=dta$clust[2700:3000], type="o", pch=16)
 
   # get rid of 1-off missclassifications
   x = c(3,high_change,3)
@@ -83,14 +89,19 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
   dta$clust[idx+1] = 3
 
-
-
   dta$clust[abs(diff(dta$obs)) == 0] = 4
+
+  x = c(3,4)
+  idx = which(dta$clust == x[1])
+  idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  dta$clust[idx+1] = 3
 
   x = c(3,4,3)
   idx = which(dta$clust == x[1])
   idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
   dta$clust[idx+1] = 3
+
+
 #
 #   x = c(1,3,3)
 #   start1 = which(dta$clust == x[1])
@@ -129,7 +140,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
 
   # #look for start and end of migration
   end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
-  start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
+  start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)] ))
 
 
   dur = difftime(dta$date[end], dta$date[start], tz= "UTC", units = "hours")
@@ -138,7 +149,6 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   Duration_table = rbind(Duration_table, info)
 
   Duration_table = Duration_table[-c(1,2),]
-
 
   # plot(abs(diff(dta$obs[2000:3000])), col= dta$clust[2000:3000])
   # plot(dta$obs[2500:3000], col= dta$clust[2500:3000])

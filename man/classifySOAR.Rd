@@ -36,12 +36,12 @@ plot(PAM_data$pressure$date, PAM_data$pressure$obs, xlab = "Time", ylab = "Press
 PAM_data$pressure = PAM_data$pressure[((PAM_data$pressure$date >= "2016-07-30")
 & (PAM_data$pressure$date <= "2017-06-01")),]
 
-behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2)
+behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2, toPLOT = F)
 
 
 col=col=c("brown","cyan4","black","gold")
-plot(PAM_data$pressure$date[2000:3000], PAM_data$pressure$obs[2000:3000],
-col=col[behaviour$classification][2000:3000], type="o", pch=20, xlab="Date", ylab="Pressure")
+plot(PAM_data$pressure$date[2700:3000], PAM_data$pressure$obs[2700:3000],
+col=col[behaviour$classification][2700:3000], type="o", pch=20, xlab="Date", ylab="Pressure")
 
 behaviour$timetable
 
