@@ -25,22 +25,16 @@
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
-#' plot(abs(diff(PAM_data$pressure$obs[2000:4000]))[2000:4000],PAM_data$pressure$obs[2000:4000],
-#' col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
+#' plot(PAM_data$pressure$date[2000:4000],PAM_data$pressure$obs[2000:4000],
+#' col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Pressure")
 #'
 #' behaviour$timetable
 #'
 #' @export
 classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soaring_duration = 2){
-  # if (method == "kmeans"){
-  #   km = kmeans(abs(diff(dta$obs)),centers=3)
-  #   dta$clust = c(1,km$cluster)
-  # }
 
   dta$clust = c(ifelse(abs(diff(dta$obs))>threshold,2,1),1)
-  # plot(abs(diff(dta$obs)), col= dta$clust)
   type = "soarglide"
-
 
   if(toPLOT == T) plotTHLD(abs(diff(dta$obs)),  classification = dta$clust, threshold = threshold, type=type)
 
@@ -64,6 +58,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   x = c(high_change, low_change)
   end = which(dta$clust == x[1])
   end = end[sapply(end, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  end = end + 1 # to make sure it indexes the last value as the end
 
   if(end[1]< start[1]) end = end[-1] #if the series starts with an end not a start, remove the first ending
   if (length(end)>length(start)) start= start[1:length(end)]
