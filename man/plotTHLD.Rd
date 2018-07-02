@@ -31,7 +31,7 @@ PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2
 behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3, toPLOT = F)
 
 plotTHLD(dta = PAM_data$acceleration$act,
-    # type = behaviour$type,
+    type = behaviour$type,
      classification = behaviour$classification,
      threshold = behaviour$threshold)
 

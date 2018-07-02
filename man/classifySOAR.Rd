@@ -40,8 +40,8 @@ behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2)
 
 
 col=col=c("brown","cyan4","black","gold")
-plot(abs(diff(PAM_data$pressure$obs[2000:4000]))[2000:4000],PAM_data$pressure$obs[2000:4000],
-col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
+plot(PAM_data$pressure$date[2000:3000], PAM_data$pressure$obs[2000:3000],
+col=col[behaviour$classification][2000:3000], type="o", pch=20, xlab="Date", ylab="Pressure")
 
 behaviour$timetable
 

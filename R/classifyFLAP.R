@@ -74,7 +74,6 @@ classifyFLAP <- function(dta , flapping_duration = 3, toPLOT = T, method = "kmea
   index = unlist(sapply(1:length(start), function(i) start[i]:end[i]))
   dta$clust[index] = 3
 
-
   # get rid of 1-off missclassifications
   x = c(3,low_activity,3)
   idx = which(dta$clust == x[1])

@@ -25,8 +25,8 @@
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
-#' plot(PAM_data$pressure$date[2000:4000],PAM_data$pressure$obs[2000:4000],
-#' col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Pressure")
+#' plot(PAM_data$pressure$date[2000:3000], PAM_data$pressure$obs[2000:3000],
+#' col=col[behaviour$classification][2000:3000], type="o", pch=20, xlab="Date", ylab="Pressure")
 #'
 #' behaviour$timetable
 #'
@@ -58,18 +58,18 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   x = c(high_change, low_change)
   end = which(dta$clust == x[1])
   end = end[sapply(end, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
-  end = end + 1 # to make sure it indexes the last value as the end
+  end = end #+ 1 # to make sure it indexes the last value as the end
 
-  if(end[1]< start[1]) end = end[-1] #if the series starts with an end not a start, remove the first ending
-  if (length(end)>length(start)) start= start[1:length(end)]
-  if (length(end)<length(start)) end= end[1:length(start)]
+  if(end[1] < start[1]) end = end[-1] #if the series starts with an end not a start, remove the first ending
+  if (length(end)>length(start)) start = start[1:length(end)]
+  if (length(end)<length(start)) end = end[1:length(start)]
 
   # make sure only periods where birds is flying longer than the flapping duration are stored
   index = which((end-start) >= soaring_duration)
   start = start[index]
-  end = end[index]
+  end = end[index]#+1
 
-  index = unlist(sapply(1:length(start), function(i) start[i]:end[i]))
+  index = unlist(sapply(1:length(start), function(i) start[i]:(end[i]+1)))
   dta$clust[index] = 3
 
   # get rid of 1-off missclassifications
@@ -83,9 +83,54 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
   dta$clust[idx+1] = 3
 
-  #look for start and end of migration
+
+
+  dta$clust[abs(diff(dta$obs)) == 0] = 4
+
+  x = c(3,4,3)
+  idx = which(dta$clust == x[1])
+  idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  dta$clust[idx+1] = 3
+#
+#   x = c(1,3,3)
+#   start1 = which(dta$clust == x[1])
+#   start1 = start1[sapply(start1, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+#   x = c(2,3,3)
+#   start2 = which(dta$clust == x[1])
+#   start2 = start2[sapply(start2, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+#   x = c(4,3,3)
+#   start4 = which(dta$clust == x[1])
+#   start4 = start4[sapply(start4, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+#   start = c(start1,start2,start4)[order(c(start1,start2,start4))]
+#   start = start + 1
+#
+#
+#   x = c(3,3,1)
+#   start1 = which(dta$clust == x[1])
+#   start1 = start1[sapply(start1, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+#   x = c(3,3,2)
+#   start2 = which(dta$clust == x[1])
+#   start2 = start2[sapply(start2, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+#   x = c(3,3,4)
+#   start4 = which(dta$clust == x[1])
+#   start4 = start4[sapply(start4, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+#   end = c(start1,start2,start4)[order(c(start1,start2,start4))]
+#   end = end + 1
+#
+#
+#   if(end[1]< start[1]) end = end[-1] #if the series starts with an end not a start, remove the first ending
+#   if (length(end)>length(start)) start = start[1:length(end)]
+#   if (length(end)<length(start)) end = end[1:length(start)]
+#
+#   # make sure only periods where birds is flying longer than the flapping duration are stored
+#   index = which((end-start) >= soaring_duration)
+#   start = start[index]
+#   end = end[index]
+
+  # #look for start and end of migration
   end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
   start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
+
 
   dur = difftime(dta$date[end], dta$date[start], tz= "UTC", units = "hours")
   info = data.frame(dta$date[start], dta$date[end], dur)
@@ -93,12 +138,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   Duration_table = rbind(Duration_table, info)
 
   Duration_table = Duration_table[-c(1,2),]
-  dta$clust[abs(diff(dta$obs)) == 0] = 4
 
-  x = c(3,4,3)
-  idx = which(dta$clust == x[1])
-  idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
-  dta$clust[idx+1] = 3
 
   # plot(abs(diff(dta$obs[2000:3000])), col= dta$clust[2000:3000])
   # plot(dta$obs[2500:3000], col= dta$clust[2500:3000])
