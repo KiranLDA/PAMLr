@@ -76,7 +76,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   index = unlist(sapply(1:length(start), function(i) start[i]:(end[i])))
   dta$clust[index] = 3
 
-  plot(dta$date[2700:3000],dta$obs[2700:3000], col=dta$clust[2700:3000], type="o", pch=16)
+  # plot(dta$date[2700:3000],dta$obs[2700:3000], col=dta$clust[2700:3000], type="o", pch=16)
 
   # get rid of 1-off missclassifications
   x = c(3,high_change,3)
@@ -156,10 +156,10 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   return(list(type = type,
               timetable = Duration_table,
               classification = dta$clust,
-              low_change = low_change,
-              high_change = high_change,
+              low_activity = low_change,
+              high_activity = high_change,
               migration = 3,
-              no_change = 4,
+              no_activity = 4,
               threshold = threshold))
 }
 
