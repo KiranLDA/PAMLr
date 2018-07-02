@@ -39,7 +39,7 @@ classifyFLAP <- function(dta , flapping_duration = 3, toPLOT = T, method = "kmea
   threshold = sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
                   max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2
 
-  if(toPLOT == T) plotTHLD(dta$act, type , classification = km$cluster,threshold = threshold)
+  if(toPLOT == T) plotTHLD(dta$act, classification = km$cluster,threshold = threshold, type = type)
 
   # Count the length of each category
   start=0

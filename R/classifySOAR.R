@@ -1,9 +1,11 @@
 #' Make timetable
 #'
 #' @param dta data stored as a list see str(data(PAM_data)) for example format
-#' @param flapping_duration number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 3x5min = 15 minutes of intense activity is considered a migratory flight
 #' @param toPLOT can be true or false. If true then threshold is plotted according to plotTHLD()
-#' @param method for the time being only supports "kmeans", but will later also include maybe
+#' @param method for the time being only supports manual. In this case the threshold = 2 as a default. This is the 15 minute hectopascal change
+#' @param soaring_duration number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 1x15min = 15 minutes of intense activity is considered a migratory flight
+#' @param threshold the manual threshold at which activity and non activity is drawn. in this case a change of greater than 2 hpa /15 minutes ios unlikely to have be caused by weather
+#'
 #' @return a timetable for when the species was migrating or not
 #'
 #' @examples
@@ -12,34 +14,35 @@
 #' str(PAM_data)
 #'
 #' #plot the activity to see if it looks ok
-#' plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="activity")
+#' plot(PAM_data$pressure$date, PAM_data$pressure$obs, xlab = "Time", ylab = "Pressure (hPa)")
 #'
 #' # at first glance it looks like the logger was removed off a birds and left in arucksack
 #  # so remove un-needed data
-#' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
-#' & (PAM_data$acceleration$date <= "2017-06-01")),]
+#' PAM_data$pressure = PAM_data$pressure[((PAM_data$pressure$date >= "2016-07-30")
+#' & (PAM_data$pressure$date <= "2017-06-01")),]
 #'
-#' behaviour = classifyFLAP(dta = PAM_data$pressure, flapping_duration = 4)
+#' behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2)
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
-#' plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
+#' plot(abs(diff(PAM_data$pressure$obs[2000:4000]))[2000:4000],PAM_data$pressure$obs[2000:4000],
 #' col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
 #'
 #' behaviour$timetable
 #'
 #' @export
-classifySOAR <- function(dta , toPLOT = T, method = "kmeans"){
-  if (method == "kmeans"){
-    km = kmeans(abs(diff(dta$obs)),centers=2)
-    dta$clust = c(1,km$cluster)
-  }
+classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soaring_duration = 2){
+  # if (method == "kmeans"){
+  #   km = kmeans(abs(diff(dta$obs)),centers=3)
+  #   dta$clust = c(1,km$cluster)
+  # }
 
+  dta$clust = c(ifelse(abs(diff(dta$obs))>threshold,2,1),1)
+  # plot(abs(diff(dta$obs)), col= dta$clust)
   type = "soarglide"
-  threshold = sum(min(max(dta$obs[dta$clust==1]), max(dta$obs[dta$clust==2])),
-                  max(min(dta$obs[dta$clust==1]), min(dta$obs[dta$clust==2])))/2
 
-  if(toPLOT == T) plotTHLD(dta$obs, type , classification = km$cluster,threshold = threshold)
+
+  if(toPLOT == T) plotTHLD(abs(diff(dta$obs)),  classification = dta$clust, threshold = threshold, type=type)
 
   # Count the length of each category
   start=0
@@ -52,13 +55,13 @@ classifySOAR <- function(dta , toPLOT = T, method = "kmeans"){
   Duration_table$`Duration (h)` = as.numeric(Duration_table$`Duration (h)`)
 
   # now we take high activity, partition it into magration or not based on duration
-  high_activity = as.numeric(which(table(dta$clust) == min(table(dta$clust))))#-1
-  low_activity = as.numeric(which(table(dta$clust) == max(table(dta$clust))))
+  high_change = 2
+  low_change = 1
 
-  x = c(low_activity,high_activity)
+  x = c(low_change,high_change)
   start = which(dta$clust == x[1])
   start = start[sapply(start, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
-  x = c(high_activity, low_activity)
+  x = c(high_change, low_change)
   end = which(dta$clust == x[1])
   end = end[sapply(end, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
 
@@ -67,16 +70,20 @@ classifySOAR <- function(dta , toPLOT = T, method = "kmeans"){
   if (length(end)<length(start)) end= end[1:length(start)]
 
   # make sure only periods where birds is flying longer than the flapping duration are stored
-  index = which((end-start) >= flapping_duration)
+  index = which((end-start) >= soaring_duration)
   start = start[index]
   end = end[index]
 
   index = unlist(sapply(1:length(start), function(i) start[i]:end[i]))
   dta$clust[index] = 3
 
-
   # get rid of 1-off missclassifications
-  x = c(3,low_activity,3)
+  x = c(3,high_change,3)
+  idx = which(dta$clust == x[1])
+  idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  dta$clust[idx+1] = 3
+
+  x = c(3,low_change,3)
   idx = which(dta$clust == x[1])
   idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
   dta$clust[idx+1] = 3
@@ -91,14 +98,23 @@ classifySOAR <- function(dta , toPLOT = T, method = "kmeans"){
   Duration_table = rbind(Duration_table, info)
 
   Duration_table = Duration_table[-c(1,2),]
-  dta$clust[dta$act == 0] = 4
+  dta$clust[abs(diff(dta$obs)) == 0] = 4
+
+  x = c(3,4,3)
+  idx = which(dta$clust == x[1])
+  idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  dta$clust[idx+1] = 3
+
+  # plot(abs(diff(dta$obs[2000:3000])), col= dta$clust[2000:3000])
+  # plot(dta$obs[2500:3000], col= dta$clust[2500:3000])
+
   return(list(type = type,
               timetable = Duration_table,
               classification = dta$clust,
-              low_activity = low_activity,
-              high_activity = high_activity,
+              low_change = low_change,
+              high_change = high_change,
               migration = 3,
-              no_activity = 4,
+              no_change = 4,
               threshold = threshold))
 }
 

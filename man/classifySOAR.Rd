@@ -4,16 +4,19 @@
 \alias{classifySOAR}
 \title{Make timetable}
 \usage{
-classifySOAR(dta, toPLOT = T, method = "kmeans")
+classifySOAR(dta, toPLOT = T, method = "manual", threshold = 2,
+  soaring_duration = 2)
 }
 \arguments{
 \item{dta}{data stored as a list see str(data(PAM_data)) for example format}
 
 \item{toPLOT}{can be true or false. If true then threshold is plotted according to plotTHLD()}
 
-\item{method}{for the time being only supports "kmeans", but will later also include maybe}
+\item{method}{for the time being only supports manual. In this case the threshold = 2 as a default. This is the 15 minute hectopascal change}
 
-\item{flapping_duration}{number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 3x5min = 15 minutes of intense activity is considered a migratory flight}
+\item{threshold}{the manual threshold at which activity and non activity is drawn. in this case a change of greater than 2 hpa /15 minutes ios unlikely to have be caused by weather}
+
+\item{soaring_duration}{number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 1x15min = 15 minutes of intense activity is considered a migratory flight}
 }
 \value{
 a timetable for when the species was migrating or not
@@ -27,17 +30,17 @@ data(PAM_data)
 str(PAM_data)
 
 #plot the activity to see if it looks ok
-plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="activity")
+plot(PAM_data$pressure$date, PAM_data$pressure$obs, xlab = "Time", ylab = "Pressure (hPa)")
 
 # at first glance it looks like the logger was removed off a birds and left in arucksack
-PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
-& (PAM_data$acceleration$date <= "2017-06-01")),]
+PAM_data$pressure = PAM_data$pressure[((PAM_data$pressure$date >= "2016-07-30")
+& (PAM_data$pressure$date <= "2017-06-01")),]
 
-behaviour = classifyFLAP(dta = PAM_data$pressure, flapping_duration = 4)
+behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2)
 
 
 col=col=c("brown","cyan4","black","gold")
-plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
+plot(abs(diff(PAM_data$pressure$obs[2000:4000]))[2000:4000],PAM_data$pressure$obs[2000:4000],
 col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
 
 behaviour$timetable

@@ -4,16 +4,16 @@
 \alias{plotTHLD}
 \title{Plot threshold}
 \usage{
-plotTHLD(dta, type = "flapping", classification, threshold)
+plotTHLD(dta, classification, threshold, type)
 }
 \arguments{
 \item{dta}{Raw acceleration or pressure data used to make the classification}
 
-\item{type}{The type of classification used i.e "flapping" or soar-gliding}
-
 \item{classification}{Is the result of the classification. is in the format of a vector of numbers used for low or high activity}
 
 \item{threshold}{The threshold between different classes}
+
+\item{type}{The type of classification used i.e "flapping" or soar-gliding}
 }
 \value{
 a graphic with the output from the classifications
@@ -31,7 +31,7 @@ PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2
 behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3, toPLOT = F)
 
 plotTHLD(dta = PAM_data$acceleration$act,
-     type = behaviour$type,
+    # type = behaviour$type,
      classification = behaviour$classification,
      threshold = behaviour$threshold)
 
