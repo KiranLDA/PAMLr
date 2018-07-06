@@ -10,10 +10,8 @@
 #' #specify the data location
 #' data(PAM_data)
 #' str(PAM_data)
-#'
-#'
 #' # at first glance it looks like the logger was removed off a birds and left in arucksack
-#' #  # so remove un-needed data
+#' # so remove un-needed data
 #' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 #'                                                & (PAM_data$acceleration$date <= "2017-06-01")),]
 #'
