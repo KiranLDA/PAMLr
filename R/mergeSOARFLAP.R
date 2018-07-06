@@ -41,4 +41,6 @@ mergeSOARFLAP <- function(dta = PAM_data, interpolate = F){
       mutate(obs.interpolate = na.approx(obs)) %>%
       mutate(classSOAR.interpolate = round(na.approx(classSOAR)))
   }
+
+  return(mergeTBL)
 }
