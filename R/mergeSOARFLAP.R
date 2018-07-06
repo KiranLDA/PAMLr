@@ -31,15 +31,15 @@ mergeSOARFLAP <- function(dta = PAM_data, interpolate = F){
   ## Create two data.tables with which to demonstrate a data.table merge
   pressure = data.table(dta$pressure, key="date")
   activity = data.table(dta$acceleration, key="date")
-  pressure$classSOAR = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2, toPLOT = F)$classification
-  activity$classFLAP = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3, toPLOT = F)$classification
+  pressure$classSOAR = classifySOAR(dta = dta$pressure, soaring_duration = 2, toPLOT = F)$classification
+  activity$classFLAP = classifyFLAP(dta = dta$acceleration, flapping_duration = 3, toPLOT = F)$classification
 
   mergeTBL = pressure[activity]
 
   if (interpolate == T){
     mergeTBL = mergeTBL %>%
-      mutate(obs.interpolate = na.approx(obs)) %>%
-      mutate(classSOAR.interpolate = round(na.approx(classSOAR)))
+      dplyr::mutate(obs.interpolate = na.approx(mergeTBL$obs)) %>%
+      dplyr::mutate(classSOAR.interpolate = round(zoo::na.approx(mergeTBL$classSOAR)))
   }
 
   return(mergeTBL)
