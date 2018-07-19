@@ -27,12 +27,12 @@
 #'              col=col[mergeTBL$classFLAP[!is.na(mergeTBL$obs)][500:1500]])
 #'
 #' @export
-mergeSOARFLAP <- function(dta = PAM_data, interpolate = F){
+mergeSOARFLAP <- function(P, A, interpolate = F){
   ## Create two data.tables with which to demonstrate a data.table merge
-  pressure = data.table(dta$pressure, key="date")
-  activity = data.table(dta$acceleration, key="date")
-  pressure$classSOAR = classifySOAR(dta = dta$pressure, soaring_duration = 2, toPLOT = F)$classification
-  activity$classFLAP = classifyFLAP(dta = dta$acceleration, flapping_duration = 3, toPLOT = F)$classification
+  pressure = data.table(P, key="date")
+  activity = data.table(A, key="date")
+  pressure$classSOAR = classifySOAR(dta = P, soaring_duration = 2, toPLOT = F)$classification
+  activity$classFLAP = classifyFLAP(dta = A, flapping_duration = 3, toPLOT = F)$classification
 
   mergeTBL = pressure[activity]
 
