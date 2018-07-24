@@ -26,7 +26,6 @@ install.packages("devtools")
 Once devtools is installed, type:
 
 ```r
-library(devtools)
 devtools::install_github("KiranLDA/PAMLr")
 
 ```
