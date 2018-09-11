@@ -15,4 +15,6 @@
 #' @import stats
 #' @import tcltk
 #' @import xts
+#' @import zoo
+#' @import dplyr
 NULL

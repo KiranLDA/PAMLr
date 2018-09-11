@@ -45,6 +45,17 @@ dygraphPAM <- function(dta,
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#66C2A5")
   }
+  if ("temperature" %in% toPLOT ){
+    dy_graph$temperature = dygraph(xts(x = dta$temperature$obs, order.by = dta$temperature$date),
+                                   xlab = "Time",
+                                   ylab = "Temperature (C)",
+                                   group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
+                                   main="Temperature as a function of time") %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
+      dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
+      dyOptions(colors ="#A6D854")
+  }
   if ("pressure" %in% toPLOT ){
     dy_graph$pressure = dygraph(xts(x = dta$pressure$obs, order.by = dta$pressure$date),
                              xlab = "Time",
@@ -76,17 +87,7 @@ dygraphPAM <- function(dta,
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#E78AC3")
   }
-  if ("temperature" %in% toPLOT ){
-    dy_graph$temperature = dygraph(xts(x = dta$temperature$obs, order.by = dta$temperature$date),
-                                    xlab = "Time",
-                                    ylab = "Temperature (C)",
-                                    group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
-                                    main="Temperature as a function of time") %>%
-      dyRangeSelector(dateWindow = c(from, to)) %>%
-      dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
-      dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
-      dyOptions(colors ="#A6D854")
-  }
+
   # options(viewer=NULL)
   htmltools::browsable(htmltools::tagList(dy_graph))
   # options(backup_options)

@@ -4,12 +4,13 @@
 \alias{mergeSOARFLAP}
 \title{Compare two different classifications}
 \usage{
-mergeSOARFLAP(dta = PAM_data, interpolate = F)
+mergeSOARFLAP(P, A, soaring_duration = 2, flapping_duration = 3,
+  interpolate = F)
 }
 \arguments{
-\item{dta}{data stored as a list. see data(PAM_data) then str(PAM_data) for example format}
-
 \item{interpolate}{can be either TURE or FALSE. Use with caution. If TRUE, then linearly interpolates pressure observations}
+
+\item{dta}{data stored as a list. see data(PAM_data) then str(PAM_data) for example format}
 }
 \value{
 merged observations and classifications
