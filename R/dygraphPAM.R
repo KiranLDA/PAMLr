@@ -96,7 +96,7 @@ dygraphPAM <- function(dta,
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
-      dyOptions(colors = c("#66C2A5","#A6D854","#FC8D62"))
+      dyOptions(colors = c("#FC8D62","#A6D854","#FC8D62"))
     dy_graph$magneticm = dygraph(xts(x = dta$magnetic[,c(5,6,7)], order.by = dta$magnetic$date),
                                    xlab = "Time",
                                    ylab = "Magnetic mX, mY,and mZ",
@@ -105,7 +105,7 @@ dygraphPAM <- function(dta,
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
-      dyOptions(colors = c("#66C2A5","#A6D854","#FC8D62"))
+      dyOptions(colors = c("#FC8D62","#A6D854","#FC8D62"))
   }
 
 
