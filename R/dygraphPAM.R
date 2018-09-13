@@ -87,6 +87,27 @@ dygraphPAM <- function(dta,
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#E78AC3")
   }
+  if ("magnetic" %in% toPLOT ){
+    dy_graph$temperature = dygraph(xts(x = dta$magnetic[,c(2,3,4)], order.by = dta$magnetic$date),
+                                   xlab = "Time",
+                                   ylab = "Magnetic gX, gY,and gZ",
+                                   group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
+                                   main="Mgnetism g as a function of time") %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
+      dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
+      dyOptions(colors ="#A6D854")
+    dy_graph$temperature = dygraph(xts(x = dta$magnetic[,c(5,6,7)], order.by = dta$magnetic$date),
+                                   xlab = "Time",
+                                   ylab = "Magnetic mX, mY,and mZ",
+                                   group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
+                                   main="Magnetism m as a function of time") %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
+      dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
+      dyOptions(colors ="#A6D854")
+  }
+
 
   # options(viewer=NULL)
   htmltools::browsable(htmltools::tagList(dy_graph))
