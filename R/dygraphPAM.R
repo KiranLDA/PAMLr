@@ -88,7 +88,7 @@ dygraphPAM <- function(dta,
       dyOptions(colors ="#E78AC3")
   }
   if ("magnetic" %in% toPLOT ){
-    dy_graph$temperature = dygraph(xts(x = dta$magnetic[,c(2,3,4)], order.by = dta$magnetic$date),
+    dy_graph$magneticg = dygraph(xts(x = dta$magnetic[,c(2,3,4)], order.by = dta$magnetic$date),
                                    xlab = "Time",
                                    ylab = "Magnetic gX, gY,and gZ",
                                    group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
@@ -97,7 +97,7 @@ dygraphPAM <- function(dta,
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#A6D854")
-    dy_graph$temperature = dygraph(xts(x = dta$magnetic[,c(5,6,7)], order.by = dta$magnetic$date),
+    dy_graph$magneticm = dygraph(xts(x = dta$magnetic[,c(5,6,7)], order.by = dta$magnetic$date),
                                    xlab = "Time",
                                    ylab = "Magnetic mX, mY,and mZ",
                                    group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
