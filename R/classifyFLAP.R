@@ -1,7 +1,7 @@
 #' Make timetable
 #'
 #' @param dta data stored as a list see str(data(PAM_data)) for example format
-#' @param flapping_duration number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 3x5min = 15 minutes of intense activity is considered a migratory flight
+#' @param period number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 3x5min = 15 minutes of intense activity is considered flight
 #' @param toPLOT can be true or false. If true then threshold is plotted according to plotTHLD()
 #' @param method for the time being only supports "kmeans", but will later also include maybe
 #' @return a timetable for when the species was migrating or not
@@ -19,7 +19,7 @@
 #' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 #' & (PAM_data$acceleration$date <= "2017-06-01")),]
 #'
-#' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 4)
+#' behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 4)
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
@@ -29,7 +29,7 @@
 #' behaviour$timetable
 #'
 #' @export
-classifyFLAP <- function(dta , flapping_duration = 3, toPLOT = T, method = "kmeans"){
+classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "UTC"){
   if (method == "kmeans"){
     km = stats::kmeans(dta$act,centers=2)
     dta$clust = km$cluster
@@ -47,8 +47,8 @@ classifyFLAP <- function(dta , flapping_duration = 3, toPLOT = T, method = "kmea
 
   Duration_table = data.frame(matrix(c("2015-01-01","2015-01-01","2015-01-01","2015-01-01",0,0),nrow=2))
   colnames(Duration_table) = c("start","end","Duration (h)")
-  Duration_table$start = as.POSIXct(Duration_table$start,tz="UTC",format="%Y-%m-%d")
-  Duration_table$end = as.POSIXct(Duration_table$end,tz="UTC",format="%Y-%m-%d")
+  Duration_table$start = as.POSIXct(Duration_table$start,tz=tz,format="%Y-%m-%d")
+  Duration_table$end = as.POSIXct(Duration_table$end,tz=tz,format="%Y-%m-%d")
   Duration_table$`Duration (h)` = as.numeric(Duration_table$`Duration (h)`)
 
   # now we take high activity, partition it into magration or not based on duration
@@ -67,7 +67,7 @@ classifyFLAP <- function(dta , flapping_duration = 3, toPLOT = T, method = "kmea
   if (length(end)<length(start)) end= end[1:length(start)]
 
   # make sure only periods where birds is flying longer than the flapping duration are stored
-  index = which((end-start) >= flapping_duration)
+  index = which((end-start) >= period)
   start = start[index]
   end = end[index]
 
@@ -84,7 +84,7 @@ classifyFLAP <- function(dta , flapping_duration = 3, toPLOT = T, method = "kmea
   end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
   start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
 
-  dur = difftime(dta$date[end], dta$date[start], tz= "UTC", units = "hours")
+  dur = difftime(dta$date[end], dta$date[start], tz= tz, units = "hours")
   info = data.frame(dta$date[start], dta$date[end], dur)
   names(info) = c("start","end","Duration (h)")
   Duration_table = rbind(Duration_table, info)

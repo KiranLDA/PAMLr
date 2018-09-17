@@ -18,8 +18,11 @@
 #' backup_options <- options()
 #' options(viewer=NULL)
 #'
+#' # Classify bir's behaviour
+#' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 5)
+#'
 #' # Plot interactive graphics
-#' dygraphPAM(dta = PAM_data)
+#' dygraphClassified(dta = PAM_data, timetable = behaviour$timetable)
 #'
 #' # restore Rstudio settings from before plot
 #' options(backup_options)
@@ -28,11 +31,15 @@
 #'
 #'
 #' @export
-dygraphPAM <- function(dta,
+dygraphClassified <- function(dta,
                        from = dta$light$date[1],
                        to = dta$light$date[length(dta$light$date)],
-                       toPLOT = names(dta)) {
+                       toPLOT = names(dta),
+                       timetable = timetable) {
   # backup_options <- options()
+  # col = c("#66C2A5","#A6D854","#FC8D62","#8DA0CB")
+
+
   len = ifelse( ("id" %in% toPLOT) , length(names(dta))-1, length(names(dta)))
 
   dy_graph = list()
@@ -46,6 +53,7 @@ dygraphPAM <- function(dta,
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
+      dyShading(from=timetable$start, to=timetable$end, color="grey") %>%
       dyOptions(colors ="#66C2A5")
   }
   if ("temperature" %in% toPLOT ){
@@ -61,10 +69,10 @@ dygraphPAM <- function(dta,
   }
   if ("pressure" %in% toPLOT ){
     dy_graph$pressure = dygraph(xts(x = dta$pressure$obs, order.by = dta$pressure$date),
-                             xlab = "Time",
-                             ylab = "Pressure (hPa)",
-                             group = dta$light$date,#dta$pressure$date, #This is useful for synchronosing multiple graphs
-                             main="Pressure as a function of time") %>%
+                                xlab = "Time",
+                                ylab = "Pressure (hPa)",
+                                group = dta$light$date,#dta$pressure$date, #This is useful for synchronosing multiple graphs
+                                main="Pressure as a function of time") %>%
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
@@ -81,10 +89,10 @@ dygraphPAM <- function(dta,
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#8DA0CB")
     dy_graph$pitch = dygraph(xts(x = dta$acceleration$pit, order.by = dta$acceleration$date),
-                                    xlab = "Time",
-                                    ylab = "Pitch",
-                                    group = dta$light$date,#dta$acceleration$date, #This is useful for synchronosing multiple graphs
-                                    main="Pitch as a function of time") %>%
+                             xlab = "Time",
+                             ylab = "Pitch",
+                             group = dta$light$date,#dta$acceleration$date, #This is useful for synchronosing multiple graphs
+                             main="Pitch as a function of time") %>%
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
@@ -92,19 +100,19 @@ dygraphPAM <- function(dta,
   }
   if ("magnetic" %in% toPLOT ){
     dy_graph$magneticg = dygraph(xts(x = dta$magnetic[,c(2,3,4)], order.by = dta$magnetic$date),
-                                   xlab = "Time",
-                                   ylab = "Magnetic gX, gY,and gZ",
-                                   group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
-                                   main="Mgnetism g as a function of time") %>%
+                                 xlab = "Time",
+                                 ylab = "Magnetic gX, gY,and gZ",
+                                 group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
+                                 main="Mgnetism g as a function of time") %>%
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors = c("#8DA0CB","#A6D854","#FC8D62"))
     dy_graph$magneticm = dygraph(xts(x = dta$magnetic[,c(5,6,7)], order.by = dta$magnetic$date),
-                                   xlab = "Time",
-                                   ylab = "Magnetic mX, mY,and mZ",
-                                   group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
-                                   main="Magnetism m as a function of time") %>%
+                                 xlab = "Time",
+                                 ylab = "Magnetic mX, mY,and mZ",
+                                 group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
+                                 main="Magnetism m as a function of time") %>%
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
