@@ -169,7 +169,6 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, per
 #
 #
 
-
   x = c(low_change,high_change)
   start = which(dta$clust == x[1])
   start = start[sapply(start, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
@@ -188,7 +187,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, per
   start = start[index]
   end = end[index]
 
-  index = unlist(sapply(1:length(start), function(i) start[i]:end[i]))
+  index = unlist(sapply(1:length(start), function(i) start[i]:end[i]))+1 # because of delay
   dta$clust[index] = 3
 
   # get rid of 1-off missclassifications
@@ -208,7 +207,9 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, per
 
   Duration_table = Duration_table[-c(1,2),]
   # dta$clust[dta$act == 0] = 4
+
   dta$clust[abs(diff(dta$obs)) == 0] = 4
+
 
   return(list(type = type,
               timetable = Duration_table,
