@@ -14,6 +14,8 @@ classifyFLAP(dta, period = 3, toPLOT = T, method = "kmeans", tz = "UTC")
 \item{toPLOT}{can be true or false. If true then threshold is plotted according to plotTHLD()}
 
 \item{method}{for the time being only supports "kmeans", but will later also include maybe}
+
+\item{tz}{timezone, default is "UTC"}
 }
 \value{
 a timetable for when the species was migrating or not

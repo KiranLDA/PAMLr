@@ -16,6 +16,8 @@ dygraphClassified(dta, from = dta$light$date[1],
 \item{to}{date that plotting ends}
 
 \item{toPLOT}{names of the variables to plot. For now this includes `light`, `pressure`, `acceleration` and `temperature`}
+
+\item{timetable}{classification of start/stop}
 }
 \value{
 a plot of all the measurements
@@ -40,8 +42,5 @@ dygraphClassified(dta = PAM_data, timetable = behaviour$timetable)
 
 # restore Rstudio settings from before plot
 options(backup_options)
-
-
-
 
 }
