@@ -38,10 +38,15 @@ PAM_data$pressure = PAM_data$pressure[((PAM_data$pressure$date >= "2016-07-30")
 
 behaviour = classifySOAR(dta = PAM_data$pressure, period = 2, toPLOT = F)
 
+#plot the rclassification as an interactive plot
+backup_options <- options()
+options(viewer=NULL) # ensure it is viewed in internet browser
+dygraphClassified(dta = PAM_data, timetable = behaviour$timetable)
+options(backup_options) # restore previous viewer settings
 
 col=col=c("brown","cyan4","black","gold")
-plot(PAM_data$pressure$date[2700:3000], PAM_data$pressure$obs[2700:3000],
-col=col[behaviour$classification][2700:3000], type="o", pch=20, xlab="Date", ylab="Pressure")
+plot(PAM_data$pressure$date[2700:7000], PAM_data$pressure$obs[2700:7000],
+col=col[behaviour$classification][2700:7000], type="o", pch=20, xlab="Date", ylab="Pressure")
 
 behaviour$timetable
 
