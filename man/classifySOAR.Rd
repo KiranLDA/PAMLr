@@ -5,7 +5,7 @@
 \title{Make timetable}
 \usage{
 classifySOAR(dta, toPLOT = T, method = "manual", threshold = 2,
-  soaring_duration = 2)
+  period = 2)
 }
 \arguments{
 \item{dta}{data stored as a list see str(data(PAM_data)) for example format}
@@ -16,7 +16,7 @@ classifySOAR(dta, toPLOT = T, method = "manual", threshold = 2,
 
 \item{threshold}{the manual threshold at which activity and non activity is drawn. in this case a change of greater than 2 hpa /15 minutes ios unlikely to have be caused by weather}
 
-\item{soaring_duration}{number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 1x15min = 15 minutes of intense activity is considered a migratory flight}
+\item{period}{number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 1x15min = 15 minutes of intense activity is considered a migratory flight}
 }
 \value{
 a timetable for when the species was migrating or not
@@ -36,7 +36,7 @@ plot(PAM_data$pressure$date, PAM_data$pressure$obs, xlab = "Time", ylab = "Press
 PAM_data$pressure = PAM_data$pressure[((PAM_data$pressure$date >= "2016-07-30")
 & (PAM_data$pressure$date <= "2017-06-01")),]
 
-behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2, toPLOT = F)
+behaviour = classifySOAR(dta = PAM_data$pressure, period = 2, toPLOT = F)
 
 
 col=col=c("brown","cyan4","black","gold")

@@ -2,6 +2,7 @@
 
 export(classifyFLAP)
 export(classifySOAR)
+export(dygraphClassified)
 export(dygraphPAM)
 export(importPAM)
 export(mergeSOARFLAP)

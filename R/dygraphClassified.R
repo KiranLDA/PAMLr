@@ -6,7 +6,7 @@
 #' @param from date that plotting starts
 #' @param to date that plotting ends
 #' @param toPLOT names of the variables to plot. For now this includes `light`, `pressure`, `acceleration` and `temperature`
-#'
+#' @param timetable classification of start/stop
 #' @return a plot of all the measurements
 #'
 #' @examples
@@ -19,16 +19,13 @@
 #' options(viewer=NULL)
 #'
 #' # Classify bir's behaviour
-#' behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 5)
+#' behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 5)
 #'
 #' # Plot interactive graphics
 #' dygraphClassified(dta = PAM_data, timetable = behaviour$timetable)
 #'
 #' # restore Rstudio settings from before plot
 #' options(backup_options)
-#'
-#'
-#'
 #'
 #' @export
 dygraphClassified <- function(dta,
@@ -39,12 +36,19 @@ dygraphClassified <- function(dta,
   # backup_options <- options()
   # col = c("#66C2A5","#A6D854","#FC8D62","#8DA0CB")
 
+  ok_periods <- list()
+  for (i in 1:nrow(timetable)){
+    ok_periods[[i]] = list(from = timetable$start[i], to = timetable$end[i])
+  }
+
+
 
   len = ifelse( ("id" %in% toPLOT) , length(names(dta))-1, length(names(dta)))
 
   dy_graph = list()
 
   if ("light" %in% toPLOT ){
+
     dy_graph$light = dygraph(xts(x = dta$light$obs, order.by = dta$light$date),
                              xlab = "Time",
                              ylab = "Light",
@@ -53,8 +57,14 @@ dygraphClassified <- function(dta,
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
-      dyShading(from=timetable$start, to=timetable$end, color="grey") %>%
       dyOptions(colors ="#66C2A5")
+
+    #add shades
+    for( period in ok_periods ) {
+      dy_graph$light <- dyShading(dy_graph$light, from = period$from , to = period$to, color = "#6D6A69")
+    }
+
+
   }
   if ("temperature" %in% toPLOT ){
     dy_graph$temperature = dygraph(xts(x = dta$temperature$obs, order.by = dta$temperature$date),
@@ -66,6 +76,10 @@ dygraphClassified <- function(dta,
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#A6D854")
+    #add shades
+    for( period in ok_periods ) {
+      dy_graph$temperature <- dyShading(dy_graph$temperature, from = period$from , to = period$to, color = "#6D6A69" )
+    }
   }
   if ("pressure" %in% toPLOT ){
     dy_graph$pressure = dygraph(xts(x = dta$pressure$obs, order.by = dta$pressure$date),
@@ -77,6 +91,10 @@ dygraphClassified <- function(dta,
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#FC8D62")
+    #add shades
+    for( period in ok_periods ) {
+      dy_graph$pressure <- dyShading(dy_graph$pressure, from = period$from , to = period$to, color = "#6D6A69" )
+    }
   }
   if ("acceleration" %in% toPLOT ){
     dy_graph$activity = dygraph(xts(x = dta$acceleration$act, order.by = dta$acceleration$date),
@@ -88,6 +106,11 @@ dygraphClassified <- function(dta,
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#8DA0CB")
+    #add shades
+    for( period in ok_periods ) {
+      dy_graph$activity <- dyShading(dy_graph$activity, from = period$from , to = period$to, color = "#6D6A69" )
+    }
+
     dy_graph$pitch = dygraph(xts(x = dta$acceleration$pit, order.by = dta$acceleration$date),
                              xlab = "Time",
                              ylab = "Pitch",
@@ -97,6 +120,10 @@ dygraphClassified <- function(dta,
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#E78AC3")
+    #add shades
+    for( period in ok_periods ) {
+      dy_graph$pitch <- dyShading(dy_graph$pitch, from = period$from , to = period$to, color = "#6D6A69" )
+    }
   }
   if ("magnetic" %in% toPLOT ){
     dy_graph$magneticg = dygraph(xts(x = dta$magnetic[,c(2,3,4)], order.by = dta$magnetic$date),
@@ -108,6 +135,11 @@ dygraphClassified <- function(dta,
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors = c("#8DA0CB","#A6D854","#FC8D62"))
+    #add shades
+    for( period in ok_periods ) {
+      dy_graph$magneticg <- dyShading(dy_graph$magneticg, from = period$from , to = period$to, color = "#6D6A69" )
+    }
+
     dy_graph$magneticm = dygraph(xts(x = dta$magnetic[,c(5,6,7)], order.by = dta$magnetic$date),
                                  xlab = "Time",
                                  ylab = "Magnetic mX, mY,and mZ",
@@ -117,6 +149,9 @@ dygraphClassified <- function(dta,
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors = c("#8DA0CB","#A6D854","#FC8D62"))
+    for( period in ok_periods ) {
+      dy_graph$magneticm <- dyShading(dy_graph$magneticm, from = period$from , to = period$to, color = "#6D6A69" )
+    }
   }
 
 

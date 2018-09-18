@@ -33,8 +33,8 @@ mergeSOARFLAP <- function(P, A, soaring_duration = 2, flapping_duration = 3,inte
   rownames(A) = c()
 
   # get rid of NAs
-  P$classSOAR = classifySOAR(dta = P, soaring_duration = soaring_duration, toPLOT = F)$classification
-  A$classFLAP = classifyFLAP(dta = A, flapping_duration = flapping_duration, toPLOT = F)$classification
+  P$classSOAR = classifySOAR(dta = P, period = soaring_duration, toPLOT = F)$classification
+  A$classFLAP = classifyFLAP(dta = A, period = flapping_duration, toPLOT = F)$classification
 
   pressure = data.table::data.table(P, key="date")
   activity = data.table::data.table(A, key="date")

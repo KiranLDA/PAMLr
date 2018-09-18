@@ -3,7 +3,7 @@
 #' @param dta data stored as a list see str(data(PAM_data)) for example format
 #' @param toPLOT can be true or false. If true then threshold is plotted according to plotTHLD()
 #' @param method for the time being only supports manual. In this case the threshold = 2 as a default. This is the 15 minute hectopascal change
-#' @param soaring_duration number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 1x15min = 15 minutes of intense activity is considered a migratory flight
+#' @param period number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 1x15min = 15 minutes of intense activity is considered a migratory flight
 #' @param threshold the manual threshold at which activity and non activity is drawn. in this case a change of greater than 2 hpa /15 minutes ios unlikely to have be caused by weather
 #'
 #' @return a timetable for when the species was migrating or not
@@ -21,7 +21,7 @@
 #' PAM_data$pressure = PAM_data$pressure[((PAM_data$pressure$date >= "2016-07-30")
 #' & (PAM_data$pressure$date <= "2017-06-01")),]
 #'
-#' behaviour = classifySOAR(dta = PAM_data$pressure, soaring_duration = 2, toPLOT = F)
+#' behaviour = classifySOAR(dta = PAM_data$pressure, period = 2, toPLOT = F)
 #'
 #'
 #' col=col=c("brown","cyan4","black","gold")
@@ -31,7 +31,7 @@
 #' behaviour$timetable
 #'
 #' @export
-classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soaring_duration = 2){
+classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, period = 2){
 
   dta$clust = c(ifelse(abs(diff(dta$obs))>threshold,2,1),1)
   type = "soarglide"
@@ -69,7 +69,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
   if (length(end)<length(start)) end = end[1:length(start)]
 
   # make sure only periods where birds is flying longer than the flapping duration are stored
-  index = which((end-start) >= soaring_duration)
+  index = which((end-start) >= period)
   start = start[index]
   end = end[index]#+1
 
@@ -134,7 +134,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "manual", threshold = 2, soa
 #   if (length(end)<length(start)) end = end[1:length(start)]
 #
 #   # make sure only periods where birds is flying longer than the flapping duration are stored
-#   index = which((end-start) >= soaring_duration)
+#   index = which((end-start) >= period)
 #   start = start[index]
 #   end = end[index]
 

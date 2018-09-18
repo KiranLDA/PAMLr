@@ -4,6 +4,7 @@
 #' @param period number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 3x5min = 15 minutes of intense activity is considered flight
 #' @param toPLOT can be true or false. If true then threshold is plotted according to plotTHLD()
 #' @param method for the time being only supports "kmeans", but will later also include maybe
+#' @param tz timezone, default is "UTC"
 #' @return a timetable for when the species was migrating or not
 #'
 #' @examples
