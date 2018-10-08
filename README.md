@@ -8,12 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-These packages used by this package are `utils`
-
-```r
-install.packages("utils") # usually already in base r
-
-```
+The packages used by this package are `dplyr`,`dygraphs`,`graphics`,`grDevices`,`htmltools`,`stats`,`tcltk`,`utils`,`xts`,`zoo`. If there are any issues with installing PAMLr, please ensure these packages are installed and working.
 
 ### Installing
 
@@ -22,8 +17,7 @@ To install this package from github, make sure you first have `devtools` install
 ```r
 install.packages("devtools")
 ```
-
-Once devtools is installed, the github package can be installed:
+The github package can be installed:
 
 ```r
 devtools::install_github("KiranLDA/PAMLr")
@@ -67,9 +61,9 @@ plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000]
 # so we should remove any un-needed data
 PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
 ```
-## Looking at data quality
+## Classify migration periods from PAM-loggers
 
-Classify bird's behaviour based on  activity (relevant for birds which flap, such as a hoopoe). Here we assume that if a bird is active for more than 15 minutes, then the bird is flying. Because loggers record every 5 minutes, we use a period of 3 (i.e. 3x5min=15min)
+Classify bird's behaviour based on  activity (relevant for birds which flap, such as a hoopoes). Here we assume that if a bird is active for more than 15 minutes, then the bird is flying. Because loggers record every 5 minutes, we use a period of 3 (i.e. 3x5min=15min)
 
 ```r
 behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 3)
