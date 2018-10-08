@@ -23,7 +23,7 @@ To install this package from github, make sure you first have `devtools` install
 install.packages("devtools")
 ```
 
-Once devtools is installed, type:
+Once devtools is installed, the github package can be installed:
 
 ```r
 devtools::install_github("KiranLDA/PAMLr")
@@ -41,28 +41,40 @@ library(PAMLr)
 #specify the data location
 data(PAM_data)
 str(PAM_data)
+```
+## Plot the raw light data as an interactive plot
 
-#plot the raw light data as an interactive plot
+This will create an interactive dygraph plot to compare different measurements recorded by the logger. If you are in Rstudio, it will open this in the viewer pane and use a lot of ram. This bit of code allows you to open this window instead in a browser and the file can later be saved as an html file.
+
+```r
 # In Rstudio, it will display in the viewer by default and use a lot of ram, and is better in html
 backup_options <- options() 
 options(viewer=NULL) # ensure it is viewed in internet browser
 dygraphPAM(dta = PAM_data) # plot
 options(backup_options) # restore previous viewer settings
+```
+## Looking at data quality
 
+From looking at the interactive plot, it's possible to tell that there was a point where the logger was taken off and probably in a rucksack, remove these periods where the logger was not in fact on the bird to remove any potential future errors in the analysis.
+
+```r
 #plot the activity data with daylight periods in yellow and nightime periods in grey
 plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000],
         type="o", xlab="Date", ylab="Light Intensity", pch=20,
         col=ifelse(PAM_data$light$obs[6000:9000]>0,"darkgoldenrod1","azure3"))
 
-# at first glance it looks like the logger was removed off a birds and left in arucksack
-#  # so remove un-needed data
+# at first glance it looks like the logger was removed off a birds and left in a rucksack
+# so we should remove any un-needed data
 PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
+```
+## Looking at data quality
 
-# classify bird's behaviour based on  activity, assume that if a bird is active for more than 
-# 3x5 minutes = 15 minutes, then the bird is migration
-behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3)
+Classify bird's behaviour based on  activity (relevant for birds which flap, such as a hoopoe). Here we assume that if a bird is active for more than 15 minutes, then the bird is flying. Because loggers record every 5 minutes, we use a period of 3 (i.e. 3x5min=15min)
 
-# check the classification
+```r
+behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 3)
+
+# plot the classification
 col=col=c("brown","cyan4","gold","black")
 plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
   col=col[behaviour$classification][2000:4000], 
