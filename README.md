@@ -47,6 +47,8 @@ options(viewer=NULL) # ensure it is viewed in internet browser
 dygraphPAM(dta = PAM_data) # plot
 options(backup_options) # restore previous viewer settings
 ```
+![alt text](https://github.com/KiranLDA/PAMLr/tree/master/graphics/dygraphPAM.png)
+
 ## Looking at data quality
 
 From looking at the interactive plot, it's possible to tell that there was a point where the logger was taken off and probably in a rucksack, remove these periods where the logger was not in fact on the bird to remove any potential future errors in the analysis.
@@ -61,6 +63,8 @@ plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000]
 # so we should remove any un-needed data
 PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
 ```
+![alt text](https://github.com/KiranLDA/PAMLr/tree/master/graphics/nightime_daytime.png)
+
 ## Classify migration periods from PAM-loggers
 
 Classify bird's behaviour based on  activity (relevant for birds which flap, such as a hoopoes). Here we assume that if a bird is active for more than 15 minutes, then the bird is flying. Because loggers record every 5 minutes, we use a period of 3 (i.e. 3x5min=15min)
@@ -82,6 +86,7 @@ legend( PAM_data$acceleration$date[2000],60 ,
 # look at timetable
 behaviour$timetable
 ```
+![alt text](https://github.com/KiranLDA/PAMLr/tree/master/graphics/classification.png)
 
 ## Authors
 
