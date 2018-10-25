@@ -38,7 +38,14 @@ data(PAM_data)
 # Look at that data
 str(PAM_data)
 ```
-This is what it should look like
+
+
+To import your own data use:
+```r
+importPAM("C:/Put/your/path/here")`
+```
+
+This is what it should look like:
 
 ```
 # # List of 6
@@ -65,8 +72,6 @@ This is what it should look like
 # #   ..$ mY  : int [1:1559] 15645 15610 15259 15549 15561 14545 16631 14548 15195 10924 ...
 # #   ..$ mZ  : int [1:1559] 5559 4627 6374 6147 5887 10881 5177 9000 6810 13793 ...
 ```
-
-To import your own data use `importPAM("C:/Put/your/path/here")`
 
 
 ## Plot the raw light data as an interactive plot
@@ -128,7 +133,7 @@ Continuously flapping birds have higher activity than soaring birds. You can the
 ```r
 behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 3)
 ```
-![classification](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classification_threshold.png)
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classification_thershold.png">
 
 This will give you various information. It will tell you how the data were classidied in `type`. It will also give you a `timetable` of when the bird was flying, with start and end times, and the duration of this flight in hours. This can be manipulated as needed. It then also gives you the `classification` of each time point and specified what each classification stands for, which value represents `low_activity`, `high_activity`, `migration` or `no_activity`. And finally what the `threshold` was between high and low activity.
 
@@ -239,30 +244,32 @@ It is therefore then possible to use this information to plot the classification
 ```r
 # plot the classification
 col=col=c("brown","cyan4","gold","black")
-plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
-  col=col[behaviour$classification][2000:4000], 
+plot(PAM_data$acceleration$date[2000:3400],PAM_data$acceleration$act[2000:3400],
+  col=col[behaviour$classification][2000:3400], 
   type="o", pch=20, xlab="Date", ylab="Activity")
-legend( PAM_data$acceleration$date[2000],60 , 
+legend( PAM_data$acceleration$date[2000],50 , 
         c("No activity", "Low activity", "High activity", "Migration" ) ,
         col = col[c(behaviour$no_activity, behaviour$low_activity,
                     behaviour$high_activity, behaviour$migration)],
         pch=20)
-
-# look at timetable
-behaviour$timetable
 ```
-![classification](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classification.png)
+
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classification.png">
 
 Interestingly we can see that the bird does these long migratory flights of > 10 hours, let's look to see, using the light data, whether these flights occur during night or day
 
 ```r
 #plot the activity data with daylight periods in yellow and nightime periods in grey
-plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000],
-        type="o", xlab="Date", ylab="Light Intensity", pch=20,
-        col=ifelse(PAM_data$light$obs[6000:9000]>0,"darkgoldenrod1","azure3"))
+plot(PAM_data$acceleration$date[2000:3400], PAM_data$acceleration$act[2000:3400],
+        type="o", xlab="Date", ylab="Activity", pch=20, 
+        cex= ifelse(behaviour$classification[2000:3400] == behaviour$migration,1.5,0.7),
+        col=ifelse(PAM_data$light$obs[2000:3400]>0,"darkgoldenrod1","azure3"))
+legend(PAM_data$acceleration$date[2000],45, 
+        c("Daytime","Nightime") ,
+        col = c("darkgoldenrod1","azure3"),
+        pch=20)
 ```
-
-![activity during night and day](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightime_daytime.png)
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightime_daytime.png">
 
 ### Classifying soar-gliding behaviour
 
