@@ -38,8 +38,11 @@ str(PAM_data)
 ```
 ## Plot the raw light data as an interactive plot
 
-This will create an interactive dygraph plot to compare different measurements recorded by the logger. If you are in Rstudio, it will open this in the viewer pane and use a lot of ram. This bit of code allows you to open this window instead in a browser and the file can later be saved as an html file.
+<img align="left" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/dygraphPAM.png">
 
+Within `PAMLr` it is possible to create interactive `dygraphPAM()` plots which allow you to compare different measurements recorded by the logger. These might for instance include light, temperature, pressure, activity, pitch and magnetism. 
+
+If you are working from Rstudio, this bit of code should be run:
 ```r
 # In Rstudio, it will display in the viewer by default and use a lot of ram, and is better in html
 backup_options <- options() 
@@ -47,7 +50,15 @@ options(viewer=NULL) # ensure it is viewed in internet browser
 dygraphPAM(dta = PAM_data) # plot
 options(backup_options) # restore previous viewer settings
 ```
-![raw data visualisation](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/dygraphPAM.png)
+If you are working from base R:
+```r
+dygraphPAM(dta = PAM_data) # plot
+```
+The reason there is additional code for Rstudio, is that by default it will open this graphic in the viewer pane and use up a lot of ram. This the additional code allows you to open this window in a browser instead of r studio, and the file can later be saved as an html file.
+
+With this interactive plot, you can then zoom in and out of different plots to help get a feel for the data. For instance, this is a great way of seeing changes in the data which might be due to a logger being in a rucksack and no longer on the birds, or to look at how acticity or pressure might look during migration periods.
+
+It is possible to select areas to zoom into by right clicking and highighting certain regions, and to double click to zoom out. All plots are synched to the same time period and have a timeline at the bottom to increase or decrease the time over which the data is observed.
 
 ## Looking at data quality
 
@@ -91,6 +102,12 @@ behaviour$timetable
 ## Authors
 
 Kiran Dhanjal-Adams
+
+## Relevant references
+
+Dhanjal-Adams, K.L., Bauer, S., Emmenegger, T., Hahn, S., Lisovski, S., & Liechti, F. (2018) [Spatiotemporal Group Dynamics in a Long-Distance Migratory Bird](https://www.cell.com/current-biology/fulltext/S0960-9822(18)30845-5?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0960982218308455%3Fshowall%3Dtrue). Current Biology, 28, 2824–2830.e3. 
+
+Liechti, F., Bauer, S., Dhanjal-Adams, K.L., Emmenegger, T., Zehtindjiev, P., & Hahn, S. (2018) [Miniaturized multi-sensor loggers provide new insight into year-round flight behaviour of small trans-Sahara avian migrants](https://movementecologyjournal.biomedcentral.com/articles/10.1186/s40462-018-0137-1). Movement Ecology, 6, 19. 
 
 ## License
 
