@@ -71,9 +71,6 @@ To import your own data use `importPAM("C:/Put/your/path/here")`
 
 ## Plot the raw light data as an interactive plot
 
-
-<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/dygraphPAM.png">
-
 Within `PAMLr` it is possible to create interactive `dygraphPAM()` plots which allow you to compare different measurements recorded by the logger. These might for instance include light, temperature, pressure, activity, pitch and magnetism. 
 
 If you are **working from Rstudio**, this bit of code should be run:
@@ -92,6 +89,8 @@ dygraphPAM(dta = PAM_data) # plot
 ```
 The reason there is additional code for Rstudio, is that by default it will open this graphic in the viewer pane and use up a lot of ram. This the additional code allows you to open this window in a browser instead of r studio, and the file can later be saved as an html file.
 
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/dygraphPAM.png">
+
 With this interactive plot, you can then zoom in and out of different plots to help get a feel for the data. For instance, this is a great way of seeing changes in the data which might be due to a logger being in a rucksack and no longer on the birds, or to look at how acticity or pressure might look during migration periods.
 
 It is possible to select areas to zoom into by right clicking and highighting certain regions, and to double click to zoom out. All plots are synched to the same time period and have a timeline at the bottom to increase or decrease the time over which the data is observed.
@@ -109,7 +108,7 @@ PAM_data$light = PAM_data$light[(PAM_data$light$date >= "2016-07-30" & PAM_data$
 PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
 
 # pressure
-PAM_data$pressure = AM_data$pressure[(PAM_data$pressure$date >= "2016-07-30" & PAM_data$pressure$date <= "2017-06-01"),]
+PAM_data$pressure = PAM_data$pressure[(PAM_data$pressure$date >= "2016-07-30" & PAM_data$pressure$date <= "2017-06-01"),]
 
 # temperature
 PAM_data$temperature = PAM_data$temperature[(PAM_data$temperature$date >= "2016-07-30" & PAM_data$temperature$date <= "2017-06-01"),]
@@ -128,8 +127,114 @@ Continuously flapping birds have higher activity than soaring birds. You can the
 
 ```r
 behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 3)
+```
+![classification](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classification_threshold.png)
+
+This will give you various information. It will tell you how the data were classidied in `type`. It will also give you a `timetable` of when the bird was flying, with start and end times, and the duration of this flight in hours. This can be manipulated as needed. It then also gives you the `classification` of each time point and specified what each classification stands for, which value represents `low_activity`, `high_activity`, `migration` or `no_activity`. And finally what the `threshold` was between high and low activity.
+
+```r
 behaviour
 ```
+```
+# # $`type`
+# # [1] "flapping"
+# # 
+# # $timetable
+# #                  start                 end Duration (h)
+# # 3  2016-08-06 20:20:00 2016-08-07 01:50:00    5.5000000
+# # 4  2016-08-07 19:40:00 2016-08-08 09:15:00   13.5833333
+# # 5  2016-08-08 19:30:00 2016-08-09 04:10:00    8.6666667
+# # 6  2016-08-09 21:15:00 2016-08-10 01:30:00    4.2500000
+# # 7  2016-08-10 22:30:00 2016-08-10 23:50:00    1.3333333
+# # 8  2016-08-21 18:45:00 2016-08-22 04:15:00    9.5000000
+# # 9  2016-08-22 18:40:00 2016-08-23 04:35:00    9.9166667
+# # 10 2016-08-23 18:35:00 2016-08-24 04:50:00   10.2500000
+# # 11 2016-08-24 18:35:00 2016-08-25 03:50:00    9.2500000
+# # 12 2016-08-25 05:45:00 2016-08-25 06:00:00    0.2500000
+# # 13 2016-08-25 19:15:00 2016-08-26 01:05:00    5.8333333
+# # 14 2016-08-26 05:30:00 2016-08-26 06:00:00    0.5000000
+# # 15 2016-08-26 06:25:00 2016-08-26 06:40:00    0.2500000
+# # 16 2016-08-27 02:55:00 2016-08-27 03:25:00    0.5000000
+# # 17 2016-08-27 05:30:00 2016-08-27 05:45:00    0.2500000
+# # 18 2016-08-27 20:30:00 2016-08-27 22:00:00    1.5000000
+# # 19 2016-08-28 20:15:00 2016-08-28 20:55:00    0.6666667
+# # 20 2016-08-30 00:10:00 2016-08-30 04:00:00    3.8333333
+# # 21 2016-08-31 20:50:00 2016-09-01 00:40:00    3.8333333
+# # 22 2016-09-17 18:45:00 2016-09-18 01:30:00    6.7500000
+# # 23 2016-09-18 02:25:00 2016-09-18 05:15:00    2.8333333
+# # 24 2016-09-18 18:35:00 2016-09-18 20:00:00    1.4166667
+# # 25 2016-09-20 00:25:00 2016-09-20 02:45:00    2.3333333
+# # 26 2016-09-23 02:45:00 2016-09-23 03:15:00    0.5000000
+# # 27 2016-09-23 18:40:00 2016-09-23 21:45:00    3.0833333
+# # 28 2016-10-04 19:55:00 2016-10-05 02:20:00    6.4166667
+# # 29 2016-10-05 23:45:00 2016-10-06 01:20:00    1.5833333
+# # 30 2017-03-10 19:10:00 2017-03-11 06:00:00   10.8333333
+# # 31 2017-03-11 19:00:00 2017-03-12 04:15:00    9.2500000
+# # 32 2017-03-12 19:00:00 2017-03-13 06:10:00   11.1666667
+# # 33 2017-03-13 19:05:00 2017-03-14 05:50:00   10.7500000
+# # 34 2017-03-14 18:45:00 2017-03-15 02:20:00    7.5833333
+# # 35 2017-03-16 20:20:00 2017-03-16 20:35:00    0.2500000
+# # 36 2017-03-16 20:55:00 2017-03-16 21:15:00    0.3333333
+# # 37 2017-03-24 19:00:00 2017-03-25 04:45:00    9.7500000
+# # 38 2017-03-30 18:30:00 2017-03-31 04:15:00    9.7500000
+# # 39 2017-03-31 18:25:00 2017-04-01 04:20:00    9.9166667
+# # 40 2017-04-02 19:35:00 2017-04-02 21:30:00    1.9166667
+# # 41 2017-04-03 01:10:00 2017-04-03 04:25:00    3.2500000
+# # 42 2017-04-03 19:00:00 2017-04-04 02:15:00    7.2500000
+# # 43 2017-04-04 05:15:00 2017-04-04 05:30:00    0.2500000
+# # 44 2017-04-05 10:35:00 2017-04-05 10:50:00    0.2500000
+# # 45 2017-04-06 05:15:00 2017-04-06 05:30:00    0.2500000
+# # 46 2017-05-02 05:35:00 2017-05-02 05:50:00    0.2500000
+# # 47 2017-05-23 08:55:00 2017-05-23 09:15:00    0.3333333
+# # 48 2017-05-24 17:25:00 2017-05-24 17:40:00    0.2500000
+# # 49 2017-05-25 06:35:00 2017-05-25 06:50:00    0.2500000
+# # 50 2017-05-29 06:35:00 2017-05-29 06:50:00    0.2500000
+# # 51 2017-05-31 05:20:00 2017-05-31 05:35:00    0.2500000
+# # 52 2017-05-31 14:05:00 2017-05-31 14:25:00    0.3333333
+# # 
+# # $classification
+# #    [1] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #   [43] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 2 2 2 2 2 2 2 2 2 2 4 2
+# #   [85] 4 4 4 4 2 2 4 2 2 2 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 4 2 2 2
+# #  [127] 4 2 2 2 4 2 4 2 2 2 2 2 2 4 2 2 2 2 2 4 2 2 2 2 2 2 2 2 2 4 4 4 2 4 2 4 4 2 4 4 4 4
+# #  [169] 2 4 2 2 2 2 2 2 4 2 2 2 4 4 2 4 2 2 4 4 4 4 4 4 2 2 2 4 2 2 2 2 2 4 4 2 2 2 2 2 2 2
+# #  [211] 2 2 2 2 4 1 2 2 2 4 2 2 2 4 2 2 2 2 4 2 4 2 4 2 4 2 2 2 4 4 4 2 4 4 4 4 2 4 4 1 4 4
+# #  [253] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #  [295] 4 4 4 4 4 4 4 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #  [337] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 2 2 2 2 4 4 4 4 4 4 1 4 4 4 4 4 4 4 4
+# #  [379] 4 4 4 4 4 4 4 4 4 2 4 4 4 4 4 4 4 4 2 2 2 2 4 4 4 4 4 4 4 4 2 4 4 4 4 4 2 2 2 2 2 2
+# #  [421] 2 2 2 4 4 2 2 4 4 4 2 2 4 2 2 4 4 2 2 2 2 2 2 2 4 2 2 4 4 4 4 4 2 2 4 4 2 2 2 2 2 2
+# #  [463] 2 4 2 2 2 2 2 4 2 2 2 2 4 2 2 2 4 4 4 4 4 4 4 4 4 4 4 4 4 2 4 4 4 4 2 2 4 4 4 4 4 4
+# #  [505] 4 2 2 1 2 2 2 2 4 2 2 4 4 2 2 4 4 2 4 4 4 4 4 2 4 2 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #  [547] 4 4 4 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #  [589] 4 4 4 4 4 4 4 4 4 4 4 4 2 4 4 4 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #  [631] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 2 4 2 2 4 4 2 2 2 4 2 2 2 2 2 1 2 2 4
+# #  [673] 2 4 2 2 2 2 2 2 2 2 4 4 2 4 4 4 2 2 4 4 2 2 2 4 2 2 2 4 4 4 4 4 4 2 2 4 2 2 2 2 2 2
+# #  [715] 2 4 2 2 4 2 2 2 2 4 4 2 4 2 2 2 2 4 4 2 2 2 4 2 2 4 4 2 2 2 2 2 2 2 2 2 4 2 2 4 4 4
+# #  [757] 2 2 4 2 2 4 2 2 2 4 2 2 2 2 2 2 2 2 2 2 4 2 2 4 4 2 2 2 4 2 2 2 4 2 4 4 4 4 4 4 4 4
+# #  [799] 2 2 2 2 2 2 2 2 4 2 2 2 4 4 4 2 2 2 4 4 1 2 2 2 2 4 2 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #  [841] 4 4 4 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #  [883] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+# #  [925] 4 4 4 4 4 4 4 4 4 4 4 4 4 2 2 2 2 2 2 2 4 4 2 4 2 2 4 4 4 4 2 4 2 2 2 2 2 2 4 4 4 4
+# #  [967] 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 4 2 4 2 2 2 2 2 2 2
+# #  [ reached getOption("max.print") -- omitted 87129 entries ]
+# # 
+# # $low_activity
+# # [1] 2
+# # 
+# # $high_activity
+# # [1] 1
+# # 
+# # $migration
+# # [1] 3
+# # 
+# # $no_activity
+# # [1] 4
+# # 
+# # $threshold
+# # [1] 13.5
+```
+It is therefore then possible to use this information to plot the classification to see if it makes sense
 
 ```r
 # plot the classification
@@ -148,6 +253,7 @@ behaviour$timetable
 ```
 ![classification](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classification.png)
 
+Interestingly we can see that the bird does these long migratory flights of > 10 hours, let's look to see, using the light data, whether these flights occur during night or day
 
 ```r
 #plot the activity data with daylight periods in yellow and nightime periods in grey
@@ -158,7 +264,9 @@ plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000]
 
 ![activity during night and day](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightime_daytime.png)
 
-## Classify migration periods from PAM-loggers
+### Classifying soar-gliding behaviour
+
+Still under development
 
 
 ## Authors
