@@ -2,7 +2,7 @@
 % Please edit documentation in R/altitudeCALC.R
 \name{altitudeCALC}
 \alias{altitudeCALC}
-\title{Plot PAM data with dygraphs}
+\title{Calculate altitude from pressure}
 \usage{
 altitudeCALC(P, T0 = 288.15, P0 = 1013.25)
 }
@@ -14,7 +14,7 @@ altitudeCALC(P, T0 = 288.15, P0 = 1013.25)
 \item{P0}{pressure at sea level in hectopascals}
 }
 \value{
-altitude in metres according to International Standard Atmosphere model (International Organization for Standardization 1975: ISO 2533:1975)
+altitude in metres, default is calculated according to International Standard Atmosphere model (International Organization for Standardization 1975: ISO 2533:1975)
 }
 \description{
 This opens a java application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow

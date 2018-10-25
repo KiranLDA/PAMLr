@@ -1,11 +1,11 @@
-#' Plot PAM data with dygraphs
+#' Calculate altitude from pressure
 #'
 #' @description This opens a java application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 #'
 #' @param P on-bird pressure in hectopascals
 #' @param P0 pressure at sea level in hectopascals
 #' @param T0 temperature at sea level
-#' @return altitude in metres according to International Standard Atmosphere model (International Organization for Standardization 1975: ISO 2533:1975)
+#' @return altitude in metres, default is calculated according to International Standard Atmosphere model (International Organization for Standardization 1975: ISO 2533:1975)
 #'
 #' @examples
 #' #load dummy data

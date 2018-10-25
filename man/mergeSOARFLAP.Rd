@@ -30,12 +30,12 @@ PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2
 PAM_data$pressure = PAM_data$pressure[((PAM_data$acceleration$date >= "2016-07-30")
                                                & (PAM_data$acceleration$date <= "2017-06-01")),]
 
-mergeTBL = mergeSOARFLAP(dta = PAM_data, interpolate = F)
-plot(mergeTBL$date[!is.na(mergeTBL$obs)][500:1500],mergeTBL$obs[!is.na(mergeTBL$obs)][500:1500],
+mergeTBL = mergeSOARFLAP(P = PAM_data$pressure, A=PAM_data$acceleration, interpolate = F)
+plot(mergeTBL$date[!is.na(mergeTBL$obs)][1500:3500],mergeTBL$obs[!is.na(mergeTBL$obs)][1500:3500],
            type="o", pch=16,
-           col=col[mergeTBL$classSOAR[!is.na(mergeTBL$obs)][500:1500]])
-plot(mergeTBL$date[!is.na(mergeTBL$obs)][500:1500],mergeTBL$obs[!is.na(mergeTBL$obs)][500:1500],
+           col=col[mergeTBL$classSOAR[!is.na(mergeTBL$obs)][1500:3500]])
+plot(mergeTBL$date[!is.na(mergeTBL$obs)][1500:3500],mergeTBL$obs[!is.na(mergeTBL$obs)][1500:3500],
              type="o", pch=16,
-             col=col[mergeTBL$classFLAP[!is.na(mergeTBL$obs)][500:1500]])
+             col=col[mergeTBL$classFLAP[!is.na(mergeTBL$obs)][1500:3500]])
 
 }
