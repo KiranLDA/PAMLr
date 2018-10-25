@@ -32,17 +32,52 @@ To make sure the package works run the following
 # load library
 library(PAMLr)
 
-#specify the data location
+# get an example of PAM data
 data(PAM_data)
+
+# Look at that data
 str(PAM_data)
 ```
+This is what it should look like
+
+```
+# # List of 6
+# #  $ id          : chr "16AJ"
+# #  $ pressure    :'data.frame':	37412 obs. of  2 variables:
+# #   ..$ date: POSIXct[1:37412], format:  ...
+# #   ..$ obs : int [1:37412] 969 969 969 969 969 969 969 969 969 969 ...
+# #  $ light       :'data.frame':	112401 obs. of  2 variables:
+# #   ..$ date: POSIXct[1:112401], format:  ...
+# #   ..$ obs : int [1:112401] 0 0 0 0 0 0 0 0 0 0 ...
+# #  $ acceleration:'data.frame':	111900 obs. of  3 variables:
+# #   ..$ date: POSIXct[1:111900], format:  ...
+# #   ..$ pit : int [1:111900] 10 10 10 10 10 10 11 11 11 11 ...
+# #   ..$ act : int [1:111900] 0 0 0 0 0 0 2 0 0 0 ...
+# #  $ temperature :'data.frame':	36818 obs. of  2 variables:
+# #   ..$ date: POSIXct[1:36818], format:  ...
+# #   ..$ obs : int [1:36818] 33 33 33 33 33 33 33 33 33 33 ...
+# #  $ magnetic    :'data.frame':	1559 obs. of  7 variables:
+# #   ..$ date: POSIXct[1:1559], format:  ...
+# #   ..$ gX  : int [1:1559] 849 -487 211 505 725 -2048 454 -126 919 -886 ...
+# #   ..$ gY  : int [1:1559] -2035 -2182 -2601 -2581 -2507 -1847 -2582 -2650 -2437 -2574 ...
+# #   ..$ gZ  : int [1:1559] -1642 -1962 351 -20 118 -1626 41 -76 -152 -1327 ...
+# #   ..$ mX  : int [1:1559] -1600 -947 -2779 7 -1852 5844 1061 -118 -2196 2493 ...
+# #   ..$ mY  : int [1:1559] 15645 15610 15259 15549 15561 14545 16631 14548 15195 10924 ...
+# #   ..$ mZ  : int [1:1559] 5559 4627 6374 6147 5887 10881 5177 9000 6810 13793 ...
+```
+
+To import your own data use `importPAM("C:/Put/your/path/here")`
+
+
 ## Plot the raw light data as an interactive plot
 
-<img align="left" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/dygraphPAM.png">
+
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/dygraphPAM.png">
 
 Within `PAMLr` it is possible to create interactive `dygraphPAM()` plots which allow you to compare different measurements recorded by the logger. These might for instance include light, temperature, pressure, activity, pitch and magnetism. 
 
-If you are working from Rstudio, this bit of code should be run:
+If you are **working from Rstudio**, this bit of code should be run:
+
 ```r
 # In Rstudio, it will display in the viewer by default and use a lot of ram, and is better in html
 backup_options <- options() 
@@ -50,7 +85,8 @@ options(viewer=NULL) # ensure it is viewed in internet browser
 dygraphPAM(dta = PAM_data) # plot
 options(backup_options) # restore previous viewer settings
 ```
-If you are working from base R:
+If you are **working from base R** use this instead:
+
 ```r
 dygraphPAM(dta = PAM_data) # plot
 ```
@@ -59,8 +95,6 @@ The reason there is additional code for Rstudio, is that by default it will open
 With this interactive plot, you can then zoom in and out of different plots to help get a feel for the data. For instance, this is a great way of seeing changes in the data which might be due to a logger being in a rucksack and no longer on the birds, or to look at how acticity or pressure might look during migration periods.
 
 It is possible to select areas to zoom into by right clicking and highighting certain regions, and to double click to zoom out. All plots are synched to the same time period and have a timeline at the bottom to increase or decrease the time over which the data is observed.
-
-
 
 
 ## Looking at data quality
