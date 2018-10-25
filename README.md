@@ -47,7 +47,7 @@ options(viewer=NULL) # ensure it is viewed in internet browser
 dygraphPAM(dta = PAM_data) # plot
 options(backup_options) # restore previous viewer settings
 ```
-![alt text](https://github.com/KiranLDA/PAMLr/tree/master/graphics/dygraphPAM.png)
+![raw data visualisation](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/dygraphPAM.png)
 
 ## Looking at data quality
 
@@ -63,7 +63,7 @@ plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000]
 # so we should remove any un-needed data
 PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
 ```
-![alt text](https://github.com/KiranLDA/PAMLr/tree/master/graphics/nightime_daytime.png)
+![activity during night and day](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightime_daytime.png)
 
 ## Classify migration periods from PAM-loggers
 
@@ -86,7 +86,7 @@ legend( PAM_data$acceleration$date[2000],60 ,
 # look at timetable
 behaviour$timetable
 ```
-![alt text](https://github.com/KiranLDA/PAMLr/tree/master/graphics/classification.png)
+![classification](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classification.png)
 
 ## Authors
 
