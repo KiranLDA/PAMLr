@@ -60,29 +60,44 @@ With this interactive plot, you can then zoom in and out of different plots to h
 
 It is possible to select areas to zoom into by right clicking and highighting certain regions, and to double click to zoom out. All plots are synched to the same time period and have a timeline at the bottom to increase or decrease the time over which the data is observed.
 
+
+
+
 ## Looking at data quality
 
-From looking at the interactive plot, it's possible to tell that there was a point where the logger was taken off and probably in a rucksack, remove these periods where the logger was not in fact on the bird to remove any potential future errors in the analysis.
+From looking at the interactive plot, it's possible to tell that there was a point where the logger was taken off the bird and probably left in a rucksack, car or lab before the data were downloaded. These periods should therefore be removed from the data. This will depend on which sensors are on the tag, and should be edited accordingly
 
 ```r
-#plot the activity data with daylight periods in yellow and nightime periods in grey
-plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000],
-        type="o", xlab="Date", ylab="Light Intensity", pch=20,
-        col=ifelse(PAM_data$light$obs[6000:9000]>0,"darkgoldenrod1","azure3"))
+# light
+PAM_data$light = PAM_data$light[(PAM_data$light$date >= "2016-07-30" & PAM_data$light$date <= "2017-06-01"),]
 
-# at first glance it looks like the logger was removed off a birds and left in a rucksack
-# so we should remove any un-needed data
+# acceleration
 PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
+
+# pressure
+PAM_data$pressure = AM_data$pressure[(PAM_data$pressure$date >= "2016-07-30" & PAM_data$pressure$date <= "2017-06-01"),]
+
+# temperature
+PAM_data$temperature = PAM_data$temperature[(PAM_data$temperature$date >= "2016-07-30" & PAM_data$temperature$date <= "2017-06-01"),]
+
+#magnetic
+PAM_data$magnetic = PAM_data$magnetic[(PAM_data$magnetic$date >= "2016-07-30" & PAM_data$magnetic$date <= "2017-06-01"),]
 ```
-![activity during night and day](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightime_daytime.png)
+## Classifying bird migration
 
-## Classify migration periods from PAM-loggers
+Before starting to classify bird migration from PAM data, it's important to consider what type of flight the bird has. Does is flap, soar, soar-flap or soar-glide for isntance? These will have a large bearing on how behaviour is classified. The easiest type of flight to classify is a  continuously flapping bird, such as a kingfisher, a hoopoe or a shrike.
 
-Classify bird's behaviour based on  activity (relevant for birds which flap, such as a hoopoes). Here we assume that if a bird is active for more than 15 minutes, then the bird is flying. Because loggers record every 5 minutes, we use a period of 3 (i.e. 3x5min=15min)
+### Classifying flapping behaviour
+
+Continuously flapping birds have higher activity than soaring birds. You can therefore use the `classifyFLAP()` function to classify bird behaviour. This function assumes that if the bird has displayed high activity for x number of minutes, then it is flapping. It is therefore important to think about what constitutes high activity and how long this period should be. At the moment, the function uses k-means clustering to identify the threshold between high and low activity. The using `toPLOT = TRUE` allows you to see where that threshold was drawn. The period of high activity is set by default to `period = 3`. This is because activity is recorded (on this logger) every 5 minutes and we assume that after 15 minutes of high activity, the bird must be flapping, thus "high activity duration" / "data resolution" = "period" and 5 minutes / 15 minutes = period of 3.
+
 
 ```r
 behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 3)
+behaviour
+```
 
+```r
 # plot the classification
 col=col=c("brown","cyan4","gold","black")
 plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
@@ -98,6 +113,19 @@ legend( PAM_data$acceleration$date[2000],60 ,
 behaviour$timetable
 ```
 ![classification](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classification.png)
+
+
+```r
+#plot the activity data with daylight periods in yellow and nightime periods in grey
+plot(PAM_data$acceleration$date[6000:9000], PAM_data$acceleration$act[6000:9000],
+        type="o", xlab="Date", ylab="Light Intensity", pch=20,
+        col=ifelse(PAM_data$light$obs[6000:9000]>0,"darkgoldenrod1","azure3"))
+```
+
+![activity during night and day](https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightime_daytime.png)
+
+## Classify migration periods from PAM-loggers
+
 
 ## Authors
 
