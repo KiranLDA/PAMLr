@@ -14,7 +14,7 @@
 #'
 #'
 #' offset=12
-#' plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=offset,col=viridis::cividis(90))
+#' plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=offset,col=c("black",viridis::cividis(90)))
 #' addTWL(twilights$tFirst, offset=offset, col= ifelse(twilights$type == 1,  "goldenrod","cornflowerblue"), pch=16, cex=0.5)
 #' @export
 addTWL <- function (date, offset=0, ...)
