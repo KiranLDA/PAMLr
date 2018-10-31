@@ -133,10 +133,13 @@ plotACTOGRAM(date = PAM_data$acceleration$date, activity = PAM_data$acceleration
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/daymiddle.png">
 
 
-or with night in the middle
+It is also possible to have night in the middle and then to plot sunrise and sunsets onto this, to see how activity changes as a function of sunlight.
+
 ```r
 par(mar=c(4,4,1,6))
-plotACTOGRAM(date = PAM_data$acceleration$date, activity = PAM_data$acceleration$act, offset=12)
+offset=12
+plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=offset,col=viridis::cividis(90))
+addTWL(twilights$tFirst, offset=offset, col= ifelse(twilights$type == 1,  "goldenrod","cornflowerblue"), pch=16, cex=0.5)
 ```
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightmiddle.png">
 

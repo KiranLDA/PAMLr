@@ -29,7 +29,6 @@
 #' @export
 plotACTOGRAM <- function (date, activity , tz="UTC",
                      offset = 0, dt = NA, xlab = "Hour", ylab = "Date", cex=2,
-                     #xaxt = par("xaxt"),
                      col = c("black",viridis::magma(90)),...)
 {
 
@@ -65,8 +64,8 @@ plotACTOGRAM <- function (date, activity , tz="UTC",
   rotate <- function(x) t(apply(x, 2, rev))
   # ploti = as.matrix(raster::flip(raster::flip(t(raster::raster(activity)), 1),1))
 
-  par(par)
-  image( hour, as.numeric(day),rotate(rotate(activity)),
+  # par(par)
+  image( hour, as.numeric(day),rotate(t(activity)),#rotate(rotate(activity)),
         # rotate(ploti),
         col= col,
         axes=F, xlab = "", ylab="")
