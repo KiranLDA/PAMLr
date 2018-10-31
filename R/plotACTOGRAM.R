@@ -14,7 +14,6 @@
 #' @param ylab label for y axis
 #' @param cex size of labels
 #' @param col Colour scheme of plot. Default `col = c("black",viridis::magma(90))`
-#' @param par Graphical parameters. see `?par` for more details. default is `par = par(mar=c(4,4,1,6))`
 #'
 #' @return an actogram
 #'
@@ -22,16 +21,16 @@
 #' #specify the data location
 #' data(PAM_data)
 #'
-#' plotACTOGRAM <- function (date = PAM_data$acceleration$date,
-#'                           activity = PAM_data$acceleration$act, tz="UTC",
-#'                           offset = 0, ...)
+#' par(mar=c(4,4,1,6))
+#' plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act)
+#' plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=12)
+#'
 #'
 #' @export
 plotACTOGRAM <- function (date, activity , tz="UTC",
                      offset = 0, dt = NA, xlab = "Hour", ylab = "Date", cex=2,
                      #xaxt = par("xaxt"),
-                     colours = c("black",viridis::magma(90)),
-                     par = par(mar=c(4,4,1,6)), ...)
+                     col = c("black",viridis::magma(90)),...)
 {
 
 
@@ -50,12 +49,10 @@ plotACTOGRAM <- function (date, activity , tz="UTC",
 
   tmin <- .POSIXct(as.POSIXct(as.Date(date[1])) + offset *  60 * 60, tz)
 
-  if (as.numeric(tmin) > as.numeric(date[1]))
-    tmin <- tmin - 24 * 60 * 60
+  if (as.numeric(tmin) > as.numeric(date[1])) tmin <- tmin - 24 * 60 * 60
   tmax <- .POSIXct(as.POSIXct(as.Date(date[length(date)])) +
                      offset * 60 * 60, tz)
-  if (as.numeric(tmax) < as.numeric(date[length(date)]))
-    tmax <- tmax + 24 * 60 * 60
+  if (as.numeric(tmax) < as.numeric(date[length(date)])) tmax <- tmax + 24 * 60 * 60
   activity <- approx(as.numeric(date), activity, seq(as.numeric(tmin) + dt/2,
                                        as.numeric(tmax) - dt/2, dt))$y
   m <- 24 * 60 * 60/dt
@@ -66,15 +63,15 @@ plotACTOGRAM <- function (date, activity , tz="UTC",
 
   #probably a bit overkill, but not plotting in the needed direction otherwise
   rotate <- function(x) t(apply(x, 2, rev))
-  ploti = as.matrix(flip(flip(t(raster::raster(activity)), 1),1))
+  # ploti = as.matrix(raster::flip(raster::flip(t(raster::raster(activity)), 1),1))
 
   par(par)
-  image( hour, as.numeric(day),
-        rotate(ploti),
+  image( hour, as.numeric(day),rotate(rotate(activity)),
+        # rotate(ploti),
         col= col,
         axes=F, xlab = "", ylab="")
   mtext(ylab, side=2, line=1.2, cex=cex)
-  mtext(xlab, side=1, line=2.5, cex=cex)
+  mtext(xlab, side=1, line=3, cex=cex)
   axis.POSIXct(4, at = seq(tmin,tmax,  length = n / 60), labels = as.Date(seq(tmax,tmin,length = n / 60)),las=1, cex=cex)
   axis(1, at = seq(0, 48, by = 4), labels = seq(0, 48, by = 4)%%24, cex=cex)
   box()

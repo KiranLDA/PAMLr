@@ -121,6 +121,25 @@ PAM_data$temperature = PAM_data$temperature[(PAM_data$temperature$date >= "2016-
 #magnetic
 PAM_data$magnetic = PAM_data$magnetic[(PAM_data$magnetic$date >= "2016-07-30" & PAM_data$magnetic$date <= "2017-06-01"),]
 ```
+
+## Actinogram
+
+An actinogram (activity over time) can tell us a lot about a bird's behaviour, for instance whether it is a nocturnal or a diurnal migrant. `PAMLr` allows you to plot one of these using `plotACTOGRAM`
+
+```r
+par(mar=c(4,4,1,6))
+plotACTOGRAM(date = PAM_data$acceleration$date, activity = PAM_data$acceleration$act)
+```
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/daymiddle.png">
+
+
+or with night in the middle
+```r
+par(mar=c(4,4,1,6))
+plotACTOGRAM(date = PAM_data$acceleration$date, activity = PAM_data$acceleration$act, offset=12)
+```
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightmiddle.png">
+
 ## Classifying bird migration
 
 Before starting to classify bird migration from PAM data, it's important to consider what type of flight the bird has. Does is flap, soar, soar-flap or soar-glide for isntance? These will have a large bearing on how behaviour is classified. The easiest type of flight to classify is a  continuously flapping bird, such as a kingfisher, a hoopoe or a shrike.
@@ -275,6 +294,16 @@ legend(PAM_data$acceleration$date[2000],45,
 
 Still under development
 
+## Calculate altitude
+
+Pressure can give a general estimate of what altitude a bird is flying or stopping at. The function `altitudeCALC` will estimate this for you based on a standard formula. The parameters for this formula are easily adjusted, see `?altitudeCALC` for more details.
+
+
+```r
+altitude = altitudeCALC(P = PAM_data$pressure$obs)
+plot(PAM_data$pressure$date[2:8000], altitude[2:8000], type="o",pch=16, xlab="Date", ylab="Altitude (m)")
+```
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/altitude.png">
 
 ## Authors
 
