@@ -136,6 +136,10 @@ plotACTOGRAM(date = PAM_data$acceleration$date, activity = PAM_data$acceleration
 It is also possible to have night in the middle and then to plot sunrise and sunsets onto this, to see how activity changes as a function of sunlight.
 
 ```r
+#estimate sunrises and sunsets
+twilights <- GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
+
+#plot
 par(mar=c(4,4,1,6))
 offset=12
 plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=offset,col=c("black",viridis::cividis(90)))

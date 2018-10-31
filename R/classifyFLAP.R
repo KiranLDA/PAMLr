@@ -53,13 +53,13 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
   Duration_table$`Duration (h)` = as.numeric(Duration_table$`Duration (h)`)
 
   # now we take high activity, partition it into magration or not based on duration
-  high_activity = as.numeric(which(table(dta$clust) == min(table(dta$clust))))#-1
-  low_activity = as.numeric(which(table(dta$clust) == max(table(dta$clust))))
+  high_movement = as.numeric(which(table(dta$clust) == min(table(dta$clust))))#-1
+  low_movement = as.numeric(which(table(dta$clust) == max(table(dta$clust))))
 
-  x = c(low_activity,high_activity)
+  x = c(low_movement,high_movement)
   start = which(dta$clust == x[1])
   start = start[sapply(start, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
-  x = c(high_activity, low_activity)
+  x = c(high_movement, low_movement)
   end = which(dta$clust == x[1])
   end = end[sapply(end, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
 
@@ -76,14 +76,14 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
   dta$clust[index] = 3
 
   # get rid of 1-off missclassifications
-  x = c(3,low_activity,3)
+  x = c(3,low_movement,3)
   idx = which(dta$clust == x[1])
   idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
   dta$clust[idx+1] = 3
 
   #look for start and end of migration
-  end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
-  start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
+  # end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
+  # start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
 
   dur = difftime(dta$date[end], dta$date[start], tz= tz, units = "hours")
   info = data.frame(dta$date[start], dta$date[end], dur)
@@ -95,8 +95,8 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
   return(list(type = type,
               timetable = Duration_table,
               classification = dta$clust,
-              low_activity = low_activity,
-              high_activity = high_activity,
+              low_movement = low_movement,
+              high_movement = high_movement,
               migration = 3,
               no_activity = 4,
               threshold = threshold))
