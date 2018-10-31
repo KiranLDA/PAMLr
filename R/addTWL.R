@@ -19,5 +19,5 @@
 #' @export
 addTWL <- function (date, offset=0, ...)
 {
-  points(TwGeos::hourOffset(as.hour(rev(date)), offset%%24), rev(date),  ...)
+  points(TwGeos::hourOffset(as.hour(date), offset%%24), rev(date),  ...)
 }
