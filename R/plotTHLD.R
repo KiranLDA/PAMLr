@@ -41,6 +41,24 @@ plotTHLD <- function(dta , classification, threshold, type ){
                                   plot=F)$counts)) - min((hist(dta[dta != 0],breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
                                                                plot=F)$counts)))/2, paste0("threshold = ",threshold), pos=4)
   }
+  if (type == "pressure_change"){
+    dev.new()
+    par(mar=c(4,4,1,1))
+    hist(dta[dta != 0],
+         breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
+         xlab="Pressure difference",
+         main =" High / Low night time pressure change Classification", border=F)
+    plot(hist(dta[classification==1 & dta != 0],
+              breaks = (max(dta[classification==1 & dta != 0])-min(dta[classification==1 & dta != 0])),
+              plot=F),col = rgb(1,0,0,1/4), add=T, border=F)
+    plot(hist(dta[classification==2 & dta != 0],
+              breaks = (max(dta[classification==2 & dta != 0])-min(dta[classification==2 & dta != 0])), plot=F),
+         col = rgb(0,0,0,1/4), add=T, border=F)
+    abline(v=threshold, lty=2)
+    text(x = threshold,  (max((hist(dta[dta != 0],breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
+                                    plot=F)$counts)) - min((hist(dta[dta != 0],breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
+                                                                 plot=F)$counts)))/2, paste0("threshold = ",threshold), pos=4)
+  }
   if (type == "soarglide"){
     dev.new()
     par(mar=c(4,4,1,1))

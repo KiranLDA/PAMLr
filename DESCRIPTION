@@ -8,8 +8,8 @@ Description: This package manipulates data from SOI-GDL3pam loggers (developped 
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
-Imports:graphics,
+RoxygenNote: 6.1.0
+Imports: graphics,
     grDevices,
     utils,
     stats,
@@ -18,6 +18,8 @@ Depends: R (>= 2.10),
     data.table,
     dplyr,
     dygraphs,
+    GeoLight,
     htmltools,
+    TwGeos,
     xts,
     zoo
