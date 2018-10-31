@@ -303,7 +303,7 @@ Pressure can give a general estimate of what altitude a bird is flying or stoppi
 altitude = altitudeCALC(P = PAM_data$pressure$obs)
 plot(PAM_data$pressure$date[2:8000], altitude[2:8000], type="o",pch=16, xlab="Date", ylab="Altitude (m)")
 ```
-<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/altitude.png">
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/Altitude.png">
 
 ## Authors
 
