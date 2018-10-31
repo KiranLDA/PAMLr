@@ -20,6 +20,7 @@ Depends: R (>= 2.10),
     dygraphs,
     GeoLight,
     htmltools,
+    raster,
     TwGeos,
     xts,
     zoo

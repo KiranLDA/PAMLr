@@ -14,6 +14,7 @@
 #' @import grDevices
 #' @import htmltools
 #' @import utils
+#' @import raster
 #' @import stats
 #' @import tcltk
 #' @import xts
