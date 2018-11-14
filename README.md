@@ -33,7 +33,8 @@ To make sure the package works run the following
 library(PAMLr)
 
 # get an example of PAM data
-data(PAM_data)
+data(hoopoe)
+PAM_data = hoopoe
 
 # Look at that data
 str(PAM_data)
@@ -106,20 +107,10 @@ It is possible to select areas to zoom into by right clicking and highighting ce
 From looking at the interactive plot, it's possible to tell that there was a point where the logger was taken off the bird and probably left in a rucksack, car or lab before the data were downloaded. These periods should therefore be removed from the data. This will depend on which sensors are on the tag, and should be edited accordingly
 
 ```r
-# light
-PAM_data$light = PAM_data$light[(PAM_data$light$date >= "2016-07-30" & PAM_data$light$date <= "2017-06-01"),]
+start = as.POSIXct("2016-07-30","%Y-%m-%d", tz="UTC")
+end = as.POSIXct("2017-06-01","%Y-%m-%d", tz="UTC")
 
-# acceleration
-PAM_data$acceleration = PAM_data$acceleration[(PAM_data$acceleration$date >= "2016-07-30" & PAM_data$acceleration$date <= "2017-06-01"),]
-
-# pressure
-PAM_data$pressure = PAM_data$pressure[(PAM_data$pressure$date >= "2016-07-30" & PAM_data$pressure$date <= "2017-06-01"),]
-
-# temperature
-PAM_data$temperature = PAM_data$temperature[(PAM_data$temperature$date >= "2016-07-30" & PAM_data$temperature$date <= "2017-06-01"),]
-
-#magnetic
-PAM_data$magnetic = PAM_data$magnetic[(PAM_data$magnetic$date >= "2016-07-30" & PAM_data$magnetic$date <= "2017-06-01"),]
+PAM_data = cutPAM(PAM_data, start, end)
 ```
 
 ## Actinogram
@@ -299,7 +290,26 @@ legend(PAM_data$acceleration$date[2000],45,
 
 ### Classifying soar-gliding behaviour
 
-Still under development
+Still under development. 
+
+```r
+data(bee_eater)
+PAM_data = bee_eater
+twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+LightThreshold = 2, ask = F)
+availavariable = c("pressure", "light", "acceleration")
+
+TOclassify = SOARprep(dta = PAM_data, availavariable = availavariable, twl = twl)
+
+classification = classifyPAM(TOclassify$night_P_diff, states=3, "hmm")$state
+pressure_classification = classification2PAM(from = TOclassify$start,
+to =TOclassify$end,
+classification = classification,
+addTO = PAM_data$pressure)
+
+plot(PAM_data$pressure$date, PAM_data$pressure$obs, col= pressure_classification+1, type="o")
+```
+
 
 ## Calculate altitude
 

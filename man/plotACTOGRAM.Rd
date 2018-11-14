@@ -5,8 +5,8 @@
 \title{Plot Actogram}
 \usage{
 plotACTOGRAM(date, activity, tz = "UTC", offset = 0, dt = NA,
-  xlab = "Hour", ylab = "Date", cex = 2, colours = c("black",
-  viridis::magma(90)), par = par(mar = c(4, 4, 1, 6)), ...)
+  xlab = "Hour", ylab = "Date", cex = 2, col = c("black",
+  viridis::magma(90)), ...)
 }
 \arguments{
 \item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}
@@ -25,7 +25,7 @@ plotACTOGRAM(date, activity, tz = "UTC", offset = 0, dt = NA,
 
 \item{cex}{size of labels}
 
-\item{par}{Graphical parameters. see `?par` for more details. default is `par = par(mar=c(4,4,1,6))`}
+\item{col}{Colour scheme of plot. Default `col = c("black",viridis::magma(90))`}
 
 \item{type}{The type of classification used i.e "flapping" or soar-gliding}
 
@@ -34,8 +34,6 @@ plotACTOGRAM(date, activity, tz = "UTC", offset = 0, dt = NA,
 \item{threshold}{The threshold between different classes}
 
 \item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}
-
-\item{col}{Colour scheme of plot. Default `col = c("black",viridis::magma(90))`}
 }
 \value{
 an actogram
@@ -47,8 +45,8 @@ Plot Actogram
 #specify the data location
 data(PAM_data)
 
-plotACTOGRAM <- function (date = PAM_data$acceleration$date,
-                          activity = PAM_data$acceleration$act, tz="UTC",
-                          offset = 0, ...)
+par(mar=c(4,4,1,6))
+plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act)
+plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=12)
 
 }

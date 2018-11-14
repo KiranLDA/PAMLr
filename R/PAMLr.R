@@ -7,8 +7,8 @@
 #' @author Kiran Dhanjal-Adams \email{kiran.dhanjal.adams@gmail.com}
 #'
 #' @name PAMLr
+#' @import data.table
 #' @import dplyr
-#' @import dygraphs
 #' @import GeoLight
 #' @import graphics
 #' @import grDevices
@@ -16,6 +16,8 @@
 #' @import utils
 #' @import stats
 #' @import tcltk
+#' @import TwGeos
+#' @import viridis
 #' @import xts
 #' @import zoo
 NULL

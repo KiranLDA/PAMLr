@@ -34,16 +34,17 @@
 #' col=col[behaviour$classification][2700:7000], type="o", pch=20, xlab="Date", ylab="Pressure")
 #'
 #' behaviour$timetable
+#' @importFrom stats kmeans
 #'
 #' @export
-classifySOAR <- function(dta , toPLOT = T, method = "PressureChange", threshold = 2, period = 2){
+classifySOAR <- function(dta , toPLOT = T, method = "PressureChange", threshold = 2, period = 2, tz="UTC"){
   if(method == "LowActivityPeriod"){
     # #for testing the function
     # dta=PAM_data$acceleration
     # method = "LowActivityPeriod"
     # period=36
 
-      km = stats::kmeans(dta$act,centers=2)
+      km = kmeans(dta$act,centers=2)
       dta$clust = km$cluster
 
       # # now we take activity, partition it into magration or not based on duration of consecutive activity

@@ -25,6 +25,8 @@
 #' plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act)
 #' plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=12)
 #'
+#' @importFrom graphics image
+#' @importFrom viridis magma viridis
 #'
 #' @export
 plotACTOGRAM <- function (date, activity , tz="UTC",

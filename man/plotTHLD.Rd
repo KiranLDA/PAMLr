@@ -4,7 +4,7 @@
 \alias{plotTHLD}
 \title{Plot threshold}
 \usage{
-plotTHLD(dta, classification, threshold, type)
+plotTHLD(dta, classification, threshold, type, new_window = T)
 }
 \arguments{
 \item{dta}{Raw acceleration or pressure data used to make the classification}
@@ -14,6 +14,8 @@ plotTHLD(dta, classification, threshold, type)
 \item{threshold}{The threshold between different classes}
 
 \item{type}{The type of classification used i.e "flapping" or soar-gliding}
+
+\item{new_window}{whether you want to plot it in a new window or not}
 }
 \value{
 a graphic with the output from the classifications

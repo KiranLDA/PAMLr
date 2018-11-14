@@ -25,8 +25,9 @@
 #' options(backup_options)
 #'
 #'
-#'
-#'
+#' @importFrom dygraphs dygraph dyRangeSelector dyHighlight dyLegend dyOptions dyShading
+#' @importFrom htmltools browsable tagList
+#' @importFrom xts xts
 #' @export
 dygraphPAM <- function(dta,
                        from = dta$light$date[1],
@@ -113,7 +114,7 @@ dygraphPAM <- function(dta,
 
 
   # options(viewer=NULL)
-  htmltools::browsable(htmltools::tagList(dy_graph))
+  browsable(tagList(dy_graph))
   # options(backup_options)
 }
 

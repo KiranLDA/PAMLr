@@ -27,6 +27,9 @@
 #' # restore Rstudio settings from before plot
 #' options(backup_options)
 #'
+#' @importFrom dygraphs dygraph dyRangeSelector dyHighlight dyLegend dyOptions dyShading
+#' @importFrom htmltools browsable tagList
+#'
 #' @export
 dygraphClassified <- function(dta,
                        from = dta$light$date[1],
@@ -156,7 +159,7 @@ dygraphClassified <- function(dta,
 
 
   # options(viewer=NULL)
-  htmltools::browsable(htmltools::tagList(dy_graph))
+  browsable(tagList(dy_graph))
   # options(backup_options)
 }
 

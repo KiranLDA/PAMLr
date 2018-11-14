@@ -4,8 +4,8 @@
 \alias{classifySOAR}
 \title{Make timetable}
 \usage{
-classifySOAR(dta, toPLOT = T, method = "manual", threshold = 2,
-  period = 2)
+classifySOAR(dta, toPLOT = T, method = "PressureChange",
+  threshold = 2, period = 2, tz = "UTC")
 }
 \arguments{
 \item{dta}{data stored as a list see str(data(PAM_data)) for example format}
@@ -49,5 +49,4 @@ plot(PAM_data$pressure$date[2700:7000], PAM_data$pressure$obs[2700:7000],
 col=col[behaviour$classification][2700:7000], type="o", pch=20, xlab="Date", ylab="Pressure")
 
 behaviour$timetable
-
 }

@@ -26,7 +26,8 @@ Make timetable
 }
 \examples{
 #specify the data location
-data(PAM_data)
+data(hoopoe)
+PAM_data = hoopoe
 str(PAM_data)
 
 #plot the activity to see if it looks ok

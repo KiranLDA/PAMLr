@@ -26,5 +26,4 @@ str(PAM_data)
 plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
 type="l", xlab="Date", ylab="Light Intensity")
 
-
 }

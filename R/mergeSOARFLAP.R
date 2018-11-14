@@ -26,6 +26,9 @@
 #'              type="o", pch=16,
 #'              col=col[mergeTBL$classFLAP[!is.na(mergeTBL$obs)][1500:3500]])
 #'
+#' @importFrom dplyr mutate %>%
+#' @importFrom zoo na.approx
+#' @import data.table
 #' @export
 mergeSOARFLAP <- function(P, A, soaring_duration = 2, flapping_duration = 3,interpolate = F){
   ## Create two data.tables with which to demonstrate a data.table merge
@@ -43,8 +46,8 @@ mergeSOARFLAP <- function(P, A, soaring_duration = 2, flapping_duration = 3,inte
 
   if (interpolate == T){
     mergeTBL = mergeTBL %>%
-      dplyr::mutate(obs.interpolate = zoo::na.approx(mergeTBL$obs)) %>%
-      dplyr::mutate(classSOAR.interpolate = round(zoo::na.approx(mergeTBL$classSOAR)))
+      mutate(obs.interpolate = na.approx(mergeTBL$obs)) %>%
+      mutate(classSOAR.interpolate = round(na.approx(mergeTBL$classSOAR)))
   }
 
   return(mergeTBL)

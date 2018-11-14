@@ -9,7 +9,8 @@
 #'
 #' @examples
 #' #specify the data location
-#' data(PAM_data)
+#' data(hoopoe)
+#' PAM_data = hoopoe
 #' str(PAM_data)
 #'
 #' #plot the activity to see if it looks ok
@@ -29,18 +30,29 @@
 #'
 #' behaviour$timetable
 #'
+#' @importFrom stats kmeans
+#' @importfrom depmixS4 depmix fit posterior
+#'
 #' @export
 classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "UTC"){
   if (method == "kmeans"){
-    km = stats::kmeans(dta$act,centers=2)
+    km = kmeans(dta$act,centers=2)
     dta$clust = km$cluster
   }
 
-  type = "flapping"
-  threshold = sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
-                  max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2
+  if (method == "hmm"){
+    # poisson() gaussian()multinomial("identity")
+    hmm <- depmix(act ~ 1, family = poisson() , nstates = 2, data=dta[dta$act>0,])
+    hmmfit <- fit(hmm, verbose = FALSE)
+    dta$clust = NA
+    dta$clust[dta$act>0] <- posterior(hmmfit)$state
+  }
 
-  if(toPLOT == T) plotTHLD(dta$act, classification = km$cluster,threshold = threshold, type = type)
+  type = "flapping"
+  threshold = sum(min(max(dta$act[dta$clust==1],na.rm=T), max(dta$act[dta$clust==2],na.rm=T)),
+                  max(min(dta$act[dta$clust==1],na.rm=T), min(dta$act[dta$clust==2],na.rm=T)))/2
+
+  if(toPLOT == T) plotTHLD(dta$act, classification = dta$clust, threshold = threshold, type = type)
 
   # Count the length of each category
   start=0
@@ -53,8 +65,16 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
   Duration_table$`Duration (h)` = as.numeric(Duration_table$`Duration (h)`)
 
   # now we take high activity, partition it into magration or not based on duration
-  high_movement = as.numeric(which(table(dta$clust) == min(table(dta$clust))))#-1
-  low_movement = as.numeric(which(table(dta$clust) == max(table(dta$clust))))
+  high_movement = as.numeric(which(table(dta$clust) == min(table(dta$clust),na.rm=T)))#-1
+  low_movement = as.numeric(which(table(dta$clust) == max(table(dta$clust),na.rm=T)))
+  dta$clust[is.na(dta$clust)] =  low_movement
+
+  # get rid of 1-off missclassifications
+  x = c(high_movement,low_movement,high_movement)
+  idx = which(dta$clust == x[1])
+  idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  dta$clust[idx+1] = high_movement
+
 
   x = c(low_movement,high_movement)
   start = which(dta$clust == x[1])
@@ -75,15 +95,15 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
   index = unlist(sapply(1:length(start), function(i) start[i]:end[i]))
   dta$clust[index] = 3
 
-  # get rid of 1-off missclassifications
-  x = c(3,low_movement,3)
-  idx = which(dta$clust == x[1])
-  idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
-  dta$clust[idx+1] = 3
+  # # get rid of 1-off missclassifications
+  # x = c(3,low_movement,3)
+  # idx = which(dta$clust == x[1])
+  # idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
+  # dta$clust[idx+1] = 3
 
   #look for start and end of migration
-  # end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
-  # start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
+  end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
+  start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
 
   dur = difftime(dta$date[end], dta$date[start], tz= tz, units = "hours")
   info = data.frame(dta$date[start], dta$date[end], dur)
@@ -98,7 +118,7 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
               low_movement = low_movement,
               high_movement = high_movement,
               migration = 3,
-              no_activity = 4,
+              no_movement = 4,
               threshold = threshold))
 }
 

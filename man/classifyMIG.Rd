@@ -48,5 +48,4 @@ plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
 col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
 
 behaviour$timetable
-
 }

@@ -32,7 +32,7 @@
 #' col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
 #'
 #' behaviour$timetable
-#'
+#' @importFrom stats kmeans
 #' @export
 classifyMIG <- function(pressure = PAM_data$pressure,
                         light = PAM_data$light, threshold = 1,
@@ -78,7 +78,7 @@ classifyMIG <- function(pressure = PAM_data$pressure,
 
   dt$mean_diff = c(1,abs(dt$mean[2:length(dt$mean)] - dt$mean[1:(length(dt$mean)-1)]))
 
-  km = stats::kmeans(dt$mean_diff*dt$sd,centers=2)
+  km = kmeans(dt$mean_diff*dt$sd,centers=2)
   dt$clust = km$cluster
 
 
@@ -99,7 +99,7 @@ classifyMIG <- function(pressure = PAM_data$pressure,
   plotTHLD(dt$sd, classification = km$cluster,threshold = threshold, type = "flapping")
 
   stop = rollapply(dt$mean,3,FUN= function(x) abs(diff(range(x))))
-  km = stats::kmeans(stop,centers=4)
+  km = kmeans(stop,centers=4)
   threshold1 = sum(min(max(stop[km$clust==1]), max(stop[km$clust==2])),
                   max(min(stop[km$clust==1]), min(stop[km$clust==2])))/2
   threshold2 = sum(min(max(stop[km$clust==2]), max(stop[km$clust==3])),
@@ -110,7 +110,7 @@ classifyMIG <- function(pressure = PAM_data$pressure,
 
   dta = rollapply(dt$mean,3,FUN= function(x) abs(diff(range(x))))
   dta = rollapply(dt$mean,2,FUN=function(x) abs(diff(x)))
-  km = stats::kmeans(dta,centers=4)
+  km = kmeans(dta,centers=4)
   classification = km$cluster
   hist(dta[dta != 0],
        breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
