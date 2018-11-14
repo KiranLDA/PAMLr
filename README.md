@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-The packages used by this package are `dplyr`,`dygraphs`,`graphics`,`grDevices`,`htmltools`,`stats`,`tcltk`,`utils`,`xts`,`zoo`. If there are any issues with installing PAMLr, please ensure these packages are installed and working.
+The packages used by this package are `dplyr`,`dygraphs`,`graphics`,`grDevices`,`htmltools`,`stats`,`tcltk`,`utils`,`xts`,`zoo`, `depmixS4`. If there are any issues with installing PAMLr, please ensure these packages are installed and working.
 
 ### Installing
 
@@ -301,15 +301,21 @@ availavariable = c("pressure", "light", "acceleration")
 
 TOclassify = SOARprep(dta = PAM_data, availavariable = availavariable, twl = twl)
 
-classification = classifyPAM(TOclassify$night_P_diff, states=3, "hmm")$state
+classification = classifyPAM(TOclassify$night_P_diff
+                              * TOclassify$total_daily_duration
+                              * TOclassify$total_daily_P_change
+                              * TOclassify$sum_activity, states=2, "hmm")$cluster
 pressure_classification = classification2PAM(from = TOclassify$start,
-to =TOclassify$end,
-classification = classification,
-addTO = PAM_data$pressure)
+                                              to =TOclassify$end,
+                                              classification = classification,
+                                              addTO = PAM_data$pressure)
 
-plot(PAM_data$pressure$date, PAM_data$pressure$obs, col= pressure_classification+1, type="o")
+plot(PAM_data$pressure$date, PAM_data$pressure$obs, 
+      bg= viridis::viridis(max(classification)+1)[pressure_classification+1], 
+      col="black",  type="o", pch=21,
+      xlab="Date", ylab="Pressure (hPa)")
 ```
-
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/pressure_classification.png">
 
 ## Calculate altitude
 
