@@ -292,19 +292,36 @@ legend(PAM_data$acceleration$date[2000],45,
 
 Still under development. 
 
+Soar-gliding birds do not display the same kind of sustained high activity that flapping birds do. However, because soar-gliding is associated with large changes in altitude, we use pressure change to classify this type of flight. For instance, we know that a pressure change of more than 3 hPa within a 30 minute interval is likely due to flight, not pressure weather. There is therefore a function `SOARprep` which finds every single one of these flight events and then summarises this flight. Summary information includes, pressure the night before and the night after this flight event, how much pressure changed during this flight, how active the bird was before and after this flight, how long the flight lasted, etc...
+
+The idea is to then use this information about the flight to classify migration periods using a hidden markov model (or k-means clustering, but the hmm seems to work better). This is where it gets complicated as different birds have different behaviours. For instance, some birds can be better at thermalling and therefore flap less, thus activity during flight will not be good at classifying behaviour. Other birds may be less good at thermalling, and therefore flap a great deal during migration, in which case activity is very useful for identifying this behaviour.
+
+Overall, the daily duration of flight time is good for classifying migration flight events, as is the total pressure changes throughout the day, and the difference in pressure from the night before and the night after. Indeed, overnighting in a different altitude/pressure zone is likely to mean the bird is overnighting in a different place and was therefore on the move during the day.
+
+Note that soar-gliders are migrate during the day.
+
 ```r
+# get example PAM data from a bee-eater
 data(bee_eater)
 PAM_data = bee_eater
+
+# find sunrise and sunset events
 twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 LightThreshold = 2, ask = F)
+
+# specify which variables are available on the PAM logger, sometimes one is not recorded or might have broken
 availavariable = c("pressure", "light", "acceleration")
 
+# create a dataset of flight events, with information about each flight event
 TOclassify = SOARprep(dta = PAM_data, availavariable = availavariable, twl = twl)
 
+#classify each flight event into multiple states
 classification = classifyPAM(TOclassify$night_P_diff
                               * TOclassify$total_daily_duration
                               * TOclassify$total_daily_P_change
                               * TOclassify$sum_activity, states=2, "hmm")$cluster
+                              
+# add this classification
 pressure_classification = classification2PAM(from = TOclassify$start,
                                               to =TOclassify$end,
                                               classification = classification,
