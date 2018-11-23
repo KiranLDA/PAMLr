@@ -334,7 +334,10 @@ pressure_classification = classification2PAM(from = TOclassify$start,
                                               to =TOclassify$end,
                                               classification = classification,
                                               addTO = PAM_data$pressure)
-# plot the data
+```
+Plot the data
+
+```r
 plot(PAM_data$pressure$date, PAM_data$pressure$obs, 
       bg= viridis::viridis(max(classification)+1)[pressure_classification+1], 
       col="black",  type="o", pch=21,
