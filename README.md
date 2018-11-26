@@ -350,6 +350,8 @@ plot(PAM_data$pressure$date[2:8000], altitude[2:8000], type="o",pch=16, xlab="Da
 ```
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/Altitude.png">
 
+
+
 ## Authors
 
 Kiran Dhanjal-Adams
