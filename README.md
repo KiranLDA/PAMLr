@@ -8,7 +8,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-The packages used by this package are `dplyr`,`dygraphs`,`graphics`,`grDevices`,`htmltools`,`stats`,`tcltk`,`utils`,`xts`,`zoo`, `depmixS4`. If there are any issues with installing PAMLr, please ensure these packages are installed and working.
+TwGeos, which should be installed prior using `devtools::install_github("SLisovski/TwGeos")`
+
+Other packages used by PAMLr are `dplyr`,`dygraphs`,`graphics`,`grDevices`,`htmltools`,`stats`,`tcltk`,`utils`,`xts`,`zoo`, `depmixS4`. If there are any issues with installing PAMLr, please ensure these packages are installed and working.
 
 ### Installing
 
