@@ -13,7 +13,8 @@ To install this package from github, make sure you first have `devtools` install
 ```r
 install.packages("devtools")
 ```
-TwGeos and SGAT should then be installed prior installing PAMLr, using `devtools::install_github("SLisovski/TwGeos")` and `devtools::install_github("SWotherspoon/SGAT")`
+
+The install SGAT from github using `devtools::install_github("SWotherspoon/SGAT")` followed by TwGeos using `devtools::install_github("SLisovski/TwGeos")`.
 
 Other packages used by PAMLr are `dplyr`,`dygraphs`,`graphics`,`grDevices`,`htmltools`,`stats`,`tcltk`,`utils`,`xts`,`zoo`, `depmixS4`. If there are any issues with installing PAMLr, please ensure these packages are installed and working.
 
