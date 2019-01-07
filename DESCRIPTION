@@ -9,21 +9,19 @@ License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Imports: 
-    data.table,
-    depmixS4,
-    dplyr,
-    dygraphs,
-    GeoLight,
-    graphics,
-    grDevices,
-    htmltools,
-    utils,
-    SGAT,
-    stats,
-    tcltk,
-    TwGeos,
-    viridis,
-    xts,
-    zoo
+Imports: data.table,
+  depmixS4,
+  dplyr,
+  dygraphs,
+  GeoLight,
+  graphics,
+  grDevices,
+  htmltools,
+  raster,
+  SGAT,
+  stats,
+  TwGeos,
+  utils,
+  viridis,
+  xts 
 Depends: R (>= 2.10)

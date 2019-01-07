@@ -24,11 +24,11 @@
 #' plot(PAM_data$pressure$date, PAM_data$pressure$date, col= pressure_classification+1, type="o")
 #'
 #' @importFrom depmixS4 depmix fit posterior
-#' @importFrom stats kmeans
+#' @importFrom stats kmeans gaussian
 #'
 #' @export
 classifyPAM <- function(dta ,
-                        method = "hmm", # or kmeans
+                        method = c("kmeans","hmm"),
                         states = 2,
                         ...){
 

@@ -4,7 +4,7 @@
 \alias{classifyPAM}
 \title{Derive classification data for soaring birds}
 \usage{
-classifyPAM(dta, method = "hmm", states = 2, ...)
+classifyPAM(dta, method = c("kmeans", "hmm"), states = 2, ...)
 }
 \arguments{
 \item{dta}{data to be classified, can be anything}

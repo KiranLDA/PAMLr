@@ -18,9 +18,10 @@
 #'                       twl = twl)
 #'
 #'
-#' @importFrom stats aggregate
-#' @import data.table
+#' @importFrom stats aggregate sd
+#' @importFrom data.table data.table
 #' @importFrom GeoLight twilightCalc
+#' @importFrom dplyr "%>%" distinct
 #'
 #' @export
 SOARprep <- function(dta,
@@ -35,7 +36,6 @@ SOARprep <- function(dta,
   # availavariable <- c("pressure", "light", "acceleration")
   # diff_P <- 2 # pressure threshold
   # tz<-"UTC"
-  #
 
   if("pressure" %in% availavariable){
     pressure <- dta$pressure
@@ -73,8 +73,8 @@ SOARprep <- function(dta,
 
   #housekeeping
   if(end[1]< start[1]) end <- end[-1] #if the series starts with an end not a start, remove the first ending
-  if (length(end)>length(start)) start <- start[1:length(end)]
-  if (length(end)<length(start)) end <- end[1:length(start)]
+  if (length(end)<length(start)) start <- start[1:length(end)]
+  if (length(end)>length(start)) end <- end[1:length(start)]
 
   # get rif of any 30 minute flights
   index <- which((end-start) > 1)
@@ -111,7 +111,9 @@ SOARprep <- function(dta,
   # for that flight, how much did the pressure change
 
   flight_list$pressure_change <- 1:length(flight_list$total_daily_flight_number)
-  flight_list$pressure_change <- unlist(lapply(1:length(flight_list$total_daily_flight_number), function(x) sum(abs(diff(pressure$obs[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]]))))
+  flight_list$pressure_change <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+                                               function(x) sum(abs(diff(pressure$obs[
+                                                 start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]]))))
   )
 
   #--------------------------------------------------
@@ -126,7 +128,8 @@ SOARprep <- function(dta,
   #--------------------------------------------------
   # for that flight, what was pressure like when the bird departed and when in stopped
   flight_list$P_dep_arr <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
-                                        function(x) abs(pressure$obs[start[nrow(flight_list[1:x,])]]- pressure$obs[end[nrow(flight_list[1:x,])]] )
+                                        function(x) abs(pressure$obs[start[nrow(flight_list[1:x,])]]-
+                                                          pressure$obs[end[nrow(flight_list[1:x,])]] )
   )
   )
 
@@ -135,8 +138,9 @@ SOARprep <- function(dta,
 
   flight_list$pressure_range <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
                                              function(x) max(pressure$obs[start[
-                                               nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])- min(
-                                                 pressure$obs[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])
+                                               nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])-
+                                               min(pressure$obs[start[nrow(flight_list[1:x,])]:end[nrow(
+                                                 flight_list[1:x,])]])
   ))
 
   #--------------------------------------------------
@@ -158,7 +162,7 @@ SOARprep <- function(dta,
 
     dt <- data.table(nightP)
     dt <- dt[,list(mean=mean(obs),sd=sd(obs)),by=nightP$night_before]
-    dt <- dt %>% distinct
+    dt <- dt %>% distinct()
     dt <- as.data.frame(dt)
 
     colnames(dt) <- c("date", "mean_night_P", "sd_night_P")
@@ -213,7 +217,7 @@ SOARprep <- function(dta,
 
     dt <- data.table(nightA)
     dt <- dt[,list(mean=mean(act),sd=sd(act), sum=sum(act)),by=nightA$night_before]
-    dt <- dt %>% distinct
+    dt <- dt %>% distinct()
     dt <- as.data.frame(dt)
 
     colnames(dt) <- c("date", "mean_night_act", "sd_night_act", "sum_night_act")

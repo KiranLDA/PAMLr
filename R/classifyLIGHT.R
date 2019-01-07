@@ -40,7 +40,6 @@
 #' behaviour$timetable
 #'
 #' @importFrom stats kmeans
-#' @importFrom depmixS4 depmix fit posterior
 #'
 #' @export
 classifyLIGHT <- function(dta , period = 3, toPLOT = T,

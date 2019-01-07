@@ -27,8 +27,9 @@
 #' # restore Rstudio settings from before plot
 #' options(backup_options)
 #'
-#' @importFrom dygraphs dygraph dyRangeSelector dyHighlight dyLegend dyOptions dyShading
+#' @importFrom dygraphs dygraph dyRangeSelector dyHighlight dyLegend dyOptions dyShading "%>%"
 #' @importFrom htmltools browsable tagList
+#' @importFrom xts xts
 #'
 #' @export
 dygraphClassified <- function(dta,

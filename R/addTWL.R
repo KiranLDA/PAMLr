@@ -27,7 +27,7 @@
 #' addTWL(twilights$tFirst, offset=offset, col= ifelse(twilights$type == 1,
 #' "goldenrod","cornflowerblue"), pch=16, cex=0.5)
 #'
-#' @importFrom TwGeos hourOffset
+#' @importFrom TwGeos hourOffset as.hour
 #' @importFrom graphics points
 #'
 #' @export

@@ -71,5 +71,4 @@ plot(PAM_data$pressure$date,PAM_data$pressure$obs,
      type="o",
      pch=16, cex=ifelse(test$classification == test$migration, 0.6, 0) )
 
-
 }

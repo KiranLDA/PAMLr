@@ -16,7 +16,7 @@
 #' # only subset some measurements
 #' quickPLOT(PAM_data, measurements = c("light", "pressure", "acceleration"))
 #'
-#' @importFrom graphics plot
+#' @importFrom graphics plot par
 #' @export
 quickPLOT <- function(dta,
                       measurements = c("pressure","light", "acceleration", "temperature", "magnetic"), ...){

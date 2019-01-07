@@ -21,8 +21,10 @@
 #' plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act)
 #' plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=12)
 #'
-#' @importFrom graphics image
+#' @importFrom graphics image mtext axis.POSIXct axis box
 #' @importFrom viridis magma viridis
+#' @importFrom stats approx
+#' @importFrom raster rotate
 #'
 #' @export
 plotACTOGRAM <- function (date, activity , tz="UTC",

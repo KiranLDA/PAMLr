@@ -30,7 +30,7 @@
 #'
 #' behaviour$timetable
 #'
-#' @importFrom stats kmeans
+#' @importFrom stats kmeans poisson
 #' @importFrom depmixS4 depmix fit posterior
 #'
 #' @export
@@ -84,8 +84,8 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
   end = end[sapply(end, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
 
   if(end[1]< start[1]) end = end[-1] #if the series starts with an end not a start, remove the first ending
-  if (length(end)>length(start)) start= start[1:length(end)]
-  if (length(end)<length(start)) end= end[1:length(start)]
+  if (length(end)<length(start)) start= start[1:length(end)]
+  if (length(end)>length(start)) end= end[1:length(start)]
 
   # make sure only periods where birds is flying longer than the flapping duration are stored
   index = which((end-start) >= period)

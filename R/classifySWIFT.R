@@ -54,8 +54,9 @@
 #'      type="o",
 #'      pch=16, cex=ifelse(test$classification == test$migration, 0.6, 0) )
 #'
+#' @importFrom stats aggregate
 #'
-#'@export
+#' @export
 classifySWIFT <- function(addTO ,
                           dta ,
                           method = "hmm", # or kmeans

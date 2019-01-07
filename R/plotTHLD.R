@@ -23,7 +23,8 @@
 #'      classification = behaviour$classification,
 #'      threshold = behaviour$threshold)
 #'
-#' @importFrom graphics hist
+#' @importFrom graphics hist plot abline text par
+#' @importFrom grDevices dev.new rgb
 #'
 #' @export
 plotTHLD <- function(dta , classification, threshold, type, new_window = T, ...){
