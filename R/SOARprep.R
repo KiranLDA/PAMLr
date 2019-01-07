@@ -13,7 +13,10 @@
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
 #' availavariable = c("pressure", "light", "acceleration")
 #'
-#' TOclassify = SOARprep(dta = PAM_data, availavariable = c("pressure", "acceleration", "light"), twl = twl)
+#' TOclassify = SOARprep(dta = PAM_data,
+#'                       availavariable = c("pressure", "acceleration", "light"),
+#'                       twl = twl)
+#'
 #'
 #' @importFrom stats aggregate
 #' @import data.table

@@ -1,36 +1,37 @@
 #' Make timetable
 #'
-#' @param dta data stored as a list see str(data(PAM_data)) for example format
+#' @param dta data stored as a list see str(data(hoopoe)) for example format
 #' @param toPLOT can be true or false. If true then threshold is plotted according to plotTHLD()
 #' @param method for the time being only supports manual. In this case the threshold = 2 as a default. This is the 15 minute hectopascal change
 #' @param period number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 1x15min = 15 minutes of intense activity is considered a migratory flight
 #' @param threshold the manual threshold at which activity and non activity is drawn. in this case a change of greater than 2 hpa /15 minutes ios unlikely to have be caused by weather
+#' @param tz timezone, default is "UTC"
 #'
 #' @return a timetable for when the species was migrating or not
 #'
 #' @examples
 #' #specify the data location
-#' data(PAM_data)
-#' str(PAM_data)
+#' data(hoopoe)
+#' str(hoopoe)
 #'
 #' #plot the activity to see if it looks ok
-#' plot(PAM_data$pressure$date, PAM_data$pressure$obs, xlab = "Time", ylab = "Pressure (hPa)")
+#' plot(hoopoe$pressure$date, hoopoe$pressure$obs, xlab = "Time", ylab = "Pressure (hPa)")
 #'
 #' # at first glance it looks like the logger was removed off a birds and left in arucksack
 #  # so remove un-needed data
-#' PAM_data$pressure = PAM_data$pressure[((PAM_data$pressure$date >= "2016-07-30")
-#' & (PAM_data$pressure$date <= "2017-06-01")),]
+#' hoopoe$pressure = hoopoe$pressure[((hoopoe$pressure$date >= "2016-07-30")
+#' & (hoopoe$pressure$date <= "2017-06-01")),]
 #'
-#' behaviour = classifySOAR(dta = PAM_data$pressure, period = 2, toPLOT = F)
+#' behaviour = classifySOAR(dta = hoopoe$pressure, period = 2, toPLOT = F)
 #'
 #' #plot the rclassification as an interactive plot
 #' backup_options <- options()
 #' options(viewer=NULL) # ensure it is viewed in internet browser
-#' dygraphClassified(dta = PAM_data, timetable = behaviour$timetable)
+#' dygraphClassified(dta = hoopoe, timetable = behaviour$timetable)
 #' options(backup_options) # restore previous viewer settings
 #'
 #' col=col=c("brown","cyan4","black","gold")
-#' plot(PAM_data$pressure$date[2700:7000], PAM_data$pressure$obs[2700:7000],
+#' plot(hoopoe$pressure$date[2700:7000], hoopoe$pressure$obs[2700:7000],
 #' col=col[behaviour$classification][2700:7000], type="o", pch=20, xlab="Date", ylab="Pressure")
 #'
 #' behaviour$timetable
@@ -40,7 +41,7 @@
 classifySOAR <- function(dta , toPLOT = T, method = "PressureChange", threshold = 2, period = 2, tz="UTC"){
   if(method == "LowActivityPeriod"){
     # #for testing the function
-    # dta=PAM_data$acceleration
+    # dta=hoopoe$acceleration
     # method = "LowActivityPeriod"
     # period=36
 

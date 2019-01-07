@@ -11,6 +11,8 @@ quickPLOT(dta, measurements = c("pressure", "light", "acceleration",
 \item{dta}{path where files are stored}
 
 \item{measurements}{a series of measurements logged by the PAM logger which are to be plotted. Currently supports these file extentions: "pressure","light", "acceleration", "temperature" and "magnetic"}
+
+\item{...}{any additional parameters used by graphics::plot}
 }
 \value{
 a plot of PAM data

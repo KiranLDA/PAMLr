@@ -2,6 +2,7 @@
 #'
 #' @param dta path where files are stored
 #' @param measurements a series of measurements logged by the PAM logger which are to be plotted. Currently supports these file extentions: "pressure","light", "acceleration", "temperature" and "magnetic"
+#' @param ... any additional parameters used by graphics::plot
 #'
 #' @return a plot of PAM data
 #'

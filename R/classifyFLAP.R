@@ -31,7 +31,7 @@
 #' behaviour$timetable
 #'
 #' @importFrom stats kmeans
-#' @importfrom depmixS4 depmix fit posterior
+#' @importFrom depmixS4 depmix fit posterior
 #'
 #' @export
 classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "UTC"){

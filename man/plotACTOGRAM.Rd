@@ -27,13 +27,7 @@ plotACTOGRAM(date, activity, tz = "UTC", offset = 0, dt = NA,
 
 \item{col}{Colour scheme of plot. Default `col = c("black",viridis::magma(90))`}
 
-\item{type}{The type of classification used i.e "flapping" or soar-gliding}
-
-\item{classification}{Is the result of the classification. is in the format of a vector of numbers used for low or high activity}
-
-\item{threshold}{The threshold between different classes}
-
-\item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}
+\item{...}{Any additional parameters used by graphics::image}
 }
 \value{
 an actogram

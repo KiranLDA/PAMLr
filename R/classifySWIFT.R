@@ -4,7 +4,7 @@
 #' @param dta data to be used for the classification, for swifts, this is created by the SOARprep function
 #' @param method method for classifying data, currently support "hmm" for hidden markov model and "kmeans" for kmeans clustering
 #' @param states number of states to classify the data into
-#' @param availalavariable currently supports c("light", "pressure", "acceleration"), but will not work without "light" and "pressure"
+#' @param availavariable currently supports c("light", "pressure", "acceleration"), but will not work without "light" and "pressure"
 #' @param ... any additional inputs for depmixs4::depmix or or stats::kmeans functions, depending on method selected
 #'
 #' @return a timetable for when the species was migrating or not
@@ -35,7 +35,9 @@
 #'
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
 #'
-#' TOclassify = SOARprep(dta = PAM_data, availavariable = c("pressure", "acceleration","light"), twl=twl, diff_P=15)
+#' TOclassify = SOARprep(dta = PAM_data,
+#'                       availavariable = c("pressure", "acceleration","light"),
+#'                       twl=twl, diff_P=15)
 #' str(TOclassify)
 #' TOclassify = TOclassify[complete.cases(TOclassify),]
 #'
@@ -45,19 +47,20 @@
 #'                      dta = TOclassify,
 #'                      method = "hmm", # or kmeans
 #'                      states = 3,
-#'                      availalavariable = c("light", "pressure", "acceleration"))
+#'                      availavariable = c("light", "pressure", "acceleration"))
 #'
-#' plot(PAM_data$pressure$date,PAM_data$pressure$obs, col=viridis::viridis(max(test$classification)+1)[test$classification+1],
+#' plot(PAM_data$pressure$date,PAM_data$pressure$obs,
+#'      col=viridis::viridis(max(test$classification)+1)[test$classification+1],
 #'      type="o",
 #'      pch=16, cex=ifelse(test$classification == test$migration, 0.6, 0) )
 #'
 #'
 #'@export
-classifySWIFT <- function(addTO = PAM_data$pressure,
-                          dta = TOclassify,
+classifySWIFT <- function(addTO ,
+                          dta ,
                           method = "hmm", # or kmeans
                           states = 2,
-                          availalavariable = c("light", "pressure", "acceleration"), ... )
+                          availavariable = c("light", "pressure", "acceleration"), ... )
 {
 
   if ("acceleration" %in% availavariable ){

@@ -4,9 +4,8 @@
 \alias{classifySWIFT}
 \title{Make timetable}
 \usage{
-classifySWIFT(addTO = PAM_data$pressure, dta = TOclassify,
-  method = "hmm", states = 2, availalavariable = c("light",
-  "pressure", "acceleration"), ...)
+classifySWIFT(addTO, dta, method = "hmm", states = 2,
+  availavariable = c("light", "pressure", "acceleration"), ...)
 }
 \arguments{
 \item{addTO}{the data that the classification is added to, because the data is derived from pressure, classically this would be data(swift)$pressure}
@@ -17,7 +16,7 @@ classifySWIFT(addTO = PAM_data$pressure, dta = TOclassify,
 
 \item{states}{number of states to classify the data into}
 
-\item{availalavariable}{currently supports c("light", "pressure", "acceleration"), but will not work without "light" and "pressure"}
+\item{availavariable}{currently supports c("light", "pressure", "acceleration"), but will not work without "light" and "pressure"}
 
 \item{...}{any additional inputs for depmixs4::depmix or or stats::kmeans functions, depending on method selected}
 }
@@ -53,7 +52,9 @@ quickPLOT(PAM_data, measurements=c("light","pressure","acceleration"))
 
 twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
 
-TOclassify = SOARprep(dta = PAM_data, availavariable = c("pressure", "acceleration","light"), twl=twl, diff_P=15)
+TOclassify = SOARprep(dta = PAM_data,
+                      availavariable = c("pressure", "acceleration","light"),
+                      twl=twl, diff_P=15)
 str(TOclassify)
 TOclassify = TOclassify[complete.cases(TOclassify),]
 
@@ -63,9 +64,10 @@ test = classifySWIFT(addTO = PAM_data$pressure,
                      dta = TOclassify,
                      method = "hmm", # or kmeans
                      states = 3,
-                     availalavariable = c("light", "pressure", "acceleration"))
+                     availavariable = c("light", "pressure", "acceleration"))
 
-plot(PAM_data$pressure$date,PAM_data$pressure$obs, col=viridis::viridis(max(test$classification)+1)[test$classification+1],
+plot(PAM_data$pressure$date,PAM_data$pressure$obs,
+     col=viridis::viridis(max(test$classification)+1)[test$classification+1],
      type="o",
      pch=16, cex=ifelse(test$classification == test$migration, 0.6, 0) )
 

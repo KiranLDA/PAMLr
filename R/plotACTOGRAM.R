@@ -1,11 +1,6 @@
 #' Plot Actogram
 #'
 #' @param date Date data in POSIXct format, most commonly `PAM_data$acceleration$date`
-#' @param type The type of classification used i.e "flapping" or soar-gliding
-#' @param classification Is the result of the classification. is in the format of a vector of numbers used for low or high activity
-#' @param threshold The threshold between different classes
-
-#' @param date Date data in POSIXct format, most commonly `PAM_data$acceleration$date`
 #' @param activity Activity data in POSIXct format, most commonly `PAM_data$acceleration$act`
 #' @param tz Time zone for POSIXct, default set to "UTC"
 #' @param offset This parameter determines where the center of the graph is. When `offset = 0`, then midday is at the center of the graph. when `offset=12` midnight`
@@ -14,9 +9,10 @@
 #' @param ylab label for y axis
 #' @param cex size of labels
 #' @param col Colour scheme of plot. Default `col = c("black",viridis::magma(90))`
+#' @param ... Any additional parameters used by graphics::image
 #'
 #' @return an actogram
-#'
+#' @importFrom graphics image
 #' @examples
 #' #specify the data location
 #' data(PAM_data)
@@ -70,7 +66,7 @@ plotACTOGRAM <- function (date, activity , tz="UTC",
   image( hour, as.numeric(day),rotate(t(activity)),#rotate(rotate(activity)),
         # rotate(ploti),
         col= col,
-        axes=F, xlab = "", ylab="")
+        axes=F, xlab = "", ylab="", ...)
   mtext(ylab, side=2, line=1.2, cex=cex)
   mtext(xlab, side=1, line=3, cex=cex)
   axis.POSIXct(4, at = seq(tmin,tmax,  length = n / 60), labels = as.Date(seq(tmax,tmin,length = n / 60)),las=1, cex=cex)
