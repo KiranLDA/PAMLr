@@ -25,7 +25,8 @@ a dataframe of derives metrhics based on pressure: `date`,`start` of flight even
 Derive classification data for soaring birds
 }
 \examples{
-data(PAM_data)
+data(hoopoe)
+PAM_data=hoopoe
 twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
 availavariable = c("pressure", "light", "acceleration")
 

@@ -9,7 +9,8 @@
 #' @return a dataframe of derives metrhics based on pressure: `date`,`start` of flight event,`end`,`duration` of flight event,`total_daily_duration` spent flying that day,`total_daily_flight_number` total number of flight events that day,`pressure_change` absolute total pressure differences during that flight,`P_dep_arr` difference in pressure between the start of the flight and the end of the flight,`pressure_range` difference between min and max pressure during that flight,`mean_night_P` difference in mean pressure from the night before and the night after the flight event,`sd_night_P`,`mean_nextnight_P`,`sd_nextnight_P`,`night_P_diff`,`sum_activity` total amount of activity during that flight event,`prop_resting` proportion of time spent resting during that flight,`prop_active` proportion of time spent active during that flight event
 #'
 #' @examples
-#' data(PAM_data)
+#' data(hoopoe)
+#' PAM_data=hoopoe
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
 #' availavariable = c("pressure", "light", "acceleration")
 #'
@@ -158,7 +159,7 @@ SOARprep <- function(dta,
       return(to_add)
     }
 
-    nightP <- do.call(rbind,lapply(1:length(nights$tFirst),FUN = fun))
+    nightP <- do.call(rbind,lapply(1:(length(nights$tFirst)-1),FUN = fun))
 
     dt <- data.table(nightP)
     dt <- dt[,list(mean=mean(obs),sd=sd(obs)),by=nightP$night_before]
