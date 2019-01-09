@@ -2,12 +2,12 @@
 % Please edit documentation in R/mergePAM.R
 \name{mergePAM}
 \alias{mergePAM}
-\title{Integrate classification from classifyPAM into PAM data}
+\title{merges all the data into one table for interpolation}
 \usage{
-mergePAM(PAM_data, interp = T, keep_NA = T)
+mergePAM(dta, interp = TRUE, keep_NA = TRUE)
 }
 \arguments{
-\item{PAM_data}{raw pam data see `data(bee_eater` for example}
+\item{dta}{raw pam data see `data(bee_eater` for example}
 
 \item{interp}{logical. whether or not to interpolate if there are NAs}
 
@@ -17,7 +17,7 @@ mergePAM(PAM_data, interp = T, keep_NA = T)
 merged and interpolated dataset
 }
 \description{
-Integrate classification from classifyPAM into PAM data
+merges all the data into one table for interpolation
 }
 \examples{
 data(bee_eater)
