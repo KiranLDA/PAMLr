@@ -15,11 +15,11 @@
 #' @importFrom zoo na.approx
 #'
 #' @export
-mergePAM <- function(PAM_data, interp = T, keep_NA=T ){
+mergePAM <- function(PAM_data, interp = TRUE, keep_NA=TRUE ){
 
-  if("id" %in% colnames(PAM_data$light)){
+  if("id" %in% names(PAM_data)){
     to_remove = which(names(PAM_data) == "id")
-    PAM_data[[to_remove]] = NULL
+    PAM_data[[to_remove]] <- NULL
   }
   if("obs" %in% colnames(PAM_data$light)){
     colnames(PAM_data$light)[which(colnames(PAM_data$light) == "obs")] = "light"
