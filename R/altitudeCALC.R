@@ -9,7 +9,8 @@
 #'
 #' @examples
 #' #load dummy data
-#' data(PAM_data)
+#' data(hoopoe)
+#' PAM_data=hoopoe
 #'
 #' altitude = altitudeCALC(P = PAM_data$pressure$obs)
 #' plot(PAM_data$pressure$date, altitude, type="o",pch=16, xlab="Date", ylab="Altitude (m)")

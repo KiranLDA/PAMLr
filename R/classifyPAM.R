@@ -8,7 +8,9 @@
 #' @return the data's classification based on the chosen algorithm
 #'
 #' @examples
-#' data(PAM_data)
+#' data(hoopoe)
+#' PAM_data=hoopoe
+#'
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 #' LightThreshold = 2, ask = F)
 #' availavariable = c("pressure", "light", "acceleration")

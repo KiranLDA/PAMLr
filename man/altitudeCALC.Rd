@@ -21,7 +21,8 @@ This opens a java application which allows the user to zoom in and out. In Rstud
 }
 \examples{
 #load dummy data
-data(PAM_data)
+data(hoopoe)
+PAM_data=hoopoe
 
 altitude = altitudeCALC(P = PAM_data$pressure$obs)
 plot(PAM_data$pressure$date, altitude, type="o",pch=16, xlab="Date", ylab="Altitude (m)")

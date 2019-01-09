@@ -27,7 +27,8 @@ Plot threshold
 }
 \examples{
 #specify the data location
-data(PAM_data)
+data(hoopoe)
+PAM_data=hoopoe
 
 PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 & (PAM_data$acceleration$date <= "2017-06-01")),]

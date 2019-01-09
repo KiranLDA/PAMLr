@@ -20,7 +20,8 @@ shortened PAM data
 cut PAM data
 }
 \examples{
-data(PAM_data)
+data(hoopoe)
+PAM_data=hoopoe
 str(PAM_data)
 
 start = as.POSIXct("2015-08-01","\%Y-\%m-\%d", tz="UTC")

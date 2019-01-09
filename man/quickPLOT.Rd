@@ -21,7 +21,8 @@ a plot of PAM data
 quickly plot the pam data to have an idea of it's quality
 }
 \examples{
-data(PAM_data)
+data(hoopoe)
+PAM_data=hoopoe
 str(PAM_data)
 
 #plot everything in 2 windows

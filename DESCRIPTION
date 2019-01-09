@@ -23,5 +23,6 @@ Imports: data.table,
   TwGeos,
   utils,
   viridis,
-  xts 
+  xts,
+  zoo
 Depends: R (>= 2.10)

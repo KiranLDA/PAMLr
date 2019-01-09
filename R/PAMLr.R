@@ -21,4 +21,5 @@
 #' @importFrom utils read.delim
 #' @importFrom viridis magma viridis
 #' @importFrom xts xts
+#' @importFrom zoo na.approx
 NULL

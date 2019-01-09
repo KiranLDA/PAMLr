@@ -214,7 +214,7 @@ SOARprep <- function(dta,
 
     }
 
-    nightA <- do.call(rbind,lapply(1:length(nights$tFirst),FUN = fun))
+    nightA <- do.call(rbind,lapply(1:(length(nights$tFirst)-1),FUN = fun))
 
     dt <- data.table(nightA)
     dt <- dt[,list(mean=mean(act),sd=sd(act), sum=sum(act)),by=nightA$night_before]

@@ -20,9 +20,9 @@
 #' * TOclassify$total_daily_P_change,
 #' states=3, "hmm")$state
 #' pressure_classification = classification2PAM(from = TOclassify$start,
-#' to =TOclassify$end,
-#' classification = classification,
-#' addTO = PAM_data$pressure)
+#'                                               to =TOclassify$end,
+#'                                                classification = classification,
+#'                                                addTO = PAM_data$pressure)
 #'
 #' plot(PAM_data$pressure$date, PAM_data$pressure$obs,
 #' col= viridis::viridis(4)[pressure_classification+1],

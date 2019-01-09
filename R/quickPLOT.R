@@ -7,7 +7,8 @@
 #' @return a plot of PAM data
 #'
 #' @examples
-#' data(PAM_data)
+#' data(hoopoe)
+#' PAM_data=hoopoe
 #' str(PAM_data)
 #'
 #' #plot everything in 2 windows

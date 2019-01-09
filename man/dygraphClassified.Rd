@@ -27,7 +27,8 @@ This opens a java application which allows the user to zoom in and out. In Rstud
 }
 \examples{
 #load dummy data
-data(PAM_data)
+data(hoopoe)
+PAM_data=hoopoe
 
 # This bit is for Rstudio users to prevent html from opening in Viewer pane and crashing
 # It opens in web browser instead

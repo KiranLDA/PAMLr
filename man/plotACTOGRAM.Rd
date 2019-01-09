@@ -37,7 +37,8 @@ Plot Actogram
 }
 \examples{
 #specify the data location
-data(PAM_data)
+data(hoopoe)
+PAM_data=hoopoe
 
 par(mar=c(4,4,1,6))
 plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act)
