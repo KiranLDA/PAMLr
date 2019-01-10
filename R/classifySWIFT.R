@@ -54,7 +54,8 @@
 #'      type="o",
 #'      pch=16, cex=ifelse(test$classification == test$migration, 0.6, 0) )
 #'
-#' @importFrom stats aggregate
+#' @importFrom stats aggregate kmeans poisson gaussian
+#' @importFrom depmixS4 depmix fit posterior
 #'
 #' @export
 classifySWIFT <- function(addTO ,
@@ -94,6 +95,7 @@ classifySWIFT <- function(addTO ,
                              to = dta$end,
                              classification = classification$cluster,
                              addTO = addTO)
+
   print("Please note that this function is under development")
   return(list(type = "swift",
               timetable = Duration_table,

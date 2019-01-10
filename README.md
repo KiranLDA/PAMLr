@@ -326,7 +326,7 @@ The function then takes the continuous light and divides them based on how long 
 # Classify using light
 classification <- classifyLIGHT(PAM_data$light, 
                                 method="kmeans",
-                                keep_one_off_missclassifications = FALSE,
+                                keep_one_off_missclassifications = T,
                                 duration_threshold = 6)$classification
 classification= as.data.frame(classification)
 classification = cbind(PAM_data$light$date, classification)
@@ -397,6 +397,57 @@ pressure_classification = classification2PAM(from = TOclassify$start,
                                               classification = classification,
                                               addTO = PAM_data$pressure)
 ```
+
+# Classify Soar-flapping (swift)
+
+
+```r
+data(swift)
+PAM_data = swift
+
+# have a quick look at the data
+quickPLOT(PAM_data, measurements=c("light","pressure","acceleration"))
+
+# from this, we can tell thatlight stopped recording and that the timeseries needs to be cut
+
+# crop the data to get rid of no good periods
+start = as.POSIXct("2016-09-01","%Y-%m-%d", tz="UTC")
+end = as.POSIXct("2017-04-21","%Y-%m-%d", tz="UTC")
+PAM_data = cutPAM(PAM_data, start, end)
+
+# backup_options <- options()
+# options(viewer=NULL) # ensure it is viewed in internet browser
+# dygraphPAM(dta = PAM_data) # plot
+# options(backup_options) # restore previous viewer settings
+
+# make sure it looks ok
+quickPLOT(PAM_data, measurements=c("light","pressure","acceleration"))
+
+# derive a whole bunch of measures which can be used to classifc the data later
+
+twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
+
+TOclassify = SOARprep(dta = PAM_data,
+                      availavariable = c("pressure", "acceleration","light"),
+                      twl=twl, diff_P=15)
+str(TOclassify)
+TOclassify = TOclassify[complete.cases(TOclassify),]
+
+
+
+test = classifySWIFT(addTO = PAM_data$pressure,
+                     dta = TOclassify,
+                     method = "hmm", # or kmeans
+                     states = 3,
+                     availavariable = c("light", "pressure", "acceleration"))
+
+plot(PAM_data$pressure$date,PAM_data$pressure$obs,
+     col=viridis::viridis(max(test$classification)+1)[test$classification+1],
+     type="o",
+     pch=16, cex=ifelse(test$classification == test$migration, 0.6, 0) )
+
+```
+
 Plot the data
 
 ```r
