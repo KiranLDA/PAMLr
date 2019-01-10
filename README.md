@@ -292,7 +292,73 @@ legend(PAM_data$acceleration$date[2000],45,
 ```
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightime_daytime.png">
 
-### Classifying soar-gliding behaviour
+# Classifying soar-gliding behaviour
+
+## Using light
+
+This classification assumes that when soar-gliding, a bird is in continuous light. The rest of the time, when light is less constant, the bird may be resting or it may be nighttime. This classification therefore assumes that (i) bird is soaring and migrating during the day, (ii) that the logger is sensitive enough to distinguish between constand and intermittent light.
+
+First we start by plotting a short section of light over time. This is used to define the light threshold `threshold` between night and day (plotted in red). Note how in some areas, the light is noisy, and in others it is very flat. The function is designed to identify these flat periods. 
+
+```r
+# import the example dataset
+data(bee_eater)
+PAM_data = bee_eater
+
+# plot
+par(mfrow=c(1,1))
+plot(PAM_data$light$date[5500:6000],
+     PAM_data$light$obs[5500:6000],
+     type="l",
+     ylab="Light")
+
+
+threshold= 100
+abline(h=threshold, col="brown")
+```
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/light_threshold.png">
+
+Then we use the `classifyLIGHT` function to separate the data into "no light", "a little light", "high light", "continuous light" (i.e. soaring) and "long periods of continuous light" (i.e. migration). The function starts by taking the light data, and finding all the "no light" periods as those below the threshold, everything else is "a little light", then it finds "high light" and  finds "continuous light" within this "high light".
+
+The function then takes the continuous light and divides them based on how long they last. The user can manually define a threshold using `method = "manual"` and `duration_threshold` which is set in hours. Or it is possible to use kmeans clustering with `method = "kmeans"`.
+
+```r
+# Classify using light
+classification <- classifyLIGHT(PAM_data$light, 
+                                method="kmeans",
+                                keep_one_off_missclassifications = FALSE,
+                                duration_threshold = 6)$classification
+classification= as.data.frame(classification)
+classification = cbind(PAM_data$light$date, classification)
+colnames(classification) = c("date","classification")
+
+# create a dataset to plot the light classification on pressure
+toplot= merge(PAM_data$pressure,classification)
+
+# Plot
+col=c("grey","goldenrod","olivedrab","royalblue", "orange")
+par(mfrow=c(2,1))
+plot(toplot$date, toplot$obs, 
+     type="o", 
+     bg=col[toplot$classification +1], 
+     col="black",
+     ylab="Pressure (hPa)",
+     cex=ifelse(toplot$classification %in% c(3,4),1,0),
+     pch=21)
+id= 2500:4000
+plot(toplot$date[id], toplot$obs[id], 
+     type="o", 
+     bg=col[toplot$classification[id] +1], 
+     col="black",
+     ylab="Pressure (hPa)",
+     cex=ifelse(toplot$classification[id] %in% c(3,4),1,0),
+     pch=21)
+
+```
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classifyLIGHT.png">
+
+## Using pressure
+
 
 Still under development.
 
