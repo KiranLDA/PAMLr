@@ -59,5 +59,5 @@ reducePAM <- function(dta,varint){
   colnames(test) = colnames(new)
   test = test[complete.cases(test),]
 
-  return(new)
+  return(test)
 }
