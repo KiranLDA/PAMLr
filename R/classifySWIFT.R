@@ -48,7 +48,7 @@
 #'                      method = "hmm", # or kmeans
 #'                      states = 3,
 #'                      availavariable = c("light", "pressure", "acceleration"))
-#'
+#' par(mfrow=c(1,1))
 #' plot(PAM_data$pressure$date,PAM_data$pressure$obs,
 #'      col=viridis::viridis(max(test$classification)+1)[test$classification+1],
 #'      type="o",
