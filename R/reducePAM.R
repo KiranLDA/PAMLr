@@ -1,22 +1,25 @@
 #' Reduces the data to a specified temporal resolution
 #'
 #' @param dta raw pam data see `data(bee_eater` for example
-#' @param varint the variable of interest. For instance if all other variables should be summarised at the same temporal resolution as this specified variable. It must correspond to variable or list in `dta`
+#' @param varint the variable of interest. For instance if all other variables should be summarised at the same temporal resolution as this specified variable. It must correspond to variable or list in `dta` Currently supports c("pressure","light","pit","act","temperature","gX","gY","gZ","mX", "mY","mZ")
 #'
 #' @return reduced/summarised and interpolated dataset
 #'
 #' @examples
 #' data(bee_eater)
 #' PAM_data = bee_eater
-#' reduced_dta = reducePAM(PAM_data, interp = T)
+#'
+#' start = as.POSIXct("2015-08-01","%Y-%m-%d", tz="UTC")
+#' end = as.POSIXct("2016-06-21","%Y-%m-%d", tz="UTC")
+#' PAM_data = cutPAM(PAM_data, start, end)
+#'
+#' reduced_dta = reducePAM(PAM_data , "pressure")
 #' head(reduced_dta)
 #'
 #' @importFrom zoo na.approx
 #'
 #' @export
-reducePAM <- function(dta,
-                         varint = c("pressure","light","pit","act",
-                                    "temperature","gX","gY","gZ","mX", "mY","mZ")){
+reducePAM <- function(dta,varint){
 
   PAM_data = dta
 

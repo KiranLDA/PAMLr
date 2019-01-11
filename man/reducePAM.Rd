@@ -4,13 +4,12 @@
 \alias{reducePAM}
 \title{Reduces the data to a specified temporal resolution}
 \usage{
-reducePAM(dta, varint = c("pressure", "light", "pit", "act",
-  "temperature", "gX", "gY", "gZ", "mX", "mY", "mZ"))
+reducePAM(dta, varint)
 }
 \arguments{
 \item{dta}{raw pam data see `data(bee_eater` for example}
 
-\item{varint}{the variable of interest. For instance if all other variables should be summarised at the same temporal resolution as this specified variable. It must correspond to variable or list in `dta`}
+\item{varint}{the variable of interest. For instance if all other variables should be summarised at the same temporal resolution as this specified variable. It must correspond to variable or list in `dta` Currently supports c("pressure","light","pit","act","temperature","gX","gY","gZ","mX", "mY","mZ")}
 }
 \value{
 reduced/summarised and interpolated dataset
@@ -21,7 +20,7 @@ Reduces the data to a specified temporal resolution
 \examples{
 data(bee_eater)
 PAM_data = bee_eater
-reduced_dta = reducePAM(PAM_data, interp = T)
+reduced_dta = reducePAM(PAM_data , "pressure")
 head(reduced_dta)
 
 }
