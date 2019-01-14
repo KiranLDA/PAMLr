@@ -34,7 +34,7 @@
 #' @importFrom depmixS4 depmix fit posterior
 #'
 #' @export
-classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "UTC"){
+classifyFLAP <- function(dta , period = 3, toPLOT = TRUE, method = "kmeans", tz= "UTC"){
   if (method == "kmeans"){
     km = kmeans(dta$act,centers=2)
     dta$clust = km$cluster
@@ -49,10 +49,10 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
   }
 
   type = "flapping"
-  threshold = sum(min(max(dta$act[dta$clust==1],na.rm=T), max(dta$act[dta$clust==2],na.rm=T)),
-                  max(min(dta$act[dta$clust==1],na.rm=T), min(dta$act[dta$clust==2],na.rm=T)))/2
+  threshold = sum(min(max(dta$act[dta$clust==1],na.rm=TRUE), max(dta$act[dta$clust==2],na.rm= TRUE)),
+                  max(min(dta$act[dta$clust==1],na.rm= TRUE), min(dta$act[dta$clust==2],na.rm= TRUE)))/2
 
-  if(toPLOT == T) plotTHLD(dta$act, classification = dta$clust, threshold = threshold, type = type)
+  if(toPLOT == TRUE) plotTHLD(dta$act, classification = dta$clust, threshold = threshold, type = type)
 
   # Count the length of each category
   start=0
@@ -65,8 +65,8 @@ classifyFLAP <- function(dta , period = 3, toPLOT = T, method = "kmeans", tz= "U
   Duration_table$`Duration (h)` = as.numeric(Duration_table$`Duration (h)`)
 
   # now we take high activity, partition it into magration or not based on duration
-  high_movement = as.numeric(which(table(dta$clust) == min(table(dta$clust),na.rm=T)))#-1
-  low_movement = as.numeric(which(table(dta$clust) == max(table(dta$clust),na.rm=T)))
+  high_movement = as.numeric(which(table(dta$clust) == min(table(dta$clust),na.rm= TRUE)))#-1
+  low_movement = as.numeric(which(table(dta$clust) == max(table(dta$clust),na.rm= TRUE)))
   dta$clust[is.na(dta$clust)] =  low_movement
 
   # get rid of 1-off missclassifications

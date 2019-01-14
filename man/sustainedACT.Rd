@@ -4,7 +4,7 @@
 \alias{sustainedACT}
 \title{Make timetable}
 \usage{
-sustainedACT(dta, period = 3, toPLOT = T, act_threshold = 1,
+sustainedACT(dta, period = 3, toPLOT = TRUE, act_threshold = 1,
   duration_threshold = 2, keep_one_off_missclassifications = FALSE,
   method = c("manual", "kmeans"), tz = "UTC")
 }
@@ -42,14 +42,15 @@ quickPLOT(bee_eater, measurements = c("pressure", "light"))
 
 dta = bee_eater$acceleration
 
-behaviour = sustainedACT(dta , period = 3, toPLOT = T,
+behaviour = sustainedACT(dta , period = 3,
+                         toPLOT = TRUE,
                          act_threshold = 1,
                          keep_one_off_missclassifications = FALSE,
                          method = "kmeans", tz= "UTC")
 
 pressure_states = merge(bee_eater$pressure,
                         data.frame(bee_eater$acceleration,states=behaviour$classification ),
-                        all=F)
+                        all=FALSE)
 par(mfrow=c(2,1), mar=c(4,4,0.5,0.5))
 col=c("black","brown","cyan4","gold")
 plot(pressure_states$date, pressure_states$obs, type="o",
@@ -58,15 +59,15 @@ plot(pressure_states$date, pressure_states$obs, type="o",
      cex = ifelse(pressure_states$states==behaviour$migrating,1,0.7))
 
 #migration is well classified, but soaring is over estimated
-behaviour = sustainedACT(dta , period = 3, toPLOT = F,
+behaviour = sustainedACT(dta , period = 3, toPLOT = FALSE,
                          act_threshold = 1,
                          duration_threshold=1.5,
-                         keep_one_off_missclassifications = T,
+                         keep_one_off_missclassifications = TRUE,
                          method = "manual", tz= "UTC")
 
 pressure_states = merge(bee_eater$pressure,
                         data.frame(bee_eater$acceleration,states=behaviour$classification ),
-                        all=F)
+                        all=FALSE)
 
 col=c("black","brown","cyan4","gold")
 plot(pressure_states$date, pressure_states$obs, type="o",

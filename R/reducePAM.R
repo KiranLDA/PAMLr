@@ -38,7 +38,7 @@ reducePAM <- function(dta,varint){
     colnames(PAM_data$temperature)[which(colnames(PAM_data$temperature) == "obs")] = "temperature"
   }
 
-  new = Reduce(function(...) merge(..., all = T), PAM_data)
+  new = Reduce(function(...) merge(..., all = TRUE), PAM_data)
   index = which(!is.na(new[,which(colnames(new) %in% varint)]))
   to_change = which(!(colnames(new) %in% c(varint, "date")))
 

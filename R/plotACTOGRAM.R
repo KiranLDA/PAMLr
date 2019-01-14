@@ -72,7 +72,9 @@ plotACTOGRAM <- function (date, activity , tz="UTC",
         axes=F, xlab = "", ylab="", ...)
   mtext(ylab, side=2, line=1.2, cex=cex)
   mtext(xlab, side=1, line=3, cex=cex)
-  axis.POSIXct(4, at = seq(tmin,tmax,  length = n / 60), labels = as.Date(seq(tmax,tmin,length = n / 60)),las=1, cex=cex)
+  axis.POSIXct(4, at = seq(tmin,tmax,  length = n / 60),
+               labels = as.Date(seq(tmax,tmin,length = n / 60)),
+               las=1, cex=cex)
   axis(1, at = seq(0, 48, by = 4), labels = seq(0, 48, by = 4)%%24, cex=cex)
   box()
 

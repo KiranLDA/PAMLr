@@ -22,7 +22,7 @@
 #' hoopoe$pressure = hoopoe$pressure[((hoopoe$pressure$date >= "2016-07-30")
 #' & (hoopoe$pressure$date <= "2017-06-01")),]
 #'
-#' behaviour = classifySOAR(dta = hoopoe$pressure, period = 2, toPLOT = F)
+#' behaviour = classifySOAR(dta = hoopoe$pressure, period = 2, toPLOT = FALSE)
 #'
 #' #plot the rclassification as an interactive plot
 #' backup_options <- options()
@@ -38,7 +38,7 @@
 #' @importFrom stats kmeans
 #'
 #' @export
-classifySOAR <- function(dta , toPLOT = T, method = "PressureChange", threshold = 2, period = 2, tz="UTC"){
+classifySOAR <- function(dta , toPLOT = TRUE, method = "PressureChange", threshold = 2, period = 2, tz="UTC"){
   if(method == "LowActivityPeriod"){
     # #for testing the function
     # dta=hoopoe$acceleration
@@ -58,7 +58,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "PressureChange", threshold 
       threshold = sum(min(max(dta$act[dta$clust==1]), max(dta$act[dta$clust==2])),
                       max(min(dta$act[dta$clust==1]), min(dta$act[dta$clust==2])))/2
 
-      if(toPLOT == T) plotTHLD(dta$act, classification = km$cluster,threshold = threshold, type = "flapping")
+      if(toPLOT == TRUE) plotTHLD(dta$act, classification = km$cluster,threshold = threshold, type = "flapping")
 
       dta$movement = 1
       dta$movement[dta$act == 0] = 0
@@ -200,7 +200,7 @@ classifySOAR <- function(dta , toPLOT = T, method = "PressureChange", threshold 
     dta$clust = c(ifelse(abs(diff(dta$obs))>threshold,2,1),1)
     type = "soarglide"
 
-    if(toPLOT == T) plotTHLD(abs(diff(dta$obs)),  classification = dta$clust, threshold = threshold, type=type)
+    if(toPLOT == TRUE) plotTHLD(abs(diff(dta$obs)),  classification = dta$clust, threshold = threshold, type=type)
 
     # Count the length of each category
     start=0

@@ -11,7 +11,7 @@
 #' data(bee_eater)
 #' PAM_data = bee_eater
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
-#' LightThreshold = 2, ask = F)
+#' LightThreshold = 2, ask = FALSE)
 #' availavariable = c("pressure", "light", "acceleration")
 #'
 #' TOclassify = SOARprep(dta = PAM_data, availavariable = availavariable, twl = twl,diff_P=2)

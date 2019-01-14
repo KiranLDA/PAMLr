@@ -4,7 +4,7 @@
 \alias{plotTHLD}
 \title{Plot threshold}
 \usage{
-plotTHLD(dta, classification, threshold, type, new_window = T, ...)
+plotTHLD(dta, classification, threshold, type, new_window = TRUE, ...)
 }
 \arguments{
 \item{dta}{Raw acceleration or pressure data used to make the classification}
@@ -33,11 +33,13 @@ PAM_data=hoopoe
 PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
 & (PAM_data$acceleration$date <= "2017-06-01")),]
 
-behaviour = classifyFLAP(dta = PAM_data$acceleration, flapping_duration = 3, toPLOT = F)
+behaviour = classifyFLAP(dta = PAM_data$acceleration,
+                         period = 3,
+                         toPLOT = FALSE)
 
 plotTHLD(dta = PAM_data$acceleration$act,
-    type = behaviour$type,
-     classification = behaviour$classification,
-     threshold = behaviour$threshold)
+         type = behaviour$type,
+         classification = behaviour$classification,
+         threshold = behaviour$threshold)
 
 }

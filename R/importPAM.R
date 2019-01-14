@@ -17,26 +17,26 @@
 #' @export
 importPAM <- function(pathname = pathname,measurements = c(".pressure", ".glf", ".acceleration", ".temperature", ".magnetic")){
 
-  id = substring(list.files(pathname,pattern=".pressure",full.names=F),1,4)
+  id = substring(list.files(pathname,pattern=".pressure",full.names = FALSE),1,4)
 
   if(".pressure" %in% measurements){
-    pressure = read.delim(list.files(pathname,pattern=".pressure",full.names=T),skip=6,sep="",header=F)
+    pressure = read.delim(list.files(pathname,pattern=".pressure",full.names = TRUE),skip=6,sep="",header = FALSE)
     pressure = as.data.frame(list(date=as.POSIXct(strptime(paste(pressure[,1],pressure[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),obs=pressure[,3]))
   }
   if((".glf" %in% measurements) | (".gle" %in% measurements)){
-    light = read.delim(list.files(pathname,pattern=".glf",full.names=T)[1],skip=6,sep="",header=F)
+    light = read.delim(list.files(pathname,pattern=".glf",full.names = TRUE)[1],skip=6,sep="",header = FALSE)
     light = as.data.frame(list(date=as.POSIXct(strptime(paste(light[,1],light[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),obs=light[,3]))
   }
   if(".acceleration" %in% measurements){
-    acceleration = read.delim(list.files(pathname,pattern=".acceleration",full.names=T),skip=6,sep="",header=F)
+    acceleration = read.delim(list.files(pathname,pattern=".acceleration",full.names = TRUE),skip=6,sep="",header = FALSE)
     acceleration = as.data.frame(list(date=as.POSIXct(strptime(paste(acceleration[,1],acceleration[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),pit=acceleration[,3], act=acceleration[,4]))
   }
   if(".temperature" %in% measurements){
-    temperature = read.delim(list.files(pathname,pattern=".temperature",full.names=T),skip=6,sep="",header=F)
+    temperature = read.delim(list.files(pathname,pattern=".temperature",full.names = TRUE),skip=6,sep="",header = FALSE)
     temperature = as.data.frame(list(date=as.POSIXct(strptime(paste(temperature[,1],temperature[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),obs=temperature[,3]))
   }
   if(".magnetic" %in% measurements){
-    magnetic = read.delim(list.files(pathname,pattern=".magnetic",full.names=T),skip=6,sep="",header=F)
+    magnetic = read.delim(list.files(pathname,pattern=".magnetic",full.names = TRUE),skip=6,sep="",header = FALSE)
     magnetic = as.data.frame(list(date=as.POSIXct(strptime(paste(magnetic[,1],magnetic[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),gX=magnetic[,4],gY=magnetic[,5],gZ=magnetic[,6],mX=magnetic[,7],mY=magnetic[,8],mZ=magnetic[,9]))
   }
   dta=list()

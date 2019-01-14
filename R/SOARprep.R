@@ -11,7 +11,8 @@
 #' @examples
 #' data(hoopoe)
 #' PAM_data=hoopoe
-#' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
+#' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+#'                              LightThreshold = 2, ask = FALSE)
 #' availavariable = c("pressure", "light", "acceleration")
 #'
 #' TOclassify = SOARprep(dta = PAM_data,
@@ -171,7 +172,7 @@ SOARprep <- function(dta,
     colnames(dt) <- c("date", "mean_nextnight_P", "sd_nextnight_P")
     dt <-dt[-1,]
     dt$date <- dt$date-1
-    flight_list <- merge(flight_list, dt, by="date", all.x=T)
+    flight_list <- merge(flight_list, dt, by="date", all.x = TRUE)
 
     flight_list$night_P_diff <- abs(flight_list$mean_night_P - flight_list$mean_nextnight_P)
 

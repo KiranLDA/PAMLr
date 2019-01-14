@@ -4,7 +4,7 @@
 \alias{classifyFLAP}
 \title{Make timetable}
 \usage{
-classifyFLAP(dta, period = 3, toPLOT = T, method = "kmeans",
+classifyFLAP(dta, period = 3, toPLOT = TRUE, method = "kmeans",
   tz = "UTC")
 }
 \arguments{

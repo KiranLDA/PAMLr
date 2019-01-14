@@ -4,7 +4,7 @@
 \alias{classifySOAR}
 \title{Make timetable}
 \usage{
-classifySOAR(dta, toPLOT = T, method = "PressureChange",
+classifySOAR(dta, toPLOT = TRUE, method = "PressureChange",
   threshold = 2, period = 2, tz = "UTC")
 }
 \arguments{
@@ -38,7 +38,7 @@ plot(hoopoe$pressure$date, hoopoe$pressure$obs, xlab = "Time", ylab = "Pressure 
 hoopoe$pressure = hoopoe$pressure[((hoopoe$pressure$date >= "2016-07-30")
 & (hoopoe$pressure$date <= "2017-06-01")),]
 
-behaviour = classifySOAR(dta = hoopoe$pressure, period = 2, toPLOT = F)
+behaviour = classifySOAR(dta = hoopoe$pressure, period = 2, toPLOT = FALSE)
 
 #plot the rclassification as an interactive plot
 backup_options <- options()

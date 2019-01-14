@@ -24,14 +24,15 @@
 #'
 #' dta = bee_eater$acceleration
 #'
-#' behaviour = sustainedACT(dta , period = 3, toPLOT = T,
+#' behaviour = sustainedACT(dta , period = 3,
+#'                          toPLOT = TRUE,
 #'                          act_threshold = 1,
 #'                          keep_one_off_missclassifications = FALSE,
 #'                          method = "kmeans", tz= "UTC")
 #'
 #' pressure_states = merge(bee_eater$pressure,
 #'                         data.frame(bee_eater$acceleration,states=behaviour$classification ),
-#'                         all=F)
+#'                         all=FALSE)
 #' par(mfrow=c(2,1), mar=c(4,4,0.5,0.5))
 #' col=c("black","brown","cyan4","gold")
 #' plot(pressure_states$date, pressure_states$obs, type="o",
@@ -40,15 +41,15 @@
 #'      cex = ifelse(pressure_states$states==behaviour$migrating,1,0.7))
 #'
 #' #migration is well classified, but soaring is over estimated
-#' behaviour = sustainedACT(dta , period = 3, toPLOT = F,
+#' behaviour = sustainedACT(dta , period = 3, toPLOT = FALSE,
 #'                          act_threshold = 1,
 #'                          duration_threshold=1.5,
-#'                          keep_one_off_missclassifications = T,
+#'                          keep_one_off_missclassifications = TRUE,
 #'                          method = "manual", tz= "UTC")
 #'
 #' pressure_states = merge(bee_eater$pressure,
 #'                         data.frame(bee_eater$acceleration,states=behaviour$classification ),
-#'                         all=F)
+#'                         all=FALSE)
 #'
 #' col=c("black","brown","cyan4","gold")
 #' plot(pressure_states$date, pressure_states$obs, type="o",
@@ -59,7 +60,7 @@
 #' @importFrom stats kmeans
 #'
 #' @export
-sustainedACT <- function(dta , period = 3, toPLOT = T,
+sustainedACT <- function(dta , period = 3, toPLOT = TRUE,
                           act_threshold = 1,
                           duration_threshold = 2,
                           keep_one_off_missclassifications = FALSE,
@@ -134,8 +135,8 @@ sustainedACT <- function(dta , period = 3, toPLOT = T,
     # method = "kmeans"
     km = kmeans(dur,centers=2)
     classification = km$cluster
-    DURthreshold = sum(min(max(dur[classification==1],na.rm=T), max(dur[classification==2],na.rm=T)),
-                       max(min(dur[classification==1],na.rm=T), min(dur[classification==2],na.rm=T)))/2
+    DURthreshold = sum(min(max(dur[classification==1],na.rm = TRUE), max(dur[classification==2],na.rm = TRUE)),
+                       max(min(dur[classification==1],na.rm = TRUE), min(dur[classification==2],na.rm = TRUE)))/2
   }
   if (method == "manual"){
     # method = "manual"
@@ -152,7 +153,7 @@ sustainedACT <- function(dta , period = 3, toPLOT = T,
   #
 
   type = "sustained activity"
-  if(toPLOT == T) plotTHLD(dur, classification = classification, threshold = DURthreshold, type = "light")
+  if(toPLOT == TRUE) plotTHLD(dur, classification = classification, threshold = DURthreshold, type = "light")
 
   # Only class as migratory the  continuous act periods which last longer than the threshold
   index=which(dur >= DURthreshold)

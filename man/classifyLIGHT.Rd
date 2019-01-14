@@ -4,7 +4,7 @@
 \alias{classifyLIGHT}
 \title{Make timetable}
 \usage{
-classifyLIGHT(dta, period = 3, toPLOT = T, light_threshold = 5,
+classifyLIGHT(dta, period = 3, toPLOT = TRUE, light_threshold = 5,
   duration_threshold = 2, keep_one_off_missclassifications = TRUE,
   method = c("manual", "kmeans"), tz = "UTC")
 }
@@ -42,7 +42,7 @@ quickPLOT(bee_eater, measurements = c("pressure", "light"))
 
 dta = bee_eater$light
 
-behaviour = classifyLIGHT(dta , period = 3, toPLOT = T,
+behaviour = classifyLIGHT(dta , period = 3, toPLOT = TRUE,
 light_threshold = 5, #duration_threshold = 2,
 keep_one_off_missclassifications = TRUE,
 method = "kmeans", tz= "UTC")

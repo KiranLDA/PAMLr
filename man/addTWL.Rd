@@ -27,7 +27,7 @@ data(hoopoe)
 par(mar=c(4,4,1,6),mfrow=c(1,2))
 # Calculate twilights
 twilights <- GeoLight::twilightCalc(hoopoe$light$date, hoopoe$light$obs,
-LightThreshold = 2, ask = F)
+LightThreshold = 2, ask = FALSE)
 
 plotACTOGRAM(date = hoopoe$acceleration$date,activity = hoopoe$acceleration$act)
 addTWL(twilights$tFirst, offset=0, col= ifelse(twilights$type == 1,

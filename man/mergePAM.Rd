@@ -22,7 +22,7 @@ merges all the data into one table for interpolation
 \examples{
 data(bee_eater)
 PAM_data = bee_eater
-merged_dta = mergePAM(PAM_data, interp = T)
+merged_dta = mergePAM(PAM_data, interp = TRUE)
 head(merged_dta)
 
 }

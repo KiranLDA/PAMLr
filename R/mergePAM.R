@@ -9,7 +9,7 @@
 #' @examples
 #' data(bee_eater)
 #' PAM_data = bee_eater
-#' merged_dta = mergePAM(PAM_data, interp = T)
+#' merged_dta = mergePAM(PAM_data, interp = TRUE)
 #' head(merged_dta)
 #'
 #' @importFrom zoo na.approx
@@ -17,7 +17,7 @@
 #' @export
 mergePAM <- function(dta,
                      interp = TRUE,
-                     keep_NA=TRUE){
+                     keep_NA = TRUE){
 
   PAM_data = dta
 

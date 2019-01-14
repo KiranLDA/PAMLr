@@ -27,7 +27,7 @@
 #'
 #' dta = bee_eater$light
 #'
-#' behaviour = classifyLIGHT(dta , period = 3, toPLOT = T,
+#' behaviour = classifyLIGHT(dta , period = 3, toPLOT = TRUE,
 #' light_threshold = 5, #duration_threshold = 2,
 #' keep_one_off_missclassifications = TRUE,
 #' method = "kmeans", tz= "UTC")
@@ -42,7 +42,7 @@
 #' @importFrom stats kmeans
 #'
 #' @export
-classifyLIGHT <- function(dta , period = 3, toPLOT = T,
+classifyLIGHT <- function(dta , period = 3, toPLOT = TRUE,
                           light_threshold = 5,
                           duration_threshold = 2,
                           keep_one_off_missclassifications = TRUE,
@@ -119,8 +119,8 @@ classifyLIGHT <- function(dta , period = 3, toPLOT = T,
     method = "kmeans"
     km = kmeans(dur,centers=2)
     classification = km$cluster
-    DURthreshold = sum(min(max(dur[classification==1],na.rm=T), max(dur[classification==2],na.rm=T)),
-                       max(min(dur[classification==1],na.rm=T), min(dur[classification==2],na.rm=T)))/2
+    DURthreshold = sum(min(max(dur[classification==1],na.rm = TRUE), max(dur[classification==2],na.rm = TRUE)),
+                       max(min(dur[classification==1],na.rm = TRUE), min(dur[classification==2],na.rm = TRUE)))/2
   }
   if (method == "manual"){
     method == "manual"
@@ -137,7 +137,7 @@ classifyLIGHT <- function(dta , period = 3, toPLOT = T,
   #
 
   type = "light"
-  if(toPLOT == T) plotTHLD(dur, classification = classification, threshold = DURthreshold, type = type)
+  if(toPLOT == TRUE) plotTHLD(dur, classification = classification, threshold = DURthreshold, type = type)
 
   # Only class as migratory the  continuous light periods which last longer than the threshold
   index=which(dur >= DURthreshold)

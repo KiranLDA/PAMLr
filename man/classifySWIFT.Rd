@@ -50,7 +50,8 @@ quickPLOT(PAM_data, measurements=c("light","pressure","acceleration"))
 
 # derive a whole bunch of measures which can be used to classifc the data later
 
-twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
+twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+                             LightThreshold = 2, ask = FALSE)
 
 TOclassify = SOARprep(dta = PAM_data,
                       availavariable = c("pressure", "acceleration","light"),
