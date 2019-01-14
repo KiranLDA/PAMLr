@@ -499,19 +499,19 @@ plot(toplot$date[id], toplot$obs[id],
 
 
 
-## Using Atmospheric Pressure and hidden markov models
+## Using Atmospheric Pressure and Hidden Markov Models
 
+### Finding individual flight events in the data
 
+Looking at the previous two classifications (light and activity), you will note that migration periods seems to occur during periods of pressure drops. However, because soar-gliding is associated with large changes in altitude, we can use pressure change as a proxy for altitude change to classify this type of flight. 
 
-Still under development.
+For instance, we know that a pressure change of more than 3 hPa within a 30 minute interval is likely due to flight, not weather. There is therefore a function `SOARprep` which finds every single one of these flight events and then summarises what happened during that flight event. Summary information includes, pressure the night before and the night after this flight event, how much pressure changed during this flight event, how active the bird was during this flight event, how long the flight event lasted, etc...
 
-Soar-gliding birds do not display the same kind of sustained high activity as flapping birds. However, because soar-gliding is associated with large changes in altitude, we can use pressure change as a proxy for altitude change to classify this type of flight. For instance, we know that a pressure change of more than 3 hPa within a 30 minute interval is likely due to flight, not weather. There is therefore a function `SOARprep` which finds every single one of these flight events and then summarises what happened during that flight event. Summary information includes, pressure the night before and the night after this flight event, how much pressure changed during this flight event, how active the bird was during this flight event, how long the flight event lasted, etc...
+### Classifying summarised information from each flight event
 
 The idea is to then use this information about the flight event to classify migration periods using a hidden markov model (or k-means clustering, but the hmm seems to work better). This is where it gets complicated as different birds have different behaviours. For instance, some birds can be better at thermalling and therefore flap less, thus activity during flight will not be good at classifying behaviour. Other birds may be less good at thermalling, and therefore flap a great deal during migration, in which case activity is very useful for identifying this behaviour.
 
-Overall, the daily duration of flight time seems good for classifying migration flight events, as is the total pressure changes throughout the day, and the difference in pressure from the night before and the night after. Indeed, overnighting in a different altitude/pressure zone is likely to mean the bird is overnighting in a different place and was therefore on the move during the day.
-
-Note that soar-gliders migrate during the day.
+Let's start by looking at the different variables which might be used to describe flight
 
 ```r
 # The  soar-gliding bird
@@ -522,13 +522,38 @@ bee_eater = cutPAM(bee_eater, start, end)
 
 # find sunrise and sunset events
 twl = GeoLight::twilightCalc(bee_eater$light$date, bee_eater$light$obs,
-LightThreshold = 2, ask = F)
+                              LightThreshold = 2, ask = F)
 
 # specify which variables are available on the PAM logger, sometimes one is not recorded or might have broken
 availavariable = c("pressure", "light", "acceleration")
 
 # create a dataset of flight events, with information about each flight event
 TOclassify = SOARprep(dta = bee_eater, availavariable = availavariable, twl = twl)
+
+par(mfrow=c(4,1))
+lapply(4:ncol(TOclassify), FUN = function(i){
+       plot(TOclassify$date, TOclassify[,i], type = "l",
+            ylab = colnames(TOclassify)[i])
+       })
+
+```
+
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/toclass1.png">
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/toclass2.png">
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/toclass3.png">
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/toclass4.png">
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/toclass5.png">
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/toclass6.png">
+
+
+
+Overall, the daily duration of flight time seems good for classifying migration flight events, as is the total pressure changes throughout the day, and the difference in pressure from the night before and the night after. Indeed, overnighting in a different altitude/pressure zone is likely to mean the bird is overnighting in a different place and was therefore on the move during the day.
+
+### Classify using the hidden markov model
+
+This method uses a hidden markov model from from the R package `depmixS4`. An important thing to think about, and will change from bird to bird, is the number of states used, this will depend on the data collected on that bird. For this particular individuals 2 states - migration and soaring are best, but in some cases, 3 states may be more appropriate.
+
+```r
 
 #classify each flight event into multiple states
 classification = classifyPAM(TOclassify$night_P_diff
@@ -543,10 +568,10 @@ pressure_classification = classification2PAM(from = TOclassify$start,
                                               addTO = bee_eater$pressure)
 ```
 
-
-Plot the data
+Plot the data. Note that it lookgs a bit better than the sustained activity or light.
 
 ```r
+par(mfrow=c(1,1))
 plot(bee_eater$pressure$date, bee_eater$pressure$obs, 
       bg= viridis::viridis(max(classification)+1)[pressure_classification+1], 
       col="black",  type="o", pch=21,
@@ -557,7 +582,9 @@ plot(bee_eater$pressure$date, bee_eater$pressure$obs,
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/pressure_classification.png">
 
 
-# Classify Soar-flapping (swift)
+# Classify Soar-flapping
+
+The example data we have for this is an Alpine Swift.
 
 
 ```r
@@ -574,13 +601,36 @@ start = as.POSIXct("2016-09-01","%Y-%m-%d", tz="UTC")
 end = as.POSIXct("2017-04-21","%Y-%m-%d", tz="UTC")
 PAM_data = cutPAM(PAM_data, start, end)
 
-# backup_options <- options()
-# options(viewer=NULL) # ensure it is viewed in internet browser
-# dygraphPAM(dta = PAM_data) # plot
-# options(backup_options) # restore previous viewer settings
-
 # make sure it looks ok
-quickPLOT(PAM_data, measurements=c("light","pressure","acceleration"))
+quickPLOT(PAM_data, measurements=c("light","pressure","acceleration"),
+          xlim=c(as.POSIXct("2016-09-20","%Y-%m-%d", tz="UTC"),
+                 as.POSIXct("2016-10-28","%Y-%m-%d", tz="UTC")))
+```
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/quickPLOTswift.png">
+
+In looking at the data, particularly pressure and pitch, we notice a big change on the first of October. The bird's behaviour goes from dirunal to contant.This is very apparent in the actinogram. The bird is flying non-stop.
+
+```r
+#estimate sunrises and sunsets
+twilights <- GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, 
+                                    LightThreshold = 2, ask = F)
+
+#plot
+par(mar=c(4,4,1,6), mfrow=c(1,1))
+offset=0
+plotACTOGRAM(date = PAM_data$acceleration$date,
+             activity = PAM_data$acceleration$act, 
+             offset=offset,col=c("black",viridis::cividis(90)))
+addTWL(twilights$tFirst, 
+       offset=offset, 
+       col= ifelse(twilights$type == 1,  "goldenrod","cornflowerblue"), 
+       pch=16, cex=0.5)
+```
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/swiftogram.png">
+
+We therefor derive similar metrics as with bee-eaters for classify with a hidden markov model, but focus more on night time activity and changes in pressure
+
+```r
 
 # derive a whole bunch of measures which can be used to classifc the data later
 
@@ -592,21 +642,28 @@ TOclassify = SOARprep(dta = PAM_data,
 str(TOclassify)
 TOclassify = TOclassify[complete.cases(TOclassify),]
 
-
-
 test = classifySWIFT(addTO = PAM_data$pressure,
                      dta = TOclassify,
                      method = "hmm", # or kmeans
                      states = 3,
                      availavariable = c("light", "pressure", "acceleration"))
 
+par(mar=c(3,4,0.5,0.5), mfrow=c(2,1))
+
 plot(PAM_data$pressure$date,PAM_data$pressure$obs,
-     col=viridis::viridis(max(test$classification)+1)[test$classification+1],
+     bg=viridis::viridis(max(test$classification)+1)[test$classification+1],
      type="o",
-     pch=16, cex=ifelse(test$classification == test$migration, 0.6, 0) )
+     ylab="Pressure",
+     pch=21, cex=0.8 )
 
+index=2800:5000
+plot(PAM_data$pressure$date[index],PAM_data$pressure$obs[index],
+     bg=viridis::viridis(max(test$classification)+1)[test$classification+1][index],
+     type="o",
+     ylab="Pressure",
+     pch=21, cex=1.2 )
 ```
-
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classiswift.png">
 
 ## Calculate altitude
 
@@ -621,14 +678,6 @@ plot(PAM_data$pressure$date[2:8000], altitude[2:8000], type="o",pch=16, xlab="Da
 ```
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/Altitude.png">
 
-
-```r
-data(bee_eater)
-PAM_data = bee_eater
-altitude = altitudeCALC(P = PAM_data$pressure$obs[PAM_data$pressure$date %in% PAM_data$temperature$date], 
-                        T0 = PAM_data$temperature$obs[PAM_data$temperature$date %in% PAM_data$pressure$date] +273.15)
-plot(PAM_data$pressure$date[2:8000], altitude[2:8000], type="o",pch=16, xlab="Date", ylab="Altitude (m)")
-```
 
 ## Authors
 
