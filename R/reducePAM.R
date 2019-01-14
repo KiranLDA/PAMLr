@@ -17,6 +17,7 @@
 #' head(reduced_dta)
 #'
 #' @importFrom zoo na.approx
+#' @importFrom stats complete.cases
 #'
 #' @export
 reducePAM <- function(dta,varint){

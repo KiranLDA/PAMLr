@@ -32,10 +32,12 @@ devtools::install_github("KiranLDA/PAMLr")
 
 To make sure the package works run the following
 
-```r
+```
 # load library
 library(PAMLr)
+```
 
+```r
 # get an example of PAM data
 data(hoopoe)
 PAM_data = hoopoe

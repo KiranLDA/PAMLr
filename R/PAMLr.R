@@ -16,7 +16,7 @@
 #' @importFrom grDevices dev.new rgb
 #' @importFrom htmltools browsable tagList
 #' @importFrom raster rotate
-#' @importFrom stats kmeans aggregate approx gaussian poisson sd
+#' @importFrom stats kmeans aggregate approx gaussian poisson sd complete.cases
 #' @importFrom TwGeos hourOffset as.hour
 #' @importFrom utils read.delim
 #' @importFrom viridis magma viridis

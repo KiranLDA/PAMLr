@@ -20,6 +20,11 @@ Reduces the data to a specified temporal resolution
 \examples{
 data(bee_eater)
 PAM_data = bee_eater
+
+start = as.POSIXct("2015-08-01","\%Y-\%m-\%d", tz="UTC")
+end = as.POSIXct("2016-06-21","\%Y-\%m-\%d", tz="UTC")
+PAM_data = cutPAM(PAM_data, start, end)
+
 reduced_dta = reducePAM(PAM_data , "pressure")
 head(reduced_dta)
 

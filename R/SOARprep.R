@@ -31,8 +31,7 @@ SOARprep <- function(dta,
                      twl,
                      tz="UTC"){
 
-
-  # # for testing
+  ## for testing
   # dta <- PAM_data
   # availavariable <- c("pressure", "light", "acceleration")
   # diff_P <- 2 # pressure threshold
@@ -160,7 +159,7 @@ SOARprep <- function(dta,
     }
 
     nightP <- do.call(rbind,lapply(1:(length(nights$tFirst)-1),FUN = fun))
-
+    obs = NULL
     dt <- data.table(nightP)
     dt <- dt[,list(mean=mean(obs),sd=sd(obs)),by=nightP$night_before]
     dt <- dt %>% distinct()
@@ -215,6 +214,7 @@ SOARprep <- function(dta,
     }
 
     nightA <- do.call(rbind,lapply(1:(length(nights$tFirst)-1),FUN = fun))
+    act = NULL
 
     dt <- data.table(nightA)
     dt <- dt[,list(mean=mean(act),sd=sd(act), sum=sum(act)),by=nightA$night_before]
