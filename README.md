@@ -13,10 +13,14 @@ To install this package from github, make sure the user first have `devtools` in
 ```r
 install.packages("devtools")
 ```
+This package relies on two packages which are not on CRAN: SGAT and TwGeos which can be installed as follows (in this order): 
 
-The install SGAT from github using `devtools::install_github("SWotherspoon/SGAT")` followed by TwGeos using `devtools::install_github("SLisovski/TwGeos")`.
+```r
+devtools::install_github("SWotherspoon/SGAT")
+devtools::install_github("SLisovski/TwGeos")
+```
 
-Other packages used by PAMLr are `dplyr`,`dygraphs`,`graphics`,`grDevices`,`htmltools`,`stats`,`tcltk`,`utils`,`xts`,`zoo`, `depmixS4`. If there are any issues with installing PAMLr, please ensure these packages are installed and working.
+
 
 ### Installing
 
@@ -27,34 +31,34 @@ The github package can be installed:
 devtools::install_github("KiranLDA/PAMLr")
 
 ```
+Other packages used by PAMLr are `dplyr`,`dygraphs`,`graphics`,`grDevices`,`htmltools`,`stats`,`tcltk`,`utils`,`xts`,`zoo`, `depmixS4`. If there are any issues with installing PAMLr, please ensure these packages are installed and working (using `install.packages()`).
 
 ## Load and test
 
 To make sure the package works run the following
 
-```
+```r
 # load library
 library(PAMLr)
-```
 
-```r
 # get an example of PAM data
 data(hoopoe)
 PAM_data = hoopoe
-
-# Look at that data
-str(PAM_data)
 ```
 
-
 To import your own data use:
+
 ```r
 importPAM("C:/Put/your/path/here")`
 ```
 
-This is what it should look like:
+This is what the data shoudl look like should look like:
 
-```
+```r
+# Look at that data
+str(PAM_data)
+
+
 # # List of 6
 # #  $ id          : chr "16AJ"
 # #  $ pressure    :'data.frame':	37412 obs. of  2 variables:
@@ -81,18 +85,21 @@ This is what it should look like:
 ```
 
 
-## Plot the raw light data as an interactive plot
+## Plot the raw light data
 
-For a quick look at the data, it's possible to use `quickPLOT`. The user can specify which arguments to use, using `measurements`. There's a choice between different combinations of `"pressure"`, `"light"`, `"acceleration"`, `"temperature"` and `"magnetic"`.
+For a quick look at the data, it's possible to use `quickPLOT`. The user can specify which arguments to use, using `measurements`. There's a choice between different combinations of `"pressure"`, `"light"`, `"acceleration"`, `"temperature"` and `"magnetic"`. You can add any parameters from `?plot`, here I illustrate it with `col="cornflowerblue"` and by showing how to  restrict the x-axis limits `xlim` with the date format, to zoom into the post breeding mihration period of a hoopoe
 
 ```r
 par(mar=c(3,4,0.5,0.5))
 quickPLOT(hoopoe, col="cornflowerblue",
-          measurements = c("pressure", "light", "acceleration")
-)
+          measurements = c("pressure", "light", "acceleration"),
+          xlim=c(as.POSIXct("2016-08-20","%Y-%m-%d", tz="UTC"),
+                 as.POSIXct("2016-09-01","%Y-%m-%d", tz="UTC")))
 ```
 
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/quickPLOT.png">
+
+## Creating an interactive plot for zooming in and out
 
 However, this graphic is quite noisy. To have a better overview of the data, it is possible to create interactive `dygraphPAM()` plots which allow the user to compare different measurements recorded by the logger. These might for instance include light, temperature, pressure, activity, pitch and magnetism. 
 
@@ -121,21 +128,20 @@ It is possible to select areas to zoom into by right clicking and highighting ce
 
 ## Removing unwanted data
 
-As mentionned above, logger data often come with periods when a logger is not on the bird. To remove these periods there is a function called `curPAM`.
+As mentionned above, logger data often come with periods when a logger is not on the bird. To remove these periods there is a function called `cutPAM`.
 
 ```r
 start = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
 end = as.POSIXct("2017-06-01","%Y-%m-%d", tz="UTC")
-
 PAM_data = cutPAM(PAM_data,start,end)
 ```
 
-`hoopoe` has now been overwritten by the cropped (by date) dataset. Beware of over-writing until you are happy with the cropping dates. This could, for example, be done using `quickPLOT(cutPAM(PAM_data,start,end), measurements = "pressure")`
+`hoopoe` has now been overwritten by the cropped (by date) dataset. Beware of over-writing until you are happy with the cropping dates. This could, for example, be done using `quickPLOT(cutPAM(PAM_data,start,end), measurements = "pressure")` iteratively until happy with start and end.
 
 
-# Actinogram
+# Actogram
 
-An actinogram (activity over time) can tell us a lot about a bird's behaviour, for instance whether it is a nocturnal or a diurnal migrant. `PAMLr` allows the user to plot one of these using `plotACTOGRAM`
+An actogram (activity over time) can tell us a lot about a bird's behaviour. For instance, whether it is a nocturnal or a diurnal migrant. `PAMLr` allows the user to plot one of these using `plotACTOGRAM`
 
 ```r
 par(mar=c(4,4,1,6))
@@ -147,27 +153,50 @@ plotACTOGRAM(date = PAM_data$acceleration$date, activity = PAM_data$acceleration
 It is also possible to have night in the middle and then to plot sunrise and sunsets onto this, to see how activity changes as a function of sunlight.
 
 ```r
-#estimate sunrises and sunsets
+# estimate sunrises and sunsets
 twilights <- GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, 
                                     LightThreshold = 2, ask = F)
 
-#plot
+# plot
 par(mar=c(4,4,1,6))
 offset=12
-plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act, offset=offset,col=c("black",viridis::cividis(90)))
+plotACTOGRAM(date = PAM_data$acceleration$date,activity = PAM_data$acceleration$act,
+             offset=offset,col=c("black",viridis::cividis(90)))
 addTWL(twilights$tFirst, offset=offset, 
-col= ifelse(twilights$type == 1,  "goldenrod","cornflowerblue"), 
-pch=16, cex=0.5)
+       col= ifelse(twilights$type == 1,  "goldenrod","cornflowerblue"), 
+       pch=16, cex=0.5)
 ```
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/nightmiddle.png">
 
+# Calculate altitude
+
+Pressure can give a general estimate of what altitude a bird is flying or stopping at. The function `altitudeCALC` will estimate this for the user based on a standard formula. The parameters for this formula are easily adjusted, see `?altitudeCALC` for more details.
+
+```r
+data(hoopoe)
+PAM_data = hoopoe
+altitude = altitudeCALC(P = PAM_data$pressure$obs)
+plot(PAM_data$pressure$date[2:8000], altitude[2:8000], type="o",pch=16, xlab="Date", ylab="Altitude (m)")
+```
+
+<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/Altitude.png">
+
+
 # Classifying bird migration
 
-Before starting to classify bird migration from PAM data, it's important to consider what type of flight the bird has. Does is flap, soar, soar-flap or soar-glide for isntance? These will have a large bearing on how behaviour is classified. The easiest type of flight to classify is a  continuously flapping bird, such as a kingfisher, a hoopoe or a shrike.
+Before starting to classify bird migration from PAM data, it's important to consider what type of flight the bird has. Does is flap, soar, soar-flap or soar-glide? These will have a large bearing on how behaviour is classified. The easiest type of flight to classify is a  continuously flapping bird, such as a kingfisher, a hoopoe or a shrike.
 
-### Classifying flapping behaviour
+## Classifying flapping behaviour
 
-Continuously flapping birds have higher activity than soaring birds (see the above actinogram). You can therefore use the `classifyFLAP()` function to classify flapping behaviour. This function assumes that if the bird has displayed high activity for x number of minutes, then it is flapping. It is therefore important to think about what constitutes high activity and how long this period should be. At the moment, the function uses k-means clustering to identify the threshold between high and low activity. Using `toPLOT = TRUE` then allows the user to see where that threshold was drawn. The period of high activity is set by default to `period = 3`. This is because activity is recorded (on this logger) every 5 minutes and we assume that after 15 minutes of high activity, the bird must be flapping. Thus "high activity duration" / "data resolution" = "period" and 15 minutes / 5 minutes = period of 3.
+<p align="center">
+  <img align="center" src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Common_Hoopoe_at_IIT_Delhi.jpg" alt>
+</p>
+<p>
+  <em>Photo by Manish Kumar, creative commons</em>
+</p>
+
+
+Continuously flapping birds have higher activity than soaring birds (see the above actogram). You can therefore use the `classifyFLAP()` function to classify flapping behaviour. This function assumes that if the bird has displayed high activity for x number of minutes, then it is flapping. It is therefore important to think about what constitutes high activity and how long this period should be. At the moment, the function uses k-means clustering to identify the threshold between high and low activity. Using `toPLOT = TRUE` then allows the user to see where that threshold was drawn. The period of high activity is set by default to `period = 3`. This is because activity is recorded (on this logger) every 5 minutes and we assume that after 15 minutes of high activity, the bird must be flapping. Thus "high activity duration" / "data resolution" = "period" and 15 minutes / 5 minutes = period of 3.
 
 
 ```r
@@ -316,9 +345,18 @@ legend(PAM_data$acceleration$date[index[1]],55,
 
 # Classifying soar-gliding behaviour
 
+Srill under development. The species we are classifying is a European bee-eater
+
+<p>
+  <img align="center" src ="https://upload.wikimedia.org/wikipedia/commons/7/77/Gu%C3%A9piers_d%27europe_Ichkeul_%28European_Bee-eater%29_Merops_apiaster.jpg" alt>
+</p>
+<p>
+  <em> Photo by El Golli Mohamed, Creative commons </em>
+</p>
+
 ## Using Light
 
-This classification assumes that when soar-gliding, a bird is in continuous light. The rest of the time, when light is less constant, the bird may be resting or it may be nighttime. This classification therefore assumes that (i) bird is soaring and therefore migrating during the day, (ii) that the logger is sensitive enough to distinguish between constant and intermittent light (not all loggers are likely to be).
+This classification assumes that when soar-gliding, a bird is in continuous light. The rest of the time, when light is less constant, the bird may be resting or it may be night. This classification therefore assumes that (i) bird is soaring and therefore migrating during the day, (ii) that the logger is sensitive enough to distinguish between constant and intermittent light (not all loggers are likely to be). This method will work better with GDL3 than GDL2 loggers.
 
 ### Defining the light threshold
 
@@ -330,14 +368,14 @@ First we start by plotting a short section of light over time. This is used to d
 # import the example dataset
 data(bee_eater)
 
+# Make sure any periods where logger is no longer on the bird are removed
 start = as.POSIXct("2015-07-30","%Y-%m-%d", tz="UTC")
 end = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
 PAM_data = cutPAM(bee_eater, start, end)
 
 
-# plot
+# plot a small section of the data
 par(mfrow=c(1,1))
-
 index=which(PAM_data$light$date >= "2015-08-30" &
             PAM_data$light$date <= "2015-09-03")
 plot(PAM_data$light$date[index],
@@ -350,6 +388,9 @@ threshold= 100
 abline(h=threshold, col="brown")
 ```
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/light_threshold.png">
+
+Note that in some cases, it may make sense to log transform the light to better define the night and day threshold. In this case it does not affect the classification
+
 
 ### The light classification
 
@@ -397,9 +438,11 @@ In the below plot, blue represents continuous light (i.e. soaring), while yellow
 
 ## Using Activity
 
+Unlike birds which flap continuously during migration and therefore show a high level of activity, soar-gliding birds only flap intermittently and threfore display intermittent activity, or sustained low activity. This is best displayed by comparing the actograms of hoopoes (LEFT - migratory flappers) and bee-eaters (RIGHT - soar-gliders).
+
 ### Plot activity
 
-Let's start by looking at the actinograms of both hoopoes (which flap) and bee-eaters, which soar-glide.
+Let's start by looking at the actograms of both hoopoes (which flap) and bee-eaters, which soar-glide.
 
 ```r
 # start by differentiating the two birds and cropping the data
@@ -433,7 +476,6 @@ plotACTOGRAM(date = hoopoe$acceleration$date,
              activity = hoopoe$acceleration$act,
              offset=offset,
              col=c("black",viridis::cividis(90)))
-
 addTWL(hoopoe_twl$tFirst, offset=offset, 
        col= ifelse(hoopoe_twl$type == 1,  
                    "goldenrod","cornflowerblue"),
@@ -444,7 +486,6 @@ plotACTOGRAM(date = bee_eater$acceleration$date,
              activity = bee_eater$acceleration$act,
              offset=offset,
              col=c("black",viridis::cividis(90)))
-
 addTWL(bee_eater_twl$tFirst, offset=offset, 
        col= ifelse(bee_eater_twl$type == 1,  
                    "goldenrod","cornflowerblue"),
@@ -453,7 +494,7 @@ addTWL(bee_eater_twl$tFirst, offset=offset,
 ```
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/hoopoe_bee_comp.png">
 
-Note that the first big difference is that hoopes (on the left) are active at night, while bee-eaters (on the right) are not. However, with bee-eaters, though the activity is does not peak as must during migration, it is instead constantly low.
+Note that the first big difference is that hoopes (on the left) are active at night, while bee-eaters (on the right) are not. However, with bee-eaters, though the activity does not peak as must during migration, it is instead constantly low.
 
 ### The activity classification
 
@@ -561,6 +602,11 @@ classification = classifyPAM(TOclassify$night_P_diff
                               * TOclassify$total_daily_P_change
                               * TOclassify$sum_activity, states=2, "hmm")$cluster
                               
+ # This classification also works quite well for a bird whose accelerometer is broken
+ # classification = classifyPAM(TOclassify$total_daily_duration
+ #                              * TOclassify$total_daily_P_change, states=2, "hmm")$cluster
+                              
+                              
 # add this classification
 pressure_classification = classification2PAM(from = TOclassify$start,
                                               to =TOclassify$end,
@@ -584,7 +630,14 @@ plot(bee_eater$pressure$date, bee_eater$pressure$obs,
 
 # Classify Soar-flapping
 
-The example data we have for this is an Alpine Swift.
+Still under development. The example data we have for this is an Alpine Swift.
+
+<p>
+  <img align="center" src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Tachymarptis_melba_-Spain_-collage-8.jpg" alt>
+</p>
+<p>
+  <em>Photo by pau.artigas, Creative commons</em>
+</p>
 
 
 ```r
@@ -608,7 +661,7 @@ quickPLOT(PAM_data, measurements=c("light","pressure","acceleration"),
 ```
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/quickPLOTswift.png">
 
-In looking at the data, particularly pressure and pitch, we notice a big change on the first of October. The bird's behaviour goes from dirunal to contant.This is very apparent in the actinogram. The bird is flying non-stop.
+In looking at the data, particularly pressure and pitch, we notice a big change on the first of October. The bird's behaviour goes from dirunal to contant.This is very apparent in the actogram. The bird is flying non-stop.
 
 ```r
 #estimate sunrises and sunsets
@@ -631,9 +684,7 @@ addTWL(twilights$tFirst,
 We therefor derive similar metrics as with bee-eaters for classify with a hidden markov model, but focus more on night time activity and changes in pressure
 
 ```r
-
 # derive a whole bunch of measures which can be used to classifc the data later
-
 twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
 
 TOclassify = SOARprep(dta = PAM_data,
@@ -648,6 +699,12 @@ test = classifySWIFT(addTO = PAM_data$pressure,
                      states = 3,
                      availavariable = c("light", "pressure", "acceleration"))
 
+
+# add this classification
+pressure_classification = classification2PAM(from = TOclassify$start,
+                                              to =TOclassify$end,
+                                              classification = classification,
+                                              addTO = bee_eater$pressure)
 par(mar=c(3,4,0.5,0.5), mfrow=c(2,1))
 
 plot(PAM_data$pressure$date,PAM_data$pressure$obs,
@@ -663,20 +720,9 @@ plot(PAM_data$pressure$date[index],PAM_data$pressure$obs[index],
      ylab="Pressure",
      pch=21, cex=1.2 )
 ```
+
+
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classiswift.png">
-
-## Calculate altitude
-
-Pressure can give a general estimate of what altitude a bird is flying or stopping at. The function `altitudeCALC` will estimate this for the user based on a standard formula. The parameters for this formula are easily adjusted, see `?altitudeCALC` for more details.
-
-
-```r
-data(hoopoe)
-PAM_data = hoopoe
-altitude = altitudeCALC(P = PAM_data$pressure$obs)
-plot(PAM_data$pressure$date[2:8000], altitude[2:8000], type="o",pch=16, xlab="Date", ylab="Altitude (m)")
-```
-<img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/Altitude.png">
 
 
 ## Authors

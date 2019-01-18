@@ -24,8 +24,8 @@ data(hoopoe)
 PAM_data=hoopoe
 str(PAM_data)
 
-start = as.POSIXct("2015-08-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
+start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
+end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
 
 newPAM = cutPAM(PAM_data,start,end)
 
