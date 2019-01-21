@@ -30,7 +30,7 @@
 #'                       twl = twl)
 #'
 #'
-#' @importFrom stats aggregate sd
+#' @importFrom stats aggregate sd median
 #' @importFrom data.table data.table
 #' @importFrom GeoLight twilightCalc
 #' @importFrom dplyr "%>%" distinct
@@ -220,19 +220,19 @@ SWIFTprep <- function(dta,
     nightP <- do.call(rbind,lapply(1:(length(nights$tFirst)-1),FUN = fun))
     obs = NULL
     dt <- data.table(nightP)
-    dt <- dt[,list(mean=mean(obs),sd=sd(obs)),by=nightP$night_before]
+    dt <- dt[,list(median=median(obs),sd=sd(obs)),by=nightP$night_before]
     dt <- dt %>% distinct()
     dt <- as.data.frame(dt)
 
-    colnames(dt) <- c("date", "mean_night_P", "sd_night_P")
+    colnames(dt) <- c("date", "median_night_P", "sd_night_P")
     flight_list <- merge(flight_list, dt, by="date")
 
-    colnames(dt) <- c("date", "mean_nextnight_P", "sd_nextnight_P")
+    colnames(dt) <- c("date", "median_nextnight_P", "sd_nextnight_P")
     dt <-dt[-1,]
     dt$date <- dt$date-1
     flight_list <- merge(flight_list, dt, by="date", all.x = TRUE)
 
-    flight_list$night_P_diff <- abs(flight_list$mean_night_P - flight_list$mean_nextnight_P)
+    flight_list$night_P_diff <- abs(flight_list$median_night_P - flight_list$median_nextnight_P)
 
   }
 
@@ -251,11 +251,18 @@ SWIFTprep <- function(dta,
                                               )
                                        )
 
-    flight_list$mean_activity <- 1:length(flight_list$total_daily_flight_number)
+    # flight_list$mean_activity <- 1:length(flight_list$total_daily_flight_number)
+    #
+    #
+    # flight_list$mean_activity <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+    #                                           function(x) mean(activity$act[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])
+    # ))
 
-    flight_list$mean_activity <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
-                                              function(x) mean(activity$act[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])
+    flight_list$median_activity <- 1:length(flight_list$total_daily_flight_number)
+    flight_list$median_activity <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+                                               function(x) median(activity$act[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])
     ))
+
 
     flight_list$prop_resting <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
                                               function(x) length(which(activity$act[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]] == 0 )) /
@@ -285,19 +292,19 @@ SWIFTprep <- function(dta,
     act = NULL
 
     dt <- data.table(nightA)
-    dt <- dt[,list(mean=mean(act),sd=sd(act), sum=sum(act)),by=nightA$night_before]
+    dt <- dt[,list(median=median(act),sd=sd(act), sum=sum(act)),by=nightA$night_before]
     dt <- dt %>% distinct()
     dt <- as.data.frame(dt)
 
-    colnames(dt) <- c("date", "mean_night_act", "sd_night_act", "sum_night_act")
+    colnames(dt) <- c("date", "median_night_act", "sd_night_act", "sum_night_act")
     flight_list <- merge(flight_list, dt, by="date")
 
-    colnames(dt) <- c("date", "mean_nextnight_act", "sd_nextnight_act", "sum_nextnight_act")
+    colnames(dt) <- c("date", "median_nextnight_act", "sd_nextnight_act", "sum_nextnight_act")
     dt <- dt[-1,]
     dt$date <- dt$date-1
     flight_list <- merge(flight_list, dt, by="date", all.x=T)
 
-    flight_list$night_act_diff <- abs(flight_list$mean_night_act - flight_list$mean_nextnight_act)
+    flight_list$night_act_diff <- abs(flight_list$median_night_act - flight_list$median_nextnight_act)
 
   }
 

@@ -348,7 +348,7 @@ legend(PAM_data$acceleration$date[index[1]],55,
 Srill under development. The species we are classifying is a European bee-eater
 
 <p>
-  <img align="center" src ="https://upload.wikimedia.org/wikipedia/commons/7/77/Gu%C3%A9piers_d%27europe_Ichkeul_%28European_Bee-eater%29_Merops_apiaster.jpg" alt>
+  <img align="center" src ="https://upload.wikimedia.org/wikipedia/commons/a/ae/Gu%C3%AApier_d%27Europe_Merops_apiaster_-_European_Bee-eater_%28parc_national_de_l%27Ichkeul%29_04.jpg" alt>
 </p>
 <p>
   <em> Photo by El Golli Mohamed, Creative commons </em>
@@ -684,43 +684,69 @@ addTWL(twilights$tFirst,
 We therefor derive similar metrics as with bee-eaters for classify with a hidden markov model, but focus more on night time activity and changes in pressure
 
 ```r
-# derive a whole bunch of measures which can be used to classifc the data later
-twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs, LightThreshold = 2, ask = F)
-
-TOclassify = SOARprep(dta = PAM_data,
-                      availavariable = c("pressure", "acceleration","light"),
-                      twl=twl, diff_P=15)
-str(TOclassify)
+# find sunrises and sunsets in the data
+twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+                             LightThreshold = 2, ask = FALSE)
+                             
+TOclassify = SWIFTprep(dta = PAM_data,
+                       availavariable = c("pressure", "acceleration", "light"),
+                       keep_one_off_missclassifications = TRUE,
+                       twl = twl)
+# remove any NAs from the data
 TOclassify = TOclassify[complete.cases(TOclassify),]
 
-test = classifySWIFT(addTO = PAM_data$pressure,
-                     dta = TOclassify,
-                     method = "hmm", # or kmeans
-                     states = 3,
-                     availavariable = c("light", "pressure", "acceleration"))
 
+
+# to look at all the variables, this bit of code can be used
+# par(mfrow=c(4,1))
+# lapply(4:ncol(TOclassify), FUN = function(i){
+#   plot(TOclassify$date, TOclassify[,i], type = "l",
+#        ylab = colnames(TOclassify)[i])
+# })
+
+# Decide on using nightime activity and pressure changes to classify migration
+classifier = (TOclassify$median_night_act + TOclassify$median_nextnight_act) + (TOclassify$sd_night_P * TOclassify$sd_nextnight_P)
+
+# classify this data using the classifyPAM function
+classification = classifyPAM(scale(classifier, scale=T), states=2, "hmm")$cluster
 
 # add this classification
-pressure_classification = classification2PAM(from = TOclassify$start,
-                                              to =TOclassify$end,
-                                              classification = classification,
-                                              addTO = bee_eater$pressure)
-par(mar=c(3,4,0.5,0.5), mfrow=c(2,1))
+act_classification = classification2PAM(from = TOclassify$start,
+                                        to =TOclassify$end,
+                                        classification = classification,
+                                        addTO = PAM_data$acceleration )
 
-plot(PAM_data$pressure$date,PAM_data$pressure$obs,
-     bg=viridis::viridis(max(test$classification)+1)[test$classification+1],
-     type="o",
-     ylab="Pressure",
-     pch=21, cex=0.8 )
+# merge pressure and activity classification together to plot them
+toplot = merge(data.frame(PAM_data$acceleration, state=act_classification) ,
+               PAM_data$pressure , by="date")
 
-index=2800:5000
-plot(PAM_data$pressure$date[index],PAM_data$pressure$obs[index],
-     bg=viridis::viridis(max(test$classification)+1)[test$classification+1][index],
-     type="o",
-     ylab="Pressure",
-     pch=21, cex=1.2 )
+
+# plot the lot
+par(mfrow=c(3,1))
+plot(toplot$date, toplot$obs,
+     bg= viridis::viridis(max(toplot$state)+1)[toplot$state+1],
+     col="black",  type="o", pch=21,
+     xlab="Date", ylab="Pressure (hPa)")
+
+# south migration
+xlim= c(as.POSIXct("2016-09-19","%Y-%m-%d", tz="UTC"),
+        as.POSIXct("2016-11-01","%Y-%m-%d", tz="UTC"))
+plot(toplot$date, toplot$obs,
+     bg= viridis::viridis(max(toplot$state)+1)[toplot$state+1],
+     col="black",  type="o", pch=21,
+     xlim=xlim,
+     xlab="Date", ylab="Pressure (hPa)")
+
+# north migration
+xlim= c(as.POSIXct("2017-03-01","%Y-%m-%d", tz="UTC"),
+        as.POSIXct("2017-04-20","%Y-%m-%d", tz="UTC"))
+plot(toplot$date, toplot$obs,
+     bg= viridis::viridis(max(toplot$state)+1)[toplot$state+1],
+     col="black",  type="o", pch=21,
+     xlim=xlim,
+     xlab="Date", ylab="Pressure (hPa)")
+
 ```
-
 
 <img align="center" src="https://raw.githubusercontent.com/KiranLDA/PAMLr/master/graphics/classiswift.png">
 
