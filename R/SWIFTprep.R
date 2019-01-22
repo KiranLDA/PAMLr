@@ -263,6 +263,15 @@ SWIFTprep <- function(dta,
                                                function(x) median(activity$act[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])
     ))
 
+    flight_list$median_pitch <- 1:length(flight_list$total_daily_flight_number)
+    flight_list$median_pitch <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+                                                 function(x) median(activity$pit[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])
+    ))
+
+    flight_list$sd_pitch <- 1:length(flight_list$total_daily_flight_number)
+    flight_list$sd_pitch <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+                                              function(x) sd(activity$pit[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])
+    ))
 
     flight_list$prop_resting <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
                                               function(x) length(which(activity$act[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]] == 0 )) /
@@ -290,6 +299,7 @@ SWIFTprep <- function(dta,
 
     nightA <- do.call(rbind,lapply(1:(length(nights$tFirst)-1),FUN = fun))
     act = NULL
+    pit = NULL
 
     dt <- data.table(nightA)
     dt <- dt[,list(median=median(act),sd=sd(act), sum=sum(act)),by=nightA$night_before]
@@ -305,6 +315,23 @@ SWIFTprep <- function(dta,
     flight_list <- merge(flight_list, dt, by="date", all.x=T)
 
     flight_list$night_act_diff <- abs(flight_list$median_night_act - flight_list$median_nextnight_act)
+
+
+    # Get pitch too
+    dt <- data.table(nightA)
+    dt <- dt[,list(median=median(pit),sd=sd(pit), sum=sum(pit)),by=nightA$night_before]
+    dt <- dt %>% distinct()
+    dt <- as.data.frame(dt)
+
+    colnames(dt) <- c("date", "median_night_pit", "sd_night_pit", "sum_night_pit")
+    flight_list <- merge(flight_list, dt, by="date")
+
+    colnames(dt) <- c("date", "median_nextnight_pit", "sd_nextnight_pit", "sum_nextnight_pit")
+    dt <- dt[-1,]
+    dt$date <- dt$date-1
+    flight_list <- merge(flight_list, dt, by="date", all.x=T)
+
+    flight_list$night_pit_diff <- abs(flight_list$median_night_pit - flight_list$median_nextnight_pit)
 
   }
 
