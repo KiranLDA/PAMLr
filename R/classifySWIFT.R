@@ -36,7 +36,7 @@
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 #'                              LightThreshold = 2, ask = FALSE)
 #'
-#' TOclassify = SOARprep(dta = PAM_data,
+#' TOclassify = soarPREP(dta = PAM_data,
 #'                       availavariable = c("pressure", "acceleration","light"),
 #'                       twl=twl, diff_P=15)
 #' str(TOclassify)

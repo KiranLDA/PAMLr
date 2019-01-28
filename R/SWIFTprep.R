@@ -25,7 +25,7 @@
 #'                              LightThreshold = 2, ask = FALSE)
 #' availavariable = c("pressure", "light", "acceleration")
 #'
-#' TOclassify = SWIFTprep(dta = PAM_data,
+#' TOclassify = swiftPREP(dta = PAM_data,
 #'                       availavariable = c("pressure", "acceleration", "light"),
 #'                       twl = twl)
 #'
@@ -36,7 +36,7 @@
 #' @importFrom dplyr "%>%" distinct
 #'
 #' @export
-SWIFTprep <- function(dta,
+swiftPREP <- function(dta,
                       availavariable = c("pressure", "light", "acceleration"),
                       twl,
                       method = "manual",
@@ -208,6 +208,7 @@ SWIFTprep <- function(dta,
   if ("light" %in% availavariable){
 
     nights <- twl[twl$type==2,]
+    obs = NULL
 
     fun <- function(x){
       to_add <- pressure[which(pressure$date > nights$tFirst[x] & pressure$date < nights$tSecond[x]),]
@@ -218,7 +219,7 @@ SWIFTprep <- function(dta,
     }
 
     nightP <- do.call(rbind,lapply(1:(length(nights$tFirst)-1),FUN = fun))
-    obs = NULL
+
     dt <- data.table(nightP)
     dt <- dt[,list(median=median(obs),sd=sd(obs)),by=nightP$night_before]
     dt <- dt %>% distinct()

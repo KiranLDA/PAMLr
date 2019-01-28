@@ -15,7 +15,7 @@
 #' LightThreshold = 2, ask = FALSE)
 #' availavariable = c("pressure", "light", "acceleration")
 #'
-#' TOclassify = SOARprep(dta = PAM_data, availavariable = availavariable, twl = twl)
+#' TOclassify = soarPREP(dta = PAM_data, availavariable = availavariable, twl = twl)
 #'
 #' classification = classifyPAM(TOclassify$night_P_diff, states=3, "hmm")$state
 #' pressure_classification = classification2PAM(from = TOclassify$start,

@@ -28,7 +28,7 @@ twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 LightThreshold = 2, ask = FALSE)
 availavariable = c("pressure", "light", "acceleration")
 
-TOclassify = SOARprep(dta = PAM_data, availavariable = availavariable, twl = twl,diff_P=2)
+TOclassify = soarPREP(dta = PAM_data, availavariable = availavariable, twl = twl,diff_P=2)
 
 classification = classifyPAM(TOclassify$total_daily_duration * log(TOclassify$night_P_diff+0.001 )
 * TOclassify$total_daily_P_change,

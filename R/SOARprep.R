@@ -15,7 +15,7 @@
 #'                              LightThreshold = 2, ask = FALSE)
 #' availavariable = c("pressure", "light", "acceleration")
 #'
-#' TOclassify = SOARprep(dta = PAM_data,
+#' TOclassify = soarPREP(dta = PAM_data,
 #'                       availavariable = c("pressure", "acceleration", "light"),
 #'                       twl = twl)
 #'
@@ -26,7 +26,7 @@
 #' @importFrom dplyr "%>%" distinct
 #'
 #' @export
-SOARprep <- function(dta,
+soarPREP <- function(dta,
                      availavariable = c("pressure", "light", "acceleration"),
                      diff_P = 2,
                      twl,

@@ -348,10 +348,10 @@ legend(PAM_data$acceleration$date[index[1]],55,
 Srill under development. The species we are classifying is a European bee-eater
 
 <p>
-  <img align="center" src ="https://upload.wikimedia.org/wikipedia/commons/a/ae/Gu%C3%AApier_d%27Europe_Merops_apiaster_-_European_Bee-eater_%28parc_national_de_l%27Ichkeul%29_04.jpg" alt>
+  <img align="center" src ="https://upload.wikimedia.org/wikipedia/commons/3/3d/Wachabl%C3%B6sung.JPG" alt>
 </p>
 <p>
-  <em> Photo by El Golli Mohamed, Creative commons </em>
+  <em> Photo by Ethnobob, Creative commons </em>
 </p>
 
 ## Using Light
@@ -546,7 +546,7 @@ plot(toplot$date[id], toplot$obs[id],
 
 Looking at the previous two classifications (light and activity), you will note that migration periods seems to occur during periods of pressure drops. However, because soar-gliding is associated with large changes in altitude, we can use pressure change as a proxy for altitude change to classify this type of flight. 
 
-For instance, we know that a pressure change of more than 3 hPa within a 30 minute interval is likely due to flight, not weather. There is therefore a function `SOARprep` which finds every single one of these flight events and then summarises what happened during that flight event. Summary information includes, pressure the night before and the night after this flight event, how much pressure changed during this flight event, how active the bird was during this flight event, how long the flight event lasted, etc...
+For instance, we know that a pressure change of more than 3 hPa within a 30 minute interval is likely due to flight, not weather. There is therefore a function `soarPREP` which finds every single one of these flight events and then summarises what happened during that flight event. Summary information includes, pressure the night before and the night after this flight event, how much pressure changed during this flight event, how active the bird was during this flight event, how long the flight event lasted, etc...
 
 ### Classifying summarised information from each flight event
 
@@ -569,7 +569,7 @@ twl = GeoLight::twilightCalc(bee_eater$light$date, bee_eater$light$obs,
 availavariable = c("pressure", "light", "acceleration")
 
 # create a dataset of flight events, with information about each flight event
-TOclassify = SOARprep(dta = bee_eater, availavariable = availavariable, twl = twl)
+TOclassify = soarPREP(dta = bee_eater, availavariable = availavariable, twl = twl)
 
 par(mfrow=c(4,1))
 lapply(4:ncol(TOclassify), FUN = function(i){
@@ -688,7 +688,7 @@ We therefor derive similar metrics as with bee-eaters for classify with a hidden
 twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
                              LightThreshold = 2, ask = FALSE)
                              
-TOclassify = SWIFTprep(dta = PAM_data,
+TOclassify = swiftPREP(dta = PAM_data,
                        availavariable = c("pressure", "acceleration", "light"),
                        keep_one_off_missclassifications = TRUE,
                        twl = twl)
