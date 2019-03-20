@@ -111,15 +111,41 @@ soarPREP <- function(dta,
   #--------------------------------------------------
   # for that flight, how much did the pressure change
 
-  flight_list$pressure_change <- 1:length(flight_list$total_daily_flight_number)
-  flight_list$pressure_change <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+  flight_list$cum_pressure_change <- 1:length(flight_list$total_daily_flight_number)
+  flight_list$cum_pressure_change <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
                                                function(x) sum(abs(diff(pressure$obs[
                                                  start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]]))))
   )
 
+
+  #--------------------------------------------------
+  # for that flight, how much did altitude change
+
+  flight_list$cum_altitude_change <- 1:length(flight_list$total_daily_flight_number)
+  flight_list$cum_altitude_change <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+                                                   function(x)
+                                                     sum(abs(diff(altitudeCALC(pressure$obs[start[nrow(flight_list[1:x,])]:
+                                                       end[nrow(flight_list[1:x,])]]
+                                                     ))
+                                                     )))
+  )
+  #--------------------------------------------------
+  # for that flight, how much did the bird go upwards
+
+  flight_list$cum_altitude_up <- 1:length(flight_list$total_daily_flight_number)
+  flight_list$cum_altitude_up <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+                                               function(x) {
+                                                 test = diff(altitudeCALC(pressure$obs[start[nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]]))
+                                                 test = test[test>0]
+                                                 test = sum(test)
+                                                 return(test)
+                                               }
+  ))
+
+
   #--------------------------------------------------
   # for each flight event, find out how much the pressure changed in total that day
-  duration_date <- aggregate(flight_list$pressure_change, by=list(as.Date(flight_list$start)),FUN=sum)
+  duration_date <- aggregate(flight_list$cum_pressure_change, by=list(as.Date(flight_list$start)),FUN=sum)
   names(duration_date) <- c("date", "total_daily_P_change")
 
   flight_list <- merge(flight_list, duration_date, by.x="date", by.y="date")
@@ -142,6 +168,13 @@ soarPREP <- function(dta,
                                                nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]])-
                                                min(pressure$obs[start[nrow(flight_list[1:x,])]:end[nrow(
                                                  flight_list[1:x,])]])
+  ))
+
+  flight_list$altitude_range <- unlist(lapply(1:length(flight_list$total_daily_flight_number),
+                                              function(x) abs(altitudeCALC(max(pressure$obs[start[
+                                                nrow(flight_list[1:x,])]:end[nrow(flight_list[1:x,])]]))-
+                                                altitudeCALC(min(pressure$obs[start[nrow(flight_list[1:x,])]:end[nrow(
+                                                  flight_list[1:x,])]])))
   ))
 
   #--------------------------------------------------

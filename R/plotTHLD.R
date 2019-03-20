@@ -30,12 +30,13 @@
 #' @importFrom grDevices dev.new rgb
 #'
 #' @export
-plotTHLD <- function(dta , classification, threshold, type, new_window = TRUE, ...){
+plotTHLD <- function(dta , classification, threshold, type, new_window = FALSE, ...){
   if(new_window == TRUE) dev.new()
   if (type == "flapping"){
   par(mar=c(4,4,1,1))
   hist(dta[dta != 0],
        breaks = (max(dta[dta != 0])-min(dta[dta != 0])),
+       xlim = c(0,max(dta[dta != 0])),
        xlab="Activity",
        main ="Initial High / Low activity Classification", border = FALSE, ...)
   plot(hist(dta[classification==1 & dta != 0],

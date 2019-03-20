@@ -4,7 +4,7 @@
 \alias{plotTHLD}
 \title{Plot threshold}
 \usage{
-plotTHLD(dta, classification, threshold, type, new_window = TRUE, ...)
+plotTHLD(dta, classification, threshold, type, new_window = FALSE, ...)
 }
 \arguments{
 \item{dta}{Raw acceleration or pressure data used to make the classification}
