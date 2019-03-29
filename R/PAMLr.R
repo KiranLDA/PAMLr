@@ -7,16 +7,19 @@
 #' @author Kiran Dhanjal-Adams \email{kiran.dhanjal.adams@gmail.com}
 #'
 #' @name PAMLr
+#' @importFrom cluster daisy agnes diana
 #' @importFrom data.table data.table
 #' @importFrom depmixS4 depmix fit posterior
 #' @importFrom dplyr "%>%" distinct
 #' @importFrom dygraphs dygraph dyRangeSelector dyHighlight dyLegend dyOptions dyShading "%>%"
+#' @importFrom EMbC embc
 #' @importFrom GeoLight twilightCalc
 #' @importFrom graphics points image mtext axis.POSIXct axis box hist plot abline text par
-#' @importFrom grDevices dev.new rgb
+#' @importFrom grDevices dev.new rgb xyz.coords
 #' @importFrom htmltools browsable tagList
 #' @importFrom raster rotate
-#' @importFrom stats kmeans aggregate approx gaussian poisson sd complete.cases median
+#' @importFrom rgl spheres3d abclines3d arrow3d text3d open3d rgl.user2window
+#' @importFrom stats kmeans aggregate approx gaussian poisson sd complete.cases median cutree as.formula
 #' @importFrom TwGeos hourOffset as.hour
 #' @importFrom utils read.delim
 #' @importFrom viridis magma viridis
