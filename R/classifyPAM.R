@@ -3,7 +3,7 @@
 #' @param dta data to be classified, can be anything
 #' @param method method for classifying data, currently support "hmm" for hidden markov model and "kmeans" for kmeans clustering
 #' @param states number of states to classify the data into
-#' @param ... any additional inputs for depmixs4::depmix or or stats::kmeans functions, depending on method selected
+#' @param ... any additional inputs for depmixs4::depmix, stats::kmeans, cluster::diana, cluster::diana  or EMbC::embc functions, depending on method selected
 #'
 #' @return the data's classification based on the chosen algorithm
 #'
@@ -185,7 +185,13 @@ classifyPAM <- function(dta ,
     classification$output <- diana(x, ... )
     classification$cluster <- cutree(classification$output, k = states)
   }
+  if (method == "pca"){
+    pca <- prcomp(x=dta, retx=TRUE, center=FALSE, scale.=F)
+    plot(pca )
+    summary(pca )
+    biplot(pca )
 
+  }
 
   return(classification)
 }
