@@ -22,7 +22,14 @@ triACC <- function(dta){
   pitch = atan2(Sy,(sqrt(Sx^2 + Sz^2)))*(180/pi)
   yaw   = atan2(Sz,(sqrt(Sx^2 + Sy^2)))*(180/pi)
 
+  centered_accx = Sx/sqrt(Sx^2 + Sy^2 + Sz^2)
+  centered_accy = Sy/sqrt(Sx^2 + Sy^2 + Sz^2)
+  centered_accz = Sz/sqrt(Sx^2 + Sy^2 + Sz^2)
+
   return(list(roll=roll,
               pitch = pitch,
-              yaw = yaw))
+              yaw = yaw,
+              centered_accx = centered_accx,
+              centered_accy = centered_accy,
+              centered_accz = centered_accz))
 }

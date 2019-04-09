@@ -134,7 +134,7 @@
 #'
 #' @export
 classifyPAM <- function(dta ,
-                        method = c("kmeans","hmm", "embc"),
+                        method = c("kmeans","hmm", "embc", "agnes", "diana"),
                         states = 2,
                         ...){
 
@@ -185,13 +185,13 @@ classifyPAM <- function(dta ,
     classification$output <- diana(x, ... )
     classification$cluster <- cutree(classification$output, k = states)
   }
-  if (method == "pca"){
-    pca <- prcomp(x=dta, retx=TRUE, center=FALSE, scale.=F)
-    plot(pca )
-    summary(pca )
-    biplot(pca )
-
-  }
+  # if (method == "pca"){
+  #   pca <- prcomp(x=dta, retx=TRUE, center=FALSE, scale.=F)
+  #   plot(pca )
+  #   summary(pca )
+  #   biplot(pca )
+  #
+  # }
 
   return(classification)
 }

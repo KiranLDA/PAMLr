@@ -4,12 +4,16 @@
 \alias{reducePAM}
 \title{Reduces the data to a specified temporal resolution}
 \usage{
-reducePAM(dta, varint)
+reducePAM(dta, varint, interp_NA = TRUE, summary = "median")
 }
 \arguments{
 \item{dta}{raw pam data see `data(bee_eater` for example}
 
-\item{varint}{the variable of interest. For instance if all other variables should be summarised at the same temporal resolution as this specified variable. It must correspond to variable or list in `dta` Currently supports c("pressure","light","pit","act","temperature","gX","gY","gZ","mX", "mY","mZ")}
+\item{varint}{the variable of interest.Sipprots c("pressure","light","pit","act","temperature","gX","gY","gZ","mX", "mY","mZ"). For instance if all other variables should be summarised at the same temporal resolution as this specified variable. It must correspond to variable or list in `dta` Currently supports}
+
+\item{interp_NA}{Default TRUE. Whether or not to replace NAs with interpolated values}
+
+\item{summary}{Can be "sum", "median" or "none" What type of summary variable to give when condensing data -}
 }
 \value{
 reduced/summarised and interpolated dataset
@@ -26,6 +30,9 @@ end = as.POSIXct("2016-06-21","\%Y-\%m-\%d", tz="UTC")
 PAM_data = cutPAM(PAM_data, start, end)
 
 reduced_dta = reducePAM(PAM_data , "pressure")
+head(reduced_dta)
+
+reduced_dta = reducePAM(PAM_data , "act", interp = FALSE)
 head(reduced_dta)
 
 }

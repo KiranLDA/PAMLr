@@ -4,7 +4,7 @@
 \alias{magSPHERE}
 \title{Plot calibrated magnetic data on a sphere}
 \usage{
-magSPHERE(magX, magY, magZ, col = "black")
+magSPHERE(magX, magY, magZ, col = "black", ...)
 }
 \arguments{
 \item{magX}{magentic data on x axis}
@@ -14,6 +14,8 @@ magSPHERE(magX, magY, magZ, col = "black")
 \item{magZ}{magentic data on z axis}
 
 \item{col}{color of points}
+
+\item{...}{additional input for rgl::spheres3d for plotting points on the sphere using}
 }
 \value{
 a 3d sphere plot
@@ -30,8 +32,8 @@ PAM_data = swift
 
 calibration = triMAG(dta = PAM_data$magnetic)
 
-#magSPHERE(magX = calibration$calib_magx,
-#         magY = calibration$calib_magy,
-#         magZ = calibration$calib_magz)
+# magSPHERE(magX = calibration$calib_magx,
+#           magY = calibration$calib_magy,
+#           magZ = calibration$calib_magz)
 
 }

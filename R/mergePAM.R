@@ -1,8 +1,8 @@
 #' merges all the data into one table for interpolation
 #'
 #' @param dta raw pam data see `data(bee_eater` for example
-#' @param interp logical. whether or not to interpolate if there are NAs
-#' @param keep_NA logical. Whether or not to keep NA
+#' @param interp logical. Default TRUE. whether or not to interpolate if there are NAs
+#' @param all logical. Default TRUE. Whether or not to keep NAs (i.e. all the datasets)
 #'
 #' @return merged and interpolated dataset
 #'
@@ -17,7 +17,7 @@
 #' @export
 mergePAM <- function(dta,
                      interp = TRUE,
-                     keep_NA = TRUE){
+                     all = TRUE){
 
   PAM_data = dta
 
@@ -35,7 +35,7 @@ mergePAM <- function(dta,
     colnames(PAM_data$temperature)[which(colnames(PAM_data$temperature) == "obs")] = "temperature"
   }
 
-  new = Reduce(function(...) merge(..., all = keep_NA), PAM_data)
+  new = Reduce(function(...) merge(..., all = all), PAM_data)
 
   if(interp == TRUE){
     new[,2:ncol(new)] = na.approx(new[,2:ncol(new)])

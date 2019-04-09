@@ -4,14 +4,14 @@
 \alias{mergePAM}
 \title{merges all the data into one table for interpolation}
 \usage{
-mergePAM(dta, interp = TRUE, keep_NA = TRUE)
+mergePAM(dta, interp = TRUE, all = TRUE)
 }
 \arguments{
 \item{dta}{raw pam data see `data(bee_eater` for example}
 
-\item{interp}{logical. whether or not to interpolate if there are NAs}
+\item{interp}{logical. Default TRUE. whether or not to interpolate if there are NAs}
 
-\item{keep_NA}{logical. Whether or not to keep NA}
+\item{all}{logical. Default TRUE. Whether or not to keep NAs (i.e. all the datasets)}
 }
 \value{
 merged and interpolated dataset

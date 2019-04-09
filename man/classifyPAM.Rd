@@ -4,7 +4,8 @@
 \alias{classifyPAM}
 \title{Derive classification data for soaring birds}
 \usage{
-classifyPAM(dta, method = c("kmeans", "hmm", "embc"), states = 2, ...)
+classifyPAM(dta, method = c("kmeans", "hmm", "embc", "agnes", "diana"),
+  states = 2, ...)
 }
 \arguments{
 \item{dta}{data to be classified, can be anything}
@@ -13,7 +14,7 @@ classifyPAM(dta, method = c("kmeans", "hmm", "embc"), states = 2, ...)
 
 \item{states}{number of states to classify the data into}
 
-\item{...}{any additional inputs for depmixs4::depmix or or stats::kmeans functions, depending on method selected}
+\item{...}{any additional inputs for depmixs4::depmix, stats::kmeans, cluster::diana, cluster::diana  or EMbC::embc functions, depending on method selected}
 }
 \value{
 the data's classification based on the chosen algorithm
@@ -96,6 +97,7 @@ points(PAM_data$pressure$date, PAM_data$pressure$obs,
        col= classification$output@C[pressure_classification+1],
        pch=16)
 
+
 #######################################################
 # agnes example
 #######################################################
@@ -137,6 +139,7 @@ plot(PAM_data$pressure$date, PAM_data$pressure$obs,
 points(PAM_data$pressure$date, PAM_data$pressure$obs,
        col= pressure_classification+1,
        pch=16)
+
 
 
 }

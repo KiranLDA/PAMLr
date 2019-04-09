@@ -9,7 +9,8 @@ License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Imports: cluster,
+Imports: changepoint,
+  cluster,
   data.table,
   depmixS4,
   dplyr,
@@ -29,3 +30,7 @@ Imports: cluster,
   xts,
   zoo
 Depends: R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

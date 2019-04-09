@@ -7,10 +7,10 @@
 #' @param dt the time interval to which the data are resampled (secs). Default is `NA`
 #' @param xlab label for x-axis (as a character string)
 #' @param ylab label for y axis (as a character string)
-#' @param plotx wherether or not to plot the x axis (for instance when compiling multifigures)
-#' @param ploty wherether or not to plot the y axis (for instance when compiling multifigures)
-#' @param plotx wherether or not to write the label of the x axis (for instance when compiling multifigures)
-#' @param ploty wherether or not to write the label of the y axis (for instance when compiling multifigures)
+#' @param plotx wherether or not to plot the x axis ticks + labels (for instance when compiling multifigures)
+#' @param ploty wherether or not to plot the y axis ticks + labels (for instance when compiling multifigures)
+#' @param labelx wherether or not to write the name of the x axis (for instance when compiling multifigures)
+#' @param labely wherether or not to write the name of the y axis (for instance when compiling multifigures)
 #' @param cex size of labels
 #' @param col Colour scheme of plot. Default `col = c("black",viridis::magma(90))`
 #' @param ... Any additional parameters used by graphics::image
@@ -53,7 +53,8 @@
 #'
 #' par( mfrow= c(1,3), oma=c(0,2,0,6),mar =  c(4,2,4,2))
 #'
-#' sensorIMG(PAM_data$pressure$date, c(0,abs(diff(PAM_data$pressure$obs))),  main="Pressure  difference",
+#' sensorIMG(PAM_data$pressure$date, c(0,abs(diff(PAM_data$pressure$obs))),
+#'           main="Pressure  difference",
 #'           ploty=FALSE,
 #'           col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
 #'

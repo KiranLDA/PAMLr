@@ -5,8 +5,9 @@
 \title{Plot Actogram}
 \usage{
 sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
-  offset = 0, dt = NA, xlab = "Hour", ylab = "Date", cex = 2,
-  col = c("black", viridis::magma(90)), ...)
+  labelx = TRUE, labely = TRUE, offset = 0, dt = NA,
+  xlab = "Hour", ylab = "Date", cex = 2, col = c("black",
+  viridis::magma(90)), ...)
 }
 \arguments{
 \item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}
@@ -15,17 +16,21 @@ sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
 
 \item{tz}{Time zone for POSIXct, default set to "UTC"}
 
-\item{plotx}{wherether or not to plot the x axis (for instance when compiling multifigures)}
+\item{plotx}{wherether or not to plot the x axis ticks + labels (for instance when compiling multifigures)}
 
-\item{ploty}{wherether or not to plot the y axis (for instance when compiling multifigures)}
+\item{ploty}{wherether or not to plot the y axis ticks + labels (for instance when compiling multifigures)}
+
+\item{labelx}{wherether or not to write the name of the x axis (for instance when compiling multifigures)}
+
+\item{labely}{wherether or not to write the name of the y axis (for instance when compiling multifigures)}
 
 \item{offset}{This parameter determines where the center of the graph is. When `offset = 0`, then midday is at the center of the graph. when `offset=12` midnight`}
 
 \item{dt}{the time interval to which the data are resampled (secs). Default is `NA`}
 
-\item{xlab}{label for x-axis}
+\item{xlab}{label for x-axis (as a character string)}
 
-\item{ylab}{label for y axis}
+\item{ylab}{label for y axis (as a character string)}
 
 \item{cex}{size of labels}
 
@@ -34,7 +39,7 @@ sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
 \item{...}{Any additional parameters used by graphics::image}
 }
 \value{
-an actogram
+an image of the sensor data, for instance with activity it would produce an actogram
 }
 \description{
 Plot Actogram
@@ -42,18 +47,51 @@ Plot Actogram
 \examples{
 #specify the data location
 data(hoopoe)
-PAM_data=hoopoe
+start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
+end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
+PAM_data = cutPAM(hoopoe,start,end)
 
-# Create plots with large margins (mar) and plot 3 together (mfrow)
-par(mar = c(4,4,1,6),  mfrow= c(1,3))
+# Create plots with 3 together (mfrow)
+par( mfrow= c(1,3), oma=c(0,2,0,6))
+
+par(mar =  c(4,2,4,2))
+sensorIMG(PAM_data$acceleration$date, ploty=FALSE,
+          PAM_data$acceleration$act, main = "Activity",
+          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
+
+par(mar =  c(4,2,4,2))
+sensorIMG(PAM_data$pressure$date, plotx=TRUE, ploty=FALSE, labely=FALSE,
+          PAM_data$pressure$obs,  main="Pressure",
+          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
+
+par(mar =  c(4,2,4,2))
+sensorIMG(PAM_data$temperature$date, labely=FALSE,
+          PAM_data$temperature$obs,  main="Temperature",
+          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
+
+######################################################
+# Look at a classification output
+######################################################
+
+# Classification
+classification  =  classifyFLAP(dta = PAM_data$acceleration, period = 10, toPLOT=FALSE)
+
+par( mfrow= c(1,3), oma=c(0,2,0,6),mar =  c(4,2,4,2))
+
+sensorIMG(PAM_data$pressure$date, c(0,abs(diff(PAM_data$pressure$obs))),
+          main="Pressure  difference",
+          ploty=FALSE,
+          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
+
+sensorIMG(PAM_data$acceleration$date, PAM_data$acceleration$act,  main="Activity",
+          ploty=FALSE, labely=FALSE,
+          col=c(viridis::cividis(90)), cex=1.2, cex.main = 2)
 
 sensorIMG(PAM_data$acceleration$date,
-          PAM_data$acceleration$act, main = "Activity")
-
-sensorIMG(PAM_data$pressure$date,
-          PAM_data$pressure$obs,  main="Pressure")
-
-sensorIMG(PAM_data$temperature$date,
-          PAM_data$temperature$obs,  main="Temperature")
+          ifelse(classification$classification == classification$migration, 1,2),
+          main="Migration Classification",
+          labely=FALSE,
+          col = c("orange","black"),
+          cex=1.2, cex.main = 2)
 
 }
