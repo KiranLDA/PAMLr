@@ -22,6 +22,20 @@
 #'                       twl = twl)
 #'
 #'
+#' start = as.POSIXct("2015-08-01","%Y-%m-%d", tz="UTC")
+#' end = as.POSIXct("2016-06-21","%Y-%m-%d", tz="UTC")
+#' PAM_data = cutPAM(bee_eater, start, end)
+#' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+#'                              LightThreshold = 2, ask = FALSE)
+#'
+#'TOclassify = pamPREP(PAM_data = PAM_data,
+#'                       method= "flap",
+#'                       twl = twl)
+#'
+#' str(TOclassify)
+#'
+#'
+#'
 #' @importFrom stats aggregate sd kmeans median
 #' @importFrom data.table data.table
 #' @importFrom GeoLight twilightCalc
@@ -35,7 +49,7 @@ pamPREP <- function(PAM_data,
                     light_thld = 1,
                     method = "pressure",
                     twl,
-                    interp = TRUE,
+                    interp = FALSE,
                     tz="UTC"){
 
   if("pressure" %in% availavariable){
@@ -49,9 +63,11 @@ pamPREP <- function(PAM_data,
   if("acceleration" %in% availavariable){
     activity <- PAM_data$acceleration
   }
+
   if("magnetic" %in% availavariable){
     magnetic <- PAM_data$magnetic
     if(interp == TRUE){
+
       if (method == "pressure"){
         magnetic = merge(pressure, magnetic, all = TRUE)
       }
@@ -61,9 +77,11 @@ pamPREP <- function(PAM_data,
       if (method %in% c("rest", "flap", "endurance")){
         magnetic = merge(activity, magnetic, all = TRUE)
       }
-      magnetic[,2:ncol(magnetic)] = na.approx(magnetic[,2:ncol(magnetic)])
+      magnetic[,2:ncol(magnetic)] = zoo::na.approx(magnetic[,2:ncol(magnetic)])
     }
+    # }
   }
+
   if("temperature" %in% availavariable){
     temperature <- PAM_data$temperature
   }
@@ -97,6 +115,7 @@ pamPREP <- function(PAM_data,
       end <- end[-to_remove]
       start <- start[-(to_remove+1)]
     }
+
     #housekeeping
     if(end[1]< start[1]) end <- end[-1] #if the series starts with an end not a start, remove the first ending
     if (length(end)<length(start)) start <- start[1:length(end)]
@@ -381,29 +400,29 @@ pamPREP <- function(PAM_data,
     #--------------------------------------------------
     # for that event, how much did the pressure change
 
-    event_list$cum_pressure_change <- 1:length(event_list$total_daily_event_number)
-    event_list$cum_pressure_change <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    # event_list$cum_pressure_change <- 1:length(event_list$total_daily_event_number)
+    event_list$cum_pressure_change <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                                     function(x) {sum(abs(diff(pressure$obs[(pressure$date >= event_list$start[x]) &
                                                                                              (pressure$date <= event_list$end[x])])))})
-    )
+    ))
 
 
     #--------------------------------------------------
     # for that event, how much did altitude change
 
-    event_list$cum_altitude_change <- 1:length(event_list$total_daily_event_number)
-    event_list$cum_altitude_change <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    # event_list$cum_altitude_change <- 1:length(event_list$total_daily_event_number)
+    event_list$cum_altitude_change <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                                     function(x){
                                                       sum(abs(diff(altitudeCALC(pressure$obs[(pressure$date >= event_list$start[x]) &
                                                                                                (pressure$date <= event_list$end[x])]
                                                       ))))
                                                     } )
-    )
+    ))
     #--------------------------------------------------
     # for that event, how much did the bird go upwards
 
-    event_list$cum_altitude_up <- 1:length(event_list$total_daily_event_number)
-    event_list$cum_altitude_up <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    # event_list$cum_altitude_up <- 1:length(event_list$total_daily_event_number)
+    event_list$cum_altitude_up <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                                 function(x) {
                                                   test = diff(altitudeCALC(pressure$obs[(pressure$date >= event_list$start[x]) &
                                                                                           (pressure$date <= event_list$end[x])]))
@@ -411,7 +430,7 @@ pamPREP <- function(PAM_data,
                                                   test = sum(test)
                                                   return(test)
                                                 }
-    ))
+    )))
 
 
     #--------------------------------------------------
@@ -425,30 +444,30 @@ pamPREP <- function(PAM_data,
 
     #--------------------------------------------------
     # for that event, what was pressure like when the bird departed and when in stopped
-    event_list$P_dep_arr <- unlist(lapply(1:length(event_list$total_daily_event_number),
-                                          function(x) {abs( pressure$obs[last(which(pressure$date <= event_list$end[x]))] -
+    event_list$P_dep_arr <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
+                                          function(x) {abs( pressure$obs[dplyr::last(which(pressure$date <= event_list$end[x]))] -
                                                               pressure$obs[which(pressure$date >= event_list$start[x])[1]])}
                                           # pressure$obs[start[nrow(event_list[1:x,])]]-
                                           #                 pressure$obs[end[nrow(event_list[1:x,])]] )
     )
-    )
+    ))
 
     #--------------------------------------------------
     # for that event, what was the total pressure range
 
-    event_list$pressure_range <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    event_list$pressure_range <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                                function(x) {max(pressure$obs[(pressure$date >= event_list$start[x]) &
                                                                                (pressure$date <= event_list$end[x])])-
                                                    min(pressure$obs[(pressure$date >= event_list$start[x]) &
                                                                       (pressure$date <= event_list$end[x])])}
-    ))
+    )))
 
-    event_list$altitude_range <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    event_list$altitude_range <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                                function(x) {abs(altitudeCALC(max(pressure$obs[(pressure$date >= event_list$start[x]) &
                                                                                                 (pressure$date <= event_list$end[x])]))-
                                                                   altitudeCALC(min(pressure$obs[(pressure$date >= event_list$start[x]) &
                                                                                                   (pressure$date <= event_list$end[x])])))}
-    ))
+    )))
   }
   #--------------------------------------------------
   # for that event, what was pressure like the night before, and what was it like the next night
@@ -488,21 +507,21 @@ pamPREP <- function(PAM_data,
   # for that event, what was the proportion of time spent resting?
   if ("acceleration" %in% availavariable){
 
-    event_list$median_activity <- 1:length(event_list$total_daily_event_number)
-    event_list$median_activity <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    # event_list$median_activity <- 1:length(event_list$total_daily_event_number)
+    event_list$median_activity <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                              function(x) {median(activity$act[(activity$date >= event_list$start[x]) &
-                                                                             (activity$date <= event_list$end[x])], na.rm=TRUE)}))
+                                                                             (activity$date <= event_list$end[x])], na.rm=TRUE)})))
 
-    event_list$sum_activity <- 1:length(event_list$total_daily_event_number)
-    event_list$sum_activity <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    # event_list$sum_activity <- 1:length(event_list$total_daily_event_number)
+    event_list$sum_activity <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                              function(x) {sum(activity$act[(activity$date >= event_list$start[x]) &
                                                                              (activity$date <= event_list$end[x])])}))
-
-    event_list$prop_resting <- unlist(lapply(1:length(event_list$total_daily_event_number),
+)
+    event_list$prop_resting <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                              function(x) {length(which(activity$act[(activity$date >= event_list$start[x]) &
                                                                                       (activity$date <= event_list$end[x])] == 0 )) /
                                                  length(activity$act[(activity$date >= event_list$start[x]) &
-                                                                       (activity$date <= event_list$end[x]) ])}))
+                                                                       (activity$date <= event_list$end[x]) ])})))
     event_list$prop_active <- 1-event_list$prop_resting
   }
 
@@ -545,29 +564,29 @@ pamPREP <- function(PAM_data,
   #--------------------------------------------------
   # for that event, what was the median body position, and how variable was it
   if ("acceleration" %in% availavariable){
-    event_list$median_pitch <- 1:length(event_list$total_daily_event_number)
-    event_list$median_pitch <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    # event_list$median_pitch <- 1:length(event_list$total_daily_event_number)
+    event_list$median_pitch <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                              function(x){
                                                median(activity$pit[(activity$date >= event_list$start[x]) &
                                                                      (activity$date <= event_list$end[x])], na.rm=TRUE)
-                                             }))
-    event_list$sd_pitch <- 1:length(event_list$total_daily_event_number)
-    event_list$sd_pitch <- unlist(lapply(1:length(event_list$total_daily_event_number),
+                                             })))
+    # event_list$sd_pitch <- 1:length(event_list$total_daily_event_number)
+    event_list$sd_pitch <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                          function(x){
                                            sd(activity$pit[(activity$date >= event_list$start[x]) &
                                                              (activity$date <= event_list$end[x])], na.rm=TRUE)
-                                         }))
+                                         })))
   }
 
   #--------------------------------------------------
   # for that event, how light or dark was it
   if ("light" %in% availavariable){
-    event_list$median_light <- 1:length(event_list$total_daily_event_number)
-    event_list$median_light <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    # event_list$median_light <- 1:length(event_list$total_daily_event_number)
+    event_list$median_light <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                              function(x){
                                                median(light$obs[(light$date >= event_list$start[x]) &
                                                                   (light$date <= event_list$end[x])], na.rm=TRUE)
-                                             }))
+                                             })))
 
 
     nights <- twl[twl$type==2,]
@@ -635,60 +654,61 @@ pamPREP <- function(PAM_data,
   #--------------------------------------------------
   # for that event, what was the median tri-axial information
   if ("magnetic" %in% availavariable){
-    event_list$median_gX <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    event_list$median_gX <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                           function(x){
                                             median(magnetic$gX[(magnetic$date >= event_list$start[x]) &
                                                                  (magnetic$date <= event_list$end[x])], na.rm=TRUE)
-                                          }))
-    event_list$median_gY <- unlist(lapply(1:length(event_list$total_daily_event_number),
+                                          })))
+    event_list$median_gY <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                           function(x){
                                             median(magnetic$gY[(magnetic$date >= event_list$start[x]) &
                                                                  (magnetic$date <= event_list$end[x])], na.rm=TRUE)
-                                          }))
-    event_list$median_gZ <- unlist(lapply(1:length(event_list$total_daily_event_number),
+                                          })))
+    event_list$median_gZ <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                           function(x){
                                             median(magnetic$gZ[(magnetic$date >= event_list$start[x]) &
                                                                  (magnetic$date <= event_list$end[x])], na.rm=TRUE)
-                                          }))
-    event_list$median_mX <- unlist(lapply(1:length(event_list$total_daily_event_number),
+                                          })))
+    event_list$median_mX <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                           function(x){
                                             median(magnetic$mX[(magnetic$date >= event_list$start[x]) &
                                                                  (magnetic$date <= event_list$end[x])], na.rm=TRUE)
-                                          }))
-    event_list$median_mY <- unlist(lapply(1:length(event_list$total_daily_event_number),
+                                          })))
+    event_list$median_mY <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                           function(x){
                                             median(magnetic$mY[(magnetic$date >= event_list$start[x]) &
                                                                  (magnetic$date <= event_list$end[x])], na.rm=TRUE)
-                                          }))
-    event_list$median_mZ <- unlist(lapply(1:length(event_list$total_daily_event_number),
+                                          })))
+    event_list$median_mZ <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                           function(x){
                                             median(magnetic$mZ[(magnetic$date >= event_list$start[x]) &
                                                                  (magnetic$date <= event_list$end[x])], na.rm=TRUE)
-                                          }))
+                                          })))
   }
   #--------------------------------------------------
   # for that event, what was the median temperature and the change in temp
   if ("temperature" %in% availavariable){
-    event_list$median_temp <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    event_list$median_temp <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                             function(x){
                                               median(temperature$obs[(temperature$date >= event_list$start[x]) &
                                                                        (temperature$date <= event_list$end[x])], na.rm=TRUE)
-                                            }))
-    event_list$sd_temp <- unlist(lapply(1:length(event_list$total_daily_event_number),
+                                            })))
+    event_list$sd_temp <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                             function(x){
                                               sd(temperature$obs[(temperature$date >= event_list$start[x]) &
                                                                        (temperature$date <= event_list$end[x])], na.rm=TRUE)
-                                            }))
-    event_list$cum_temp_change <- unlist(lapply(1:length(event_list$total_daily_event_number),
+                                            })))
+    event_list$cum_temp_change <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
                                             function(x){
                                               sum(abs(diff(temperature$obs[(temperature$date >= event_list$start[x]) &
                                                                        (temperature$date <= event_list$end[x])], na.rm=TRUE)))
-                                            }))
+                                            })))
 
 
   }
 
-
+  event_list = do.call(data.frame,lapply(event_list, function(x) replace(x, is.infinite(x),NA)))
+  event_list = do.call(data.frame,lapply(event_list, function(x) replace(x, is.nan(x),NA)))
   return(event_list)
 
 }
