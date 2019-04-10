@@ -679,7 +679,7 @@ pamPREP <- function(PAM_data,
                                               sd(temperature$obs[(temperature$date >= event_list$start[x]) &
                                                                        (temperature$date <= event_list$end[x])], na.rm=TRUE)
                                             }))
-    event_list$diff_temp <- unlist(lapply(1:length(event_list$total_daily_event_number),
+    event_list$cum_temp_change <- unlist(lapply(1:length(event_list$total_daily_event_number),
                                             function(x){
                                               sum(abs(diff(temperature$obs[(temperature$date >= event_list$start[x]) &
                                                                        (temperature$date <= event_list$end[x])], na.rm=TRUE)))
