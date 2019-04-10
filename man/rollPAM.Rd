@@ -33,10 +33,18 @@ start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
 end = as.POSIXct("2017-04-21","\%Y-\%m-\%d", tz="UTC")
 PAM_data = cutPAM(PAM_data, start, end)
 
-TOclassify = rollPAM(dta = list(PAM_data$pressure, PAM_data$acceleration),
-                     resolution_out = 15 ,
-                     window = 120)
 
+TOclassify = rollPAM(dta = PAM_data,
+                     resolution_out = 60 ,
+                     window = 2*60,
+                     interp_NA = FALSE)
+
+TOclassify = rollPAM(dta = list(pressure = PAM_data$pressure,
+                                acceleration = PAM_data$acceleration),
+                     resolution_out = 60 ,
+                     window = 24*60)
+head(TOclassify)
+plot(TOclassify$cumu_diff_pressure, type="l")
 
 
 }

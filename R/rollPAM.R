@@ -17,6 +17,12 @@
 #' end = as.POSIXct("2017-04-21","%Y-%m-%d", tz="UTC")
 #' PAM_data = cutPAM(PAM_data, start, end)
 #'
+#'
+#' TOclassify = rollPAM(dta = PAM_data,
+#'                      resolution_out = 60 ,
+#'                      window = 2*60,
+#'                      interp_NA = FALSE)
+#'
 #' TOclassify = rollPAM(dta = list(pressure = PAM_data$pressure,
 #'                                 acceleration = PAM_data$acceleration),
 #'                      resolution_out = 60 ,
@@ -138,10 +144,12 @@ rollPAM  <- function(dta,
 
   #----------------------------------------------
   # Maximum
+  # zoo::rollmax(test[,to_change],period, na.rm=TRUE)
 
-  max = do.call(cbind,lapply( to_change, function(i){
-    zoo::rollapply(test[,i],period, max, na.rm=TRUE )
-  }))
+  max = suppressWarnings(do.call(cbind,lapply( to_change, function(i){
+    zoo::rollapply(test[,i],period, function(x)  max(x,na.rm=TRUE))
+
+  })))
   max = data.frame(test$date[round(period/2): (dim(max)[1] + round(period/2)-1)],
                    max)
   colsnam = paste0("max_",colnames(new)[to_change])
@@ -150,13 +158,14 @@ rollPAM  <- function(dta,
   #----------------------------------------------
   # Minimum
 
-  min = do.call(cbind,lapply( to_change, function(i){
+  min = suppressWarnings(do.call(cbind,lapply( to_change, function(i){
     zoo::rollapply(test[,i],period, min, na.rm=TRUE )
-  }))
+  })))
   min = data.frame(test$date[round(period/2): (dim(min)[1] + round(period/2)-1)],
                    min)
   colsnam = paste0("min_",colnames(new)[to_change])
   colnames(min) <- c("date", colsnam)
+
 
   #----------------------------------------------
   # Sum
@@ -173,14 +182,13 @@ rollPAM  <- function(dta,
   #----------------------------------------------
   # Range
 
-  range = do.call(cbind,lapply( to_change, function(i){
+  range = suppressWarnings(do.call(cbind,lapply( to_change, function(i){
     zoo::rollapply(test[,i],period, function(x) max(x, na.rm=TRUE) - min(x,na.rm=TRUE) )
-  }))
+  })))
   range = data.frame(test$date[round(period/2): (dim(range)[1] + round(period/2)-1)],
                      range)
   colsnam = paste0("range_",colnames(new)[to_change])
   colnames(range) <- c("date", colsnam)
-
 
 
   out = cbind(test[round(period/2): (dim(range)[1] + round(period/2)-1),],
@@ -191,4 +199,8 @@ rollPAM  <- function(dta,
               max[,to_change],
               cumu_diff[,to_change],
               range[,to_change])
+
+  out = do.call(data.frame,lapply(out, function(x) replace(x, is.infinite(x),NA)))
+
+  return(out)
 }
