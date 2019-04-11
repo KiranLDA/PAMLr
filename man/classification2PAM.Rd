@@ -30,9 +30,9 @@ availavariable = c("pressure", "light", "acceleration")
 
 TOclassify = soarPREP(dta = PAM_data, availavariable = availavariable, twl = twl,diff_P=2)
 
-classification = classifyPAM(TOclassify$total_daily_duration * log(TOclassify$night_P_diff+0.001 )
-* TOclassify$total_daily_P_change,
-states=3, "hmm")$state
+classification = classifyPAM((TOclassify$total_daily_duration * log(TOclassify$night_P_diff+0.001 )
+* TOclassify$total_daily_P_change),
+states=3, "hmm")$cluster
 pressure_classification = classification2PAM(from = TOclassify$start,
                                               to =TOclassify$end,
                                                classification = classification,
@@ -41,6 +41,5 @@ pressure_classification = classification2PAM(from = TOclassify$start,
 plot(PAM_data$pressure$date, PAM_data$pressure$obs,
 col= viridis::viridis(4)[pressure_classification+1],
 type="o", pch=16, cex=0.6)
-
 
 }
