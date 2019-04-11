@@ -10,23 +10,22 @@
 #' @examples
 #' #specify the data location
 #' data(hoopoe)
-#' PAM_data = hoopoe
+#' # make sure the cropping period is in the correct date format
+#' start = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
+#' end = as.POSIXct("2017-06-01","%Y-%m-%d", tz="UTC")
+#'
+#' # Crop the data
+#' PAM_data= cutPAM(hoopoe,start,end)
 #' str(PAM_data)
 #'
-#' #plot the activity to see if it looks ok
-#' plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="activity")
+#' behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 12)
 #'
-#' # at first glance it looks like the logger was removed off a birds and left in arucksack
-#  # so remove un-needed data
-#' PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
-#' & (PAM_data$acceleration$date <= "2017-06-01")),]
-#'
-#' behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 4)
-#'
-#'
-#' col=col=c("brown","cyan4","black","gold")
-#' plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
-#' col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
+#' col=c("brown","cyan4","black","gold")
+#' plot(PAM_data$acceleration$date[6000:8000],PAM_data$acceleration$act[6000:8000],
+#'      col=col[behaviour$classification][6000:8000],
+#'      type="o", pch=20,
+#'      xlab="Date",
+#'      ylab="Activity")
 #'
 #' behaviour$timetable
 #'
@@ -34,7 +33,11 @@
 #' @importFrom depmixS4 depmix fit posterior
 #'
 #' @export
-classifyFLAP <- function(dta , period = 3, toPLOT = TRUE, method = "kmeans", tz= "UTC"){
+classifyFLAP <- function(dta ,
+                         period = 12,
+                         toPLOT = TRUE,
+                         method = "kmeans",
+                         tz= "UTC"){
   if (method == "kmeans"){
     km = kmeans(dta$act,centers=2)
     dta$clust = km$cluster
@@ -86,6 +89,25 @@ classifyFLAP <- function(dta , period = 3, toPLOT = TRUE, method = "kmeans", tz=
   if(end[1]< start[1]) end = end[-1] #if the series starts with an end not a start, remove the first ending
   if (length(end)<length(start)) start= start[1:length(end)]
   if (length(end)>length(start)) end= end[1:length(start)]
+
+  # dur = end-start
+  # if(period == "auto"){
+  #   if (method == "kmeans"){
+  #     km = kmeans(dur,centers=2)
+  #     cluster = km$cluster
+  #   }
+  #
+  #   if (method == "hmm"){
+  #     # poisson() gaussian()multinomial("identity")
+  #     hmm <- depmix(dur ~ 1, family = poisson() , nstates = 2)
+  #     hmmfit <- fit(hmm, verbose = FALSE)
+  #     cluster = posterior(hmmfit)$state
+  #   }
+  #   period = sum(min(max(dur[cluster==1],na.rm=TRUE), max(dur[cluster==2],na.rm= TRUE)),
+  #                   max(min(dur[cluster==1],na.rm= TRUE), min(dur[cluster==2],na.rm= TRUE)))/2
+  #   if(toPLOT == TRUE) plotTHLD(dur, classification = cluster, threshold = period, type = type)
+  #
+  # }
 
   # make sure only periods where birds is flying longer than the flapping duration are stored
   index = which((end-start) >= period)

@@ -9,7 +9,50 @@
 #' @param tz Timeuzone. default is "UTC"
 #' @param interp whether or not to interpolate the magnetic data. If FALSE, then NAs are left in the dataset
 #'
-#' @return a dataframe of derives metrhics based on pressure: `date`,`start` of event event,`end`,`duration` of event event,`total_daily_duration` spent flying that day,`total_daily_event_number` total number of event events that day,`pressure_change` absolute total pressure differences during that event,`P_dep_arr` difference in pressure between the start of the event and the end of the event,`pressure_range` difference between min and max pressure during that event,`mean_night_P` difference in mean pressure from the night before and the night after the event event,`sd_night_P`,`mean_nextnight_P`,`sd_nextnight_P`,`night_P_diff`,`sum_activity` total amount of activity during that event event,`prop_resting` proportion of time spent resting during that event,`prop_active` proportion of time spent active during that event event
+#' @return a dataframe of derives metrhics based on pressure:
+#' @return date : Date (without time)
+#' @return start : Start time and date of the event, POSIXct format
+#' @return end : Time and date that the event finished, POSIXct format
+#' @return duration : How long it lasted (in hours)
+#' @return total_daily_duration : The total duration of all the events that occured that day (in hours)
+#' @return total_daily_event_number : The total number of events which occured that day
+#' @return cum_pressure_change : The cumulative change in atmospheric pressure during that event (in hectopascals)
+#' @return cum_altitude_change : The cumulative change in altitude during that event (in metres)
+#' @return cum_altitude_up : The cumulative number of metres that the bird went upwards during that event
+#' @return total_daily_P_change : The cumulative change in atmospheric pressure for all the events for that date (in hectopascals)
+#' @return P_dep_arr : The difference between atmospheric pressure at the start of the event, and at the end (in hectopascals)
+#' @return pressure_range : The total range of the atmospheric pressure during that event (maximum minus miniimum - in hectopascals)
+#' @return altitude_range : The total altitude range during that event (maximum minus miniimum - in metres)
+#' @return mean_night_P : The mean pressure during the night before the event took place (in hectopascals)
+#' @return sd_night_P : The standard deviation of pressure the night before the event took place (in hectopascals)
+#' @return mean_nextnight_P : The mean pressure the night after the event took place (in hectopascals)
+#' @return sd_nextnight_P : The standard deviation of pressure the night after the event took place (in hectopascals)
+#' @return night_P_diff : The difference between the mean pressures of the night before and the night after the event took place (in hectopascals)
+#' @return median_activity : The median activity during that event
+#' @return sum_activity : The sum of the activity during that event
+#' @return prop_resting : The propotion of time during that event where activity = 0
+#' @return prop_active : The propotion of time during that event where activity > 0
+#' @return mean_night_act : The mean activity during the night before the event took place
+#' @return sd_night_act : The standard deviation of activity the night before the event took place
+#' @return sum_night_act : The summed activity during the night before the event took place
+#' @return mean_nextnight_act :The mean activity the night after the event took place
+#' @return sd_nextnight_act : The standard deviation of activity the night after the event took place
+#' @return sum_nextnight_act : The summed activity the night after the event took place
+#' @return night_act_diff : The difference between the mean activity of the night before and the night after the event took place
+#' @return median_pitch : The median pitch during that event
+#' @return sd_pitch : The standard deviation of pitch during that event
+#' @return median_light : The median light recordings during that event
+#' @return nightime : Whether or not it was night during the majority of the event (1= night, 0 = day)
+#' @return median_gX : Median raw acceledation on the x axis during the event
+#' @return median_gY : Median raw acceledation on the y axis during the event
+#' @return median_gZ : Median raw acceledation on the z axis during the event
+#' @return median_mX : Median raw magnetic field on the x axis during the event
+#' @return median_mY : Median raw magnetic field on the y axis during the event
+#' @return median_mZ : Median raw magnetic field on the z axis
+#' @return median_temp : Median temperature during the event (in celsius)
+#' @return sd_temp : Standard deviation of temperature during the event (in celsius)
+#' @return cum_temp_change : Cumulative absolute difference in temperature during the event (in celsius)
+#'
 #'
 #' @examples
 #' data(hoopoe)
@@ -21,16 +64,6 @@
 #'                       method= "flap",
 #'                       twl = twl)
 #'
-#'
-#' start = as.POSIXct("2015-08-01","%Y-%m-%d", tz="UTC")
-#' end = as.POSIXct("2016-06-21","%Y-%m-%d", tz="UTC")
-#' PAM_data = cutPAM(bee_eater, start, end)
-#' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
-#'                              LightThreshold = 2, ask = FALSE)
-#'
-#'TOclassify = pamPREP(PAM_data = PAM_data,
-#'                       method= "flap",
-#'                       twl = twl)
 #'
 #' str(TOclassify)
 #'
@@ -54,14 +87,23 @@ pamPREP <- function(PAM_data,
 
   if("pressure" %in% availavariable){
     pressure <- PAM_data$pressure
+    if(interp == TRUE){
+      pressure[,2:ncol(pressure)] = na.approx(pressure[,2:ncol(pressure)])
+    }
   }
 
   if("light" %in% availavariable){
     light <- PAM_data$light
+    if(interp == TRUE){
+      light[,2:ncol(light)] = na.approx(light[,2:ncol(light)])
+    }
   }
 
   if("acceleration" %in% availavariable){
     activity <- PAM_data$acceleration
+    if(interp == TRUE){
+      activity[,2:ncol(activity)] = na.approx(activity[,2:ncol(activity)])
+    }
   }
 
   if("magnetic" %in% availavariable){
@@ -77,13 +119,16 @@ pamPREP <- function(PAM_data,
       if (method %in% c("rest", "flap", "endurance")){
         magnetic = merge(activity, magnetic, all = TRUE)
       }
-      magnetic[,2:ncol(magnetic)] = zoo::na.approx(magnetic[,2:ncol(magnetic)])
+      magnetic[,2:ncol(magnetic)] = na.approx(magnetic[,2:ncol(magnetic)])
     }
     # }
   }
 
   if("temperature" %in% availavariable){
     temperature <- PAM_data$temperature
+    if(interp == TRUE){
+      temperature[,2:ncol(temperature)] = na.approx(temperature[,2:ncol(temperature)])
+    }
   }
 
 
@@ -445,7 +490,7 @@ pamPREP <- function(PAM_data,
     #--------------------------------------------------
     # for that event, what was pressure like when the bird departed and when in stopped
     event_list$P_dep_arr <- suppressWarnings(unlist(lapply(1:length(event_list$total_daily_event_number),
-                                          function(x) {abs( pressure$obs[dplyr::last(which(pressure$date <= event_list$end[x]))] -
+                                          function(x) {abs( pressure$obs[last(which(pressure$date <= event_list$end[x]))] -
                                                               pressure$obs[which(pressure$date >= event_list$start[x])[1]])}
                                           # pressure$obs[start[nrow(event_list[1:x,])]]-
                                           #                 pressure$obs[end[nrow(event_list[1:x,])]] )

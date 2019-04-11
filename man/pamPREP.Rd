@@ -6,7 +6,7 @@
 \usage{
 pamPREP(PAM_data, availavariable = c("pressure", "light", "acceleration",
   "magnetic", "temperature"), Pdiff_thld = 2, light_thld = 1,
-  method = "pressure", twl, interp = TRUE, tz = "UTC")
+  method = "pressure", twl, interp = FALSE, tz = "UTC")
 }
 \arguments{
 \item{PAM_data}{PAM data to be used in the analysis}
@@ -26,7 +26,91 @@ pamPREP(PAM_data, availavariable = c("pressure", "light", "acceleration",
 \item{tz}{Timeuzone. default is "UTC"}
 }
 \value{
-a dataframe of derives metrhics based on pressure: `date`,`start` of event event,`end`,`duration` of event event,`total_daily_duration` spent flying that day,`total_daily_event_number` total number of event events that day,`pressure_change` absolute total pressure differences during that event,`P_dep_arr` difference in pressure between the start of the event and the end of the event,`pressure_range` difference between min and max pressure during that event,`mean_night_P` difference in mean pressure from the night before and the night after the event event,`sd_night_P`,`mean_nextnight_P`,`sd_nextnight_P`,`night_P_diff`,`sum_activity` total amount of activity during that event event,`prop_resting` proportion of time spent resting during that event,`prop_active` proportion of time spent active during that event event
+a dataframe of derives metrhics based on pressure:
+
+date : Date (without time)
+
+start : Start time and date of the event, POSIXct format
+
+end : Time and date that the event finished, POSIXct format
+
+duration : How long it lasted (in hours)
+
+total_daily_duration : The total duration of all the events that occured that day (in hours)
+
+total_daily_event_number : The total number of events which occured that day
+
+cum_pressure_change : The cumulative change in atmospheric pressure during that event (in hectopascals)
+
+cum_altitude_change : The cumulative change in altitude during that event (in metres)
+
+cum_altitude_up : The cumulative number of metres that the bird went upwards during that event
+
+total_daily_P_change : The cumulative change in atmospheric pressure for all the events for that date (in hectopascals)
+
+P_dep_arr : The difference between atmospheric pressure at the start of the event, and at the end (in hectopascals)
+
+pressure_range : The total range of the atmospheric pressure during that event (maximum minus miniimum - in hectopascals)
+
+altitude_range : The total altitude range during that event (maximum minus miniimum - in metres)
+
+mean_night_P : The mean pressure during the night before the event took place (in hectopascals)
+
+sd_night_P : The standard deviation of pressure the night before the event took place (in hectopascals)
+
+mean_nextnight_P : The mean pressure the night after the event took place (in hectopascals)
+
+sd_nextnight_P : The standard deviation of pressure the night after the event took place (in hectopascals)
+
+night_P_diff : The difference between the mean pressures of the night before and the night after the event took place (in hectopascals)
+
+median_activity : The median activity during that event
+
+sum_activity : The sum of the activity during that event
+
+prop_resting : The propotion of time during that event where activity = 0
+
+prop_active : The propotion of time during that event where activity > 0
+
+mean_night_act : The mean activity during the night before the event took place
+
+sd_night_act : The standard deviation of activity the night before the event took place
+
+sum_night_act : The summed activity during the night before the event took place
+
+mean_nextnight_act :The mean activity the night after the event took place
+
+sd_nextnight_act : The standard deviation of activity the night after the event took place
+
+sum_nextnight_act : The summed activity the night after the event took place
+
+night_act_diff : The difference between the mean activity of the night before and the night after the event took place
+
+median_pitch : The median pitch during that event
+
+sd_pitch : The standard deviation of pitch during that event
+
+median_light : The median light recordings during that event
+
+nightime : Whether or not it was night during the majority of the event (1= night, 0 = day)
+
+median_gX : Median raw acceledation on the x axis during the event
+
+median_gY : Median raw acceledation on the y axis during the event
+
+median_gZ : Median raw acceledation on the z axis during the event
+
+median_mX : Median raw magnetic field on the x axis during the event
+
+median_mY : Median raw magnetic field on the y axis during the event
+
+median_mZ : Median raw magnetic field on the z axis
+
+median_temp : Median temperature during the event (in celsius)
+
+sd_temp : Standard deviation of temperature during the event (in celsius)
+
+cum_temp_change : Cumulative absolute difference in temperature during the event (in celsius)
 }
 \description{
 Derive classification data for soaring birds
@@ -40,6 +124,10 @@ twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 TOclassify = pamPREP(PAM_data = PAM_data,
                       method= "flap",
                       twl = twl)
+
+
+str(TOclassify)
+
 
 
 }

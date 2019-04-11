@@ -4,7 +4,7 @@
 \alias{classifyFLAP}
 \title{Make timetable}
 \usage{
-classifyFLAP(dta, period = 3, toPLOT = TRUE, method = "kmeans",
+classifyFLAP(dta, period = 12, toPLOT = TRUE, method = "kmeans",
   tz = "UTC")
 }
 \arguments{
@@ -27,22 +27,22 @@ Make timetable
 \examples{
 #specify the data location
 data(hoopoe)
-PAM_data = hoopoe
+# make sure the cropping period is in the correct date format
+start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
+end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
+
+# Crop the data
+PAM_data= cutPAM(hoopoe,start,end)
 str(PAM_data)
 
-#plot the activity to see if it looks ok
-plot(PAM_data$acceleration$date, PAM_data$acceleration$act, xlab="Time", ylab="activity")
+behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 12)
 
-# at first glance it looks like the logger was removed off a birds and left in arucksack
-PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
-& (PAM_data$acceleration$date <= "2017-06-01")),]
-
-behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 4)
-
-
-col=col=c("brown","cyan4","black","gold")
-plot(PAM_data$acceleration$date[2000:4000],PAM_data$acceleration$act[2000:4000],
-col=col[behaviour$classification][2000:4000], type="o", pch=20, xlab="Date", ylab="Activity")
+col=c("brown","cyan4","black","gold")
+plot(PAM_data$acceleration$date[6000:8000],PAM_data$acceleration$act[6000:8000],
+     col=col[behaviour$classification][6000:8000],
+     type="o", pch=20,
+     xlab="Date",
+     ylab="Activity")
 
 behaviour$timetable
 
