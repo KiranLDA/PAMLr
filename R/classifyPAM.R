@@ -23,10 +23,13 @@
 #' LightThreshold = 2, ask = FALSE)
 #' availavariable = c("pressure", "light", "acceleration")
 #'
-#' TOclassify = soarPREP(dta = PAM_data, availavariable = availavariable, twl = twl)
+#' TOclassify = pamPREP(PAM_data,
+#'                       method= "flap",
+#'                       twl = twl)
+#'
 #' TOclassify = TOclassify[complete.cases(TOclassify),]
 #'
-#'  #######################################################
+#' #######################################################
 #' # k-means example
 #' #######################################################
 #'
@@ -42,7 +45,6 @@
 #' points(PAM_data$pressure$date, PAM_data$pressure$obs,
 #'        col= pressure_classification+1,
 #'        pch=16)
-#'
 #'
 #' #######################################################
 #' # HMM example
@@ -137,7 +139,7 @@
 classifyPAM <- function(dta ,
                         method = c("kmeans","hmm", "embc", "agnes", "diana"),
                         states = 2,
-                        family = gaussian(),
+                        family = stats::gaussian(),
                         ...){
 
   if(any(is.na(dta))){

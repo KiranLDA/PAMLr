@@ -10,35 +10,45 @@
 #' @examples
 #' data(bee_eater)
 #' PAM_data = bee_eater
+#'
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
-#' LightThreshold = 2, ask = FALSE)
-#' availavariable = c("pressure", "light", "acceleration")
+#'                              LightThreshold = 2, ask = FALSE)
 #'
-#' TOclassify = soarPREP(dta = PAM_data, availavariable = availavariable, twl = twl,diff_P=2)
 #'
-#' classification = classifyPAM((TOclassify$total_daily_duration * log(TOclassify$night_P_diff+0.001 )
-#' * TOclassify$total_daily_P_change),
-#' states=3, "hmm")$cluster
+#' TOclassify = pamPREP(PAM_data,
+#'                      method="pressure",
+#'                      twl = twl,
+#'                      Pdiff_thld = 2,
+#'                      light_thld = 2)
+#'
+#' classification = classifyPAM((TOclassify$total_daily_duration *
+#'                               log(TOclassify$night_P_diff+0.001 )
+#'                               * TOclassify$total_daily_P_change),
+#'                              states=3, "hmm")$cluster
+#'
 #' pressure_classification = classification2PAM(from = TOclassify$start,
-#'                                               to =TOclassify$end,
-#'                                                classification = classification,
-#'                                                addTO = PAM_data$pressure)
+#'                                              to =TOclassify$end,
+#'                                              classification = classification,
+#'                                              addTO = PAM_data$pressure)
+#'
+#' pressure_classification[pressure_classification == NA] = 0
 #'
 #' plot(PAM_data$pressure$date, PAM_data$pressure$obs,
-#' col= viridis::viridis(4)[pressure_classification+1],
-#' type="o", pch=16, cex=0.6)
+#'      col= viridis::viridis(4)[pressure_classification+1],
+#'      type="o", pch=16, cex=0.6)
 #'
 #' @importFrom dplyr last
+#'
 #' @export
 classification2PAM <- function(from, to, classification, addTO ){
 
-  # for testing
+  # # for testing
   # from = TOclassify$start
   # to = TOclassify$end
   # classification = TOclassify$hmm_classification
   # addTO = PAM_data$pressure
 
-  addTO$classification  <- 0
+  addTO$classification  <- NA
   # for(i in unique(classification)){
   #   start <- which ( addTO$date %in% from[classification == i])
   #   end <- which ( addTO$date %in% to[classification == i])
@@ -51,8 +61,5 @@ classification2PAM <- function(from, to, classification, addTO ){
     end = last(which(addTO$date <= to[i]))
     addTO$classification[start:end] = classification[i]
   }
-
-
-
   return(addTO$classification)
 }

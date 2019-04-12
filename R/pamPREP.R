@@ -1,6 +1,6 @@
 #' Derive classification data for soaring birds
 #'
-#' @param PAM_data PAM data to be used in the analysis
+#' @param dta PAM data to be used in the analysis e.g. str(hoopoe)
 #' @param availavariable Variables to be used to derive metrics for classification. must have "pressure", but ideally `availavariable = c("pressure", "light", "acceleration")` if any of these are incomplete, do not use them
 #' @param Pdiff_thld Pressure threshold. Only used when method="pressure".  This if pressure changes more than e.g. 2hpa over 30 minutes, then the bird is flying
 #' @param light_thld Light threshold. Only used when method="darkness". This is the the light threshold for finding darkness, should be the same as for GeoLight::twilightCalc
@@ -60,9 +60,9 @@
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 #'                              LightThreshold = 2, ask = FALSE)
 #'
-#' TOclassify = pamPREP(PAM_data = PAM_data,
-#'                       method= "flap",
-#'                       twl = twl)
+#' TOclassify = pamPREP(PAM_data,
+#'                      method= "flap",
+#'                      twl = twl)
 #'
 #'
 #' str(TOclassify)
@@ -76,7 +76,7 @@
 #' @importFrom zoo na.approx
 #'
 #' @export
-pamPREP <- function(PAM_data,
+pamPREP <- function(dta,
                     availavariable = c("pressure", "light", "acceleration", "magnetic", "temperature"),
                     Pdiff_thld = 2,
                     light_thld = 1,
@@ -84,6 +84,7 @@ pamPREP <- function(PAM_data,
                     twl,
                     interp = FALSE,
                     tz="UTC"){
+  PAM_data = dta
 
   if("pressure" %in% availavariable){
     pressure <- PAM_data$pressure

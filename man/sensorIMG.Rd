@@ -94,4 +94,16 @@ sensorIMG(PAM_data$acceleration$date,
           col = c("orange","black"),
           cex=1.2, cex.main = 2)
 
+
+twilights <- GeoLight::twilightCalc(PAM_data$light$date,
+                                    PAM_data$light$obs,
+                                    LightThreshold = 2,
+                                    ask = FALSE)
+
+addTWL(twilights$tFirst, offset=0,
+       col= ifelse(twilights$type == 1,
+                   "goldenrod","cornflowerblue"),
+       pch=16, cex=0.5)
+
+
 }

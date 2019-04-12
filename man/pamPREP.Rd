@@ -4,12 +4,12 @@
 \alias{pamPREP}
 \title{Derive classification data for soaring birds}
 \usage{
-pamPREP(PAM_data, availavariable = c("pressure", "light", "acceleration",
+pamPREP(dta, availavariable = c("pressure", "light", "acceleration",
   "magnetic", "temperature"), Pdiff_thld = 2, light_thld = 1,
   method = "pressure", twl, interp = FALSE, tz = "UTC")
 }
 \arguments{
-\item{PAM_data}{PAM data to be used in the analysis}
+\item{dta}{PAM data to be used in the analysis e.g. str(hoopoe)}
 
 \item{availavariable}{Variables to be used to derive metrics for classification. must have "pressure", but ideally `availavariable = c("pressure", "light", "acceleration")` if any of these are incomplete, do not use them}
 
@@ -121,9 +121,9 @@ PAM_data=hoopoe
 twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
                              LightThreshold = 2, ask = FALSE)
 
-TOclassify = pamPREP(PAM_data = PAM_data,
-                      method= "flap",
-                      twl = twl)
+TOclassify = pamPREP(PAM_data,
+                     method= "flap",
+                     twl = twl)
 
 
 str(TOclassify)

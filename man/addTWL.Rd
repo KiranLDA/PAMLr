@@ -29,15 +29,36 @@ par(mar=c(4,4,1,6),mfrow=c(1,2))
 twilights <- GeoLight::twilightCalc(hoopoe$light$date, hoopoe$light$obs,
 LightThreshold = 2, ask = FALSE)
 
-plotACTOGRAM(date = hoopoe$acceleration$date,activity = hoopoe$acceleration$act)
-addTWL(twilights$tFirst, offset=0, col= ifelse(twilights$type == 1,
- "goldenrod","cornflowerblue"), pch=16, cex=0.5)
+sensorIMG(hoopoe$acceleration$date,
+          hoopoe$acceleration$act,
+          main = "Activity",ploty=FALSE,
+          offset=0,
+          col=c("black",viridis::cividis(90)),
+          cex=1.2, cex.main = 2)
+
+# plotACTOGRAM(date = hoopoe$acceleration$date,activity = hoopoe$acceleration$act)
+addTWL(twilights$tFirst,
+       offset=0,
+       col= ifelse(twilights$type == 1,
+                   "goldenrod","cornflowerblue"),
+       pch=16, cex=0.5)
 
 
 offset=12
-plotACTOGRAM(date = hoopoe$acceleration$date,activity = hoopoe$acceleration$act,
-offset=offset,col=c("black",viridis::cividis(90)))
-addTWL(twilights$tFirst, offset=offset, col= ifelse(twilights$type == 1,
-"goldenrod","cornflowerblue"), pch=16, cex=0.5)
+sensorIMG(hoopoe$acceleration$date,
+          hoopoe$acceleration$act,
+          main = "Activity",ploty=FALSE,
+          offset=offset,
+          col=c("black",viridis::cividis(90)),
+          cex=1.2, cex.main = 2)
+
+# plotACTOGRAM(date = hoopoe$acceleration$date,activity = hoopoe$acceleration$act)
+addTWL(twilights$tFirst,
+       offset=offset,
+       col= ifelse(twilights$type == 1,
+                   "goldenrod","cornflowerblue"),
+       pch=16, cex=0.5)
+
+
 
 }

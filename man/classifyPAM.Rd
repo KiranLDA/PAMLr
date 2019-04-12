@@ -5,7 +5,7 @@
 \title{Derive classification data for soaring birds}
 \usage{
 classifyPAM(dta, method = c("kmeans", "hmm", "embc", "agnes", "diana"),
-  states = 2, family = gaussian(), ...)
+  states = 2, family = stats::gaussian(), ...)
 }
 \arguments{
 \item{dta}{data to be classified, can be anything}
@@ -39,10 +39,13 @@ twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 LightThreshold = 2, ask = FALSE)
 availavariable = c("pressure", "light", "acceleration")
 
-TOclassify = soarPREP(dta = PAM_data, availavariable = availavariable, twl = twl)
+TOclassify = pamPREP(PAM_data,
+                      method= "flap",
+                      twl = twl)
+
 TOclassify = TOclassify[complete.cases(TOclassify),]
 
- #######################################################
+#######################################################
 # k-means example
 #######################################################
 
@@ -58,7 +61,6 @@ plot(PAM_data$pressure$date, PAM_data$pressure$obs,
 points(PAM_data$pressure$date, PAM_data$pressure$obs,
        col= pressure_classification+1,
        pch=16)
-
 
 #######################################################
 # HMM example
