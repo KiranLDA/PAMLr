@@ -5,7 +5,7 @@
 \title{Derive classification data for soaring birds}
 \usage{
 classifyPAM(dta, method = c("kmeans", "hmm", "embc", "agnes", "diana"),
-  states = 2, ...)
+  states = 2, family = gaussian(), ...)
 }
 \arguments{
 \item{dta}{data to be classified, can be anything}
@@ -13,6 +13,8 @@ classifyPAM(dta, method = c("kmeans", "hmm", "embc", "agnes", "diana"),
 \item{method}{method for classifying data, currently support "hmm" for hidden markov model and "kmeans" for kmeans clustering}
 
 \item{states}{number of states to classify the data into}
+
+\item{family}{By default `gaussian()`. Parameter only used in the hmm method. Must be the same as the parameters used by `depmixS4::depmix`}
 
 \item{...}{any additional inputs for depmixs4::depmix, stats::kmeans, cluster::diana, cluster::diana  or EMbC::embc functions, depending on method selected}
 }

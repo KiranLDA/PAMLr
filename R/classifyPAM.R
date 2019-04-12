@@ -3,6 +3,7 @@
 #' @param dta data to be classified, can be anything
 #' @param method method for classifying data, currently support "hmm" for hidden markov model and "kmeans" for kmeans clustering
 #' @param states number of states to classify the data into
+#' @param family By default `gaussian()`. Parameter only used in the hmm method. Must be the same as the parameters used by `depmixS4::depmix`
 #' @param ... any additional inputs for depmixs4::depmix, stats::kmeans, cluster::diana, cluster::diana  or EMbC::embc functions, depending on method selected
 #'
 #' @return the data's classification based on the chosen algorithm
@@ -128,7 +129,7 @@
 #'
 #'
 #' @importFrom depmixS4 depmix fit posterior
-#' @importFrom stats kmeans gaussian cutree as.formula
+#' @importFrom stats kmeans gaussian cutree as.formula binomial Gamma inverse.gaussian poisson quasipoisson quasibinomial quasi
 #' @importFrom EMbC embc
 #' @importFrom cluster daisy agnes diana
 #'
@@ -136,6 +137,7 @@
 classifyPAM <- function(dta ,
                         method = c("kmeans","hmm", "embc", "agnes", "diana"),
                         states = 2,
+                        family = gaussian(),
                         ...){
 
   if(any(is.na(dta))){
@@ -147,12 +149,12 @@ classifyPAM <- function(dta ,
 
   if (method == "hmm"){
     if(is.null(dim(dta))) {
-      hmm <- depmix(dta ~ 1, family = gaussian(),
+      hmm <- depmix(dta ~ 1, family = family,
                     nstates = states, ntimes=length(dta), ... )
     } else {
       hmm <- depmix(#lapply( 1:ncol(dta), function(x)  as.formula(dta[,x] ~ 1) ) ,
                     lapply( 1:ncol(dta), function(x)  as.formula(paste0("dta[,",as.character(x),"] ~ 1")) ) ,
-                    family = lapply(1:ncol(dta), function(x) gaussian()),
+                    family = lapply(1:ncol(dta), function(x) family),
                     nstates = states, ntimes=nrow(dta), ... )
     }
 
