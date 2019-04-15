@@ -20,7 +20,7 @@
 #' @importFrom htmltools browsable tagList
 #' @importFrom raster rotate
 #' @importFrom rgl spheres3d abclines3d arrow3d text3d open3d rgl.user2window plot3d rgl.projection
-#' @importFrom stats kmeans aggregate approx gaussian poisson sd complete.cases median cutree as.formula cutree binomial Gamma inverse.gaussian quasipoisson quasibinomial quasi
+#' @importFrom stats kmeans aggregate approx gaussian poisson sd complete.cases median cutree as.formula cutree binomial Gamma inverse.gaussian quasipoisson quasibinomial quasi setNames
 #' @importFrom TwGeos hourOffset as.hour
 #' @importFrom utils read.delim
 #' @importFrom viridis magma viridis
