@@ -2,7 +2,7 @@
 % Please edit documentation in R/triACC.R
 \name{triACC}
 \alias{triACC}
-\title{Calculate roll, pitch and yaw from tri axial acceleration data}
+\title{Tri-axial acceleration functions}
 \usage{
 triACC(dta)
 }
@@ -13,7 +13,7 @@ triACC(dta)
 roll, pitch and yaw from acceleration data
 }
 \description{
-Calculate roll, pitch and yaw from tri axial acceleration data
+This function calculates roll, pitch and yaw from tri-axial acceleration data. It also centeres the acceleration data (for plotting on a sphere).
 }
 \examples{
 data(swift)
@@ -21,4 +21,7 @@ PAM_data = swift
 
 triACC(dta = PAM_data$magnetic)
 
+}
+\references{
+Bidder, O.R., Walker, J.S., Jones, M.W., Holton, M.D., Urge, P., Scantlebury, D.M., Marks, N.J., Magowan, E.A., Maguire, I.E. and Wilson, R.P., 2015. Step by step: reconstruction of terrestrial animal movement paths by dead-reckoning. Movement ecology, 3(1), p.23.
 }

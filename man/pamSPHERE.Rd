@@ -2,7 +2,7 @@
 % Please edit documentation in R/pamSPHERE.R
 \name{pamSPHERE}
 \alias{pamSPHERE}
-\title{Plot calibrated magnetic data on a sphere}
+\title{Plot 3d sphere}
 \usage{
 pamSPHERE(x, y, z, spherecolor = "white", linecolor = "black",
   linewidth = 2, ptcol = "black", ptsize = 0.02, arrows = TRUE,
@@ -35,7 +35,7 @@ pamSPHERE(x, y, z, spherecolor = "white", linecolor = "black",
 a 3d sphere plot
 }
 \description{
-Plot calibrated magnetic data on a sphere
+This function takes a spherical projection of acceleration or magentic data and plots it on a sphere which can be turned and zoomed into.
 }
 \examples{
 data("swift")
@@ -56,12 +56,6 @@ pamSPHERE(x = calibration$calib_magx,
           arrows=TRUE,
           cex=2)
 
-
-#data("bee_eater")
-#start = as.POSIXct("2015-07-21","\%Y-\%m-\%d", tz="UTC")
-#end = as.POSIXct("2016-06-01","\%Y-\%m-\%d", tz="UTC")
-#PAM_data  = cutPAM(bee_eater, start, end)
-
 # plot an g-phere
 calibration = triACC(dta = PAM_data$magnetic)
 pamSPHERE(x = calibration$centered_accx,
@@ -73,4 +67,7 @@ pamSPHERE(x = calibration$centered_accx,
           spherecolor="goldenrod",
           arrows=TRUE)
 
+}
+\references{
+Adler, D., Nenadic, O. and Zucchini, W., 2003, March. Rgl: A r-library for 3d visualization with opengl. In Proceedings of the 35th Symposium of the Interface: Computing Science and Statistics, Salt Lake City (Vol. 35).
 }

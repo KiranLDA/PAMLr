@@ -1,9 +1,12 @@
 #' Reduces the data to a specified temporal resolution
 #'
+#' @description This function takesthe typical PAM_data input, which is a nested list of different sensor data, all formatted at different time resolutions. By specifying a particular sensor, all data are formatted at the same temporal resolution as this data. By default, the median of data with smaller temporal resolution are kept, and data are interpolated.
+#'
+#'
 #' @param dta raw pam data see `data(bee_eater` for example
-#' @param varint the variable of interest.Sipprots c("pressure","light","pit","act","temperature","gX","gY","gZ","mX", "mY","mZ"). For instance if all other variables should be summarised at the same temporal resolution as this specified variable. It must correspond to variable or list in `dta` Currently supports
-#' @param interp_NA Default TRUE. Whether or not to replace NAs with interpolated values
-#' @param summary Can be "sum", "median" or "none" What type of summary variable to give when condensing data -
+#' @param varint the variable of interest.Sipprots c("pressure","light","acceleration","temperature","magnetic"). For instance if all other variables should be summarised at the same temporal resolution as this specified variable.
+#' @param interp Default TRUE. Whether or not to replace NAs with interpolated values
+#' @param summary Can be "sum", "median" or "none". What type of summary variable to give when condensing data -
 #'
 #' @return reduced/summarised and interpolated dataset
 #'
@@ -15,7 +18,7 @@
 #' end = as.POSIXct("2016-06-21","%Y-%m-%d", tz="UTC")
 #' PAM_data = cutPAM(PAM_data, start, end)
 #'
-#' reduced_dta = reducePAM(PAM_data , "pressure")
+#' reduced_dta = reducePAM(PAM_data , "pressure", interp = FALSE)
 #' head(reduced_dta)
 #'
 #' reduced_dta = reducePAM(PAM_data , "act", interp = FALSE)
@@ -27,10 +30,13 @@
 #' @export
 reducePAM <- function(dta,
                       varint,
-                      interp_NA = TRUE,
+                      interp = TRUE,
                       summary = "median"){
 
   PAM_data = dta
+
+  if (varint == "acceleration") varint <- "act"
+  if (varint == "magnetic") varint <- "gX"
 
   if("id" %in% names(PAM_data)){
     to_remove = which(names(PAM_data) == "id")
@@ -53,7 +59,7 @@ reducePAM <- function(dta,
   test = do.call(cbind, lapply(to_change,
                         FUN = function(col){
                           if(any(is.na(new[,col]))){
-                            if (interp_NA == TRUE){
+                            if (interp == TRUE){
                               first = which(!is.na(new[,col]))[1]
                               last = which(!is.na(new[,col]))[length(which(!is.na(new[,col])))]
                               # new[first:last,col] <- zoo::na.approx(new[first:last,col])

@@ -3,7 +3,7 @@
 \docType{data}
 \name{bee_eater}
 \alias{bee_eater}
-\title{PAM data collected from Bee Eater}
+\title{PAM data collected from European Bee-Eater}
 \format{List of 6 variables
 \describe{
   \item{id}{Logger id}

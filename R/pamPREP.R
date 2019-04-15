@@ -1,4 +1,6 @@
-#' Derive classification data for soaring birds
+#' Prepare data for analysis
+#'
+#' @description This function summarises the data based on different patterns such as sustained acitivity, sustained pressure changes, etc... and extracts these from the data as a timetable. It then creates summary statics for each of these periods or events, such as cumulative altitude change, mean pitch etc...
 #'
 #' @param dta PAM data to be used in the analysis e.g. str(hoopoe)
 #' @param availavariable Variables to be used to derive metrics for classification. must have "pressure", but ideally `availavariable = c("pressure", "light", "acceleration")` if any of these are incomplete, do not use them
@@ -64,10 +66,7 @@
 #'                      method= "flap",
 #'                      twl = twl)
 #'
-#'
 #' str(TOclassify)
-#'
-#'
 #'
 #' @importFrom stats aggregate sd kmeans median
 #' @importFrom data.table data.table

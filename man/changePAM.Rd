@@ -2,17 +2,17 @@
 % Please edit documentation in R/changePAM.R
 \name{changePAM}
 \alias{changePAM}
-\title{Derive classification data for soaring birds}
+\title{Changepoint analysis}
 \usage{
 changePAM(dta, cpt.method = "meanvar", method = "PELT",
   penalty = "Manual", pen.value = "100*log(n)", ...)
 }
 \arguments{
-\item{dta}{data to be classified, can be anything}
+\item{dta}{data to be classified (vector)}
 
 \item{cpt.method}{method for classifying data, currently support "mean","variance", "meanvar", use ?changepoint::cpt.mean ?changepoint::cpt.var or ?changepoint::cpt.meanvar for additional parameters}
 
-\item{method}{changepoint method used in package}
+\item{method}{changepoint method used in package changepoint. see changepoint::cpt.mean, changepoint::cpt.var and changepoint::cpt.meanvar for details}
 
 \item{penalty}{See changepoint  package for details. Choice of "None", "SIC", "BIC", "MBIC", AIC", "Hannan-Quinn", "Asymptotic", "Manual" and "CROPS" penalties. If Manual is specified, the manual penalty is contained in the pen.value parameter. If Asymptotic is specified, the theoretical type I error is contained in the pen.value parameter. If CROPS is specified, the penalty range is contained in the pen.value parameter; note this is a vector of length 2 which contains the minimum and maximum penalty value. Note CROPS can only be used if the method is "PELT". The predefined penalties listed DO count the changepoint as a parameter, postfix a 0 e.g."SIC0" to NOT count the changepoint as a parameter.}
 
@@ -21,10 +21,10 @@ changePAM(dta, cpt.method = "meanvar", method = "PELT",
 \item{...}{any additional inputs for changepoint::cpt.mean,  changepoint::cpt.var or changepoint::cpt.meanvar}
 }
 \value{
-Changepoints in the data. By default it is set to look for changes in the pressure data to identify migration periods, however it can be altered to any form of changepoint analysis in the package changepoint.
+Changepoints in the data.
 }
 \description{
-Derive classification data for soaring birds
+This function implements a changepoint analysis to find changes in variance, mean or both. By default it is set to look for changes in the pressure data to identify migration periods, however it can be altered to any form of changepoint analysis in the package changepoint.
 }
 \examples{
 
@@ -50,4 +50,7 @@ abline(v=changepoints$changepoints, col="red",lwd=2)
 # plot using changepoint package output
 changepoint::plot(changepoints$output, cpt.width=3)
 
+}
+\references{
+Killick, R. and Eckley, I., 2014. changepoint: An R package for changepoint analysis. Journal of statistical software, 58(3), pp.1-19.
 }

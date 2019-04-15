@@ -1,6 +1,6 @@
 #' Plot PAM data with dygraphs
 #'
-#' @description This opens a java application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
+#' @description This opens a java dygraph application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 #'
 #' @param dta PAM data to be plotted
 #' @param from date that plotting starts
@@ -8,6 +8,8 @@
 #' @param toPLOT names of the variables to plot. For now this includes `light`, `pressure`, `acceleration` and `temperature`
 #'
 #' @return a plot of all the measurements
+#'
+#' @references Vanderkam, D., Allaire, J., Owen, J., Gromer, D., Shevtsov, P. and Thieurmel, B., dygraphs: Interface to Dygraphs Interactive Time Series Charting Library, 2015. URL http://CRAN. R-project. org/package= dygraphs. R package version 0.4, 5, p.7.
 #'
 #' @examples
 #' #load dummy data

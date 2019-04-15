@@ -23,36 +23,35 @@ Add sunrise sunset to Actogram
 
 data(hoopoe)
 
-
-par(mar=c(4,4,1,6),mfrow=c(1,2))
 # Calculate twilights
 twilights <- GeoLight::twilightCalc(hoopoe$light$date, hoopoe$light$obs,
 LightThreshold = 2, ask = FALSE)
 
+par(mar=c(4,4,4,2),mfrow=c(1,2), oma= c(0,0,0,8))
+
+# Plot daytime in middle
 sensorIMG(hoopoe$acceleration$date,
           hoopoe$acceleration$act,
-          main = "Activity",ploty=FALSE,
+          main = "Day in middle",ploty=FALSE,
           offset=0,
           col=c("black",viridis::cividis(90)),
           cex=1.2, cex.main = 2)
-
-# plotACTOGRAM(date = hoopoe$acceleration$date,activity = hoopoe$acceleration$act)
+#Add sunrises and sunsets
 addTWL(twilights$tFirst,
        offset=0,
        col= ifelse(twilights$type == 1,
                    "goldenrod","cornflowerblue"),
        pch=16, cex=0.5)
 
-
+# Plot nightime in the middle
 offset=12
 sensorIMG(hoopoe$acceleration$date,
           hoopoe$acceleration$act,
-          main = "Activity",ploty=FALSE,
+          main = "Night in middle",ploty=TRUE,
           offset=offset,
           col=c("black",viridis::cividis(90)),
           cex=1.2, cex.main = 2)
 
-# plotACTOGRAM(date = hoopoe$acceleration$date,activity = hoopoe$acceleration$act)
 addTWL(twilights$tFirst,
        offset=offset,
        col= ifelse(twilights$type == 1,

@@ -4,22 +4,22 @@
 \alias{reducePAM}
 \title{Reduces the data to a specified temporal resolution}
 \usage{
-reducePAM(dta, varint, interp_NA = TRUE, summary = "median")
+reducePAM(dta, varint, interp = TRUE, summary = "median")
 }
 \arguments{
 \item{dta}{raw pam data see `data(bee_eater` for example}
 
-\item{varint}{the variable of interest.Sipprots c("pressure","light","pit","act","temperature","gX","gY","gZ","mX", "mY","mZ"). For instance if all other variables should be summarised at the same temporal resolution as this specified variable. It must correspond to variable or list in `dta` Currently supports}
+\item{varint}{the variable of interest.Sipprots c("pressure","light","acceleration","temperature","magnetic"). For instance if all other variables should be summarised at the same temporal resolution as this specified variable.}
 
-\item{interp_NA}{Default TRUE. Whether or not to replace NAs with interpolated values}
+\item{interp}{Default TRUE. Whether or not to replace NAs with interpolated values}
 
-\item{summary}{Can be "sum", "median" or "none" What type of summary variable to give when condensing data -}
+\item{summary}{Can be "sum", "median" or "none". What type of summary variable to give when condensing data -}
 }
 \value{
 reduced/summarised and interpolated dataset
 }
 \description{
-Reduces the data to a specified temporal resolution
+This function takesthe typical PAM_data input, which is a nested list of different sensor data, all formatted at different time resolutions. By specifying a particular sensor, all data are formatted at the same temporal resolution as this data. By default, the median of data with smaller temporal resolution are kept, and data are interpolated.
 }
 \examples{
 data(bee_eater)
@@ -29,7 +29,7 @@ start = as.POSIXct("2015-08-01","\%Y-\%m-\%d", tz="UTC")
 end = as.POSIXct("2016-06-21","\%Y-\%m-\%d", tz="UTC")
 PAM_data = cutPAM(PAM_data, start, end)
 
-reduced_dta = reducePAM(PAM_data , "pressure")
+reduced_dta = reducePAM(PAM_data , "pressure", interp = FALSE)
 head(reduced_dta)
 
 reduced_dta = reducePAM(PAM_data , "act", interp = FALSE)

@@ -2,22 +2,22 @@
 % Please edit documentation in R/mergePAM.R
 \name{mergePAM}
 \alias{mergePAM}
-\title{merges all the data into one table for interpolation}
+\title{Merges all sensors into one}
 \usage{
-mergePAM(dta, interp = TRUE, all = TRUE)
+mergePAM(dta, all = TRUE, interp = FALSE)
 }
 \arguments{
 \item{dta}{raw pam data see `data(bee_eater` for example}
 
-\item{interp}{logical. Default TRUE. whether or not to interpolate if there are NAs}
-
 \item{all}{logical. Default TRUE. Whether or not to keep NAs (i.e. all the datasets)}
+
+\item{interp}{logical. Default FALSE. whether or not to interpolate if there are NAs. if all = FALSE then interp is not used.}
 }
 \value{
 merged and interpolated dataset
 }
 \description{
-merges all the data into one table for interpolation
+This function takesthe typical PAM_data input, which is a nested list of different sensor data, all formatted at different time resolutions, and merges them all into one big table. By default all times are kept, and not interpolated.
 }
 \examples{
 data(bee_eater)

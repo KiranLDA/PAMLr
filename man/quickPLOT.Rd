@@ -2,7 +2,7 @@
 % Please edit documentation in R/quickPLOT.R
 \name{quickPLOT}
 \alias{quickPLOT}
-\title{quickly plot the pam data to have an idea of it's quality}
+\title{Quickly plot the pam data to have an idea of it's quality}
 \usage{
 quickPLOT(dta, measurements = c("pressure", "light", "acceleration",
   "temperature", "magnetic"), ...)
@@ -18,7 +18,7 @@ quickPLOT(dta, measurements = c("pressure", "light", "acceleration",
 a plot of PAM data
 }
 \description{
-quickly plot the pam data to have an idea of it's quality
+Quickly plot the pam data to have an idea of it's quality
 }
 \examples{
 data(hoopoe)

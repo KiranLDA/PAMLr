@@ -1,4 +1,6 @@
-#' Plot Actogram
+#' sensor image
+#'
+#' @description This function plots sensor data as an image. An actogram for instance is a type of sensor image.
 #'
 #' @param date Date data in POSIXct format, most commonly `PAM_data$acceleration$date`
 #' @param sensor_data sensor data, for example look at `PAM_data$acceleration$act`
@@ -150,4 +152,5 @@ sensorIMG  <- function (date, sensor_data , tz="UTC", plotx=TRUE, ploty=TRUE,
   box()
 
 }
+
 

@@ -20,7 +20,7 @@ dygraphPAM(dta, from = dta$light$date[1],
 a plot of all the measurements
 }
 \description{
-This opens a java application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
+This opens a java dygraph application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 }
 \examples{
 #load dummy data
@@ -39,4 +39,7 @@ dygraphPAM(dta = PAM_data)
 options(backup_options)
 
 
+}
+\references{
+Vanderkam, D., Allaire, J., Owen, J., Gromer, D., Shevtsov, P. and Thieurmel, B., dygraphs: Interface to Dygraphs Interactive Time Series Charting Library, 2015. URL http://CRAN. R-project. org/package= dygraphs. R package version 0.4, 5, p.7.
 }

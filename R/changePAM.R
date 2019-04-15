@@ -1,13 +1,17 @@
-#' Derive classification data for soaring birds
+#' Changepoint analysis
 #'
-#' @param dta data to be classified, can be anything
+#' @description This function implements a changepoint analysis to find changes in variance, mean or both. By default it is set to look for changes in the pressure data to identify migration periods, however it can be altered to any form of changepoint analysis in the package changepoint.
+#'
+#' @param dta data to be classified (vector)
 #' @param cpt.method method for classifying data, currently support "mean","variance", "meanvar", use ?changepoint::cpt.mean ?changepoint::cpt.var or ?changepoint::cpt.meanvar for additional parameters
-#' @param method changepoint method used in package
+#' @param method changepoint method used in package changepoint. see changepoint::cpt.mean, changepoint::cpt.var and changepoint::cpt.meanvar for details
 #' @param penalty See changepoint  package for details. Choice of "None", "SIC", "BIC", "MBIC", AIC", "Hannan-Quinn", "Asymptotic", "Manual" and "CROPS" penalties. If Manual is specified, the manual penalty is contained in the pen.value parameter. If Asymptotic is specified, the theoretical type I error is contained in the pen.value parameter. If CROPS is specified, the penalty range is contained in the pen.value parameter; note this is a vector of length 2 which contains the minimum and maximum penalty value. Note CROPS can only be used if the method is "PELT". The predefined penalties listed DO count the changepoint as a parameter, postfix a 0 e.g."SIC0" to NOT count the changepoint as a parameter.
 #' @param pen.value	See changepoint package for details. Tthe theoretical type I error e.g.0.05 when using the Asymptotic penalty. A vector of length 2 (min,max) if using the CROPS penalty. The value of the penalty when using the Manual penalty option - this can be a numeric value or text giving the formula to use. Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters
 #' @param ... any additional inputs for changepoint::cpt.mean,  changepoint::cpt.var or changepoint::cpt.meanvar
 #'
-#' @return Changepoints in the data. By default it is set to look for changes in the pressure data to identify migration periods, however it can be altered to any form of changepoint analysis in the package changepoint.
+#' @return Changepoints in the data.
+#'
+#' @references Killick, R. and Eckley, I., 2014. changepoint: An R package for changepoint analysis. Journal of statistical software, 58(3), pp.1-19.
 #'
 #' @examples
 #'

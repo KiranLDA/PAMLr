@@ -2,7 +2,7 @@
 % Please edit documentation in R/confusionMAT.R
 \name{confusionMAT}
 \alias{confusionMAT}
-\title{Calculate error and create a confusion matrix}
+\title{create a confusion matrix}
 \usage{
 confusionMAT(reference, classified)
 }
@@ -15,7 +15,7 @@ confusionMAT(reference, classified)
 a confusion matrix
 }
 \description{
-Calculate error and create a confusion matrix
+The function populates a confusion matrix using predicted and reference points and estimate the errors in commission, omissioin for each class, in addition to Producer, User and overall accuracy, and the Kappa Coefficient. Errors in Commission provide a measure of false negatives i.e. the number of points that were predicted to be part of a class that they were not (probability something was incorrectly classified FN/(TP+FN)). Errors in Omission provide a measure of false positives that were predicted to be in a different class from their actual class (probability that something was missed FP/(FP +TP). User Accuracy or Recall represents the probability that a class was correctly classified TP/(TP + FN). Producer Accuracy or Precision provides a measure of how likely something was missed by the classification (probability that something was not missed TP/(TP + FP)). The Overall Accuracy represents the probability that all classes were correctly classified (TP+TN)/(TP+TN+FP+FN). Finally, the Kappa Coefficient measures the agreement between the classification and the truth ((TN+FP) (TN+FN) + (FN+TP) (FP+TP)) / (TP+FP+TN+FN)2
 }
 \examples{
 
@@ -43,4 +43,7 @@ reference = reference[-1]
 
 confusionMAT(reference, classified)
 
+}
+\references{
+Congalton, R.G. and Green, K., 2008. Assessing the accuracy of remotely sensed data: principles and practices. CRC press.
 }

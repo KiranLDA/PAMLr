@@ -12,10 +12,16 @@ compareCLASS(date, classifications)
 \item{classifications}{a dataframe containing the results from different classifications in each column. The classifications must correspond to the same datetimes.}
 }
 \value{
-a dataframe containing (i) date, (ii) the raw classifications, (iii) each state with the number of times it was used in a classification, and (iv) whether or not all classes provided the same state
+a dataframe containing date
+
+the raw classifications
+
+each state with the number of times it was used in a classification
+
+whether or not all classes provided the same state
 }
 \description{
-Combine classification results
+this function takes multiple classifications of the same data and compares the agreement between each, on a timepoint level.
 }
 \examples{
 

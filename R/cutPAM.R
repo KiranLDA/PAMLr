@@ -1,5 +1,7 @@
 #' cut PAM data
 #'
+#' @description Get rid of excess data. e.g. when a logger is kept in a rucksack or a lab before being downloaded.
+#'
 #' @param dta path where files are stored
 #' @param start posicxt object for date that PAM data should start
 #' @param end posicxt object for date that PAM data should end

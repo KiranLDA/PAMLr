@@ -1,8 +1,12 @@
-#' Calibrate magnetic data and calculate roll, pitch and yaw
+#' Calibrate magnetic data
+#'
+#' @description This function calibrates tri-axial magnetic data and then also calculates yaw, pitch and roll
 #'
 #' @param dta magentic data from PAM logger
 #'
 #' @return roll, pitch and yaw from acceleration data, as well as calibrated magnetic data for x, y and z axes
+#'
+#' @references Bidder, O.R., Walker, J.S., Jones, M.W., Holton, M.D., Urge, P., Scantlebury, D.M., Marks, N.J., Magowan, E.A., Maguire, I.E. and Wilson, R.P., 2015. Step by step: reconstruction of terrestrial animal movement paths by dead-reckoning. Movement ecology, 3(1), p.23.
 #'
 #' @examples
 #' data(swift)

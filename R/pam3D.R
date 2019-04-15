@@ -1,11 +1,15 @@
 #' 3d scatterplot
 #'
+#' @description Creates an interactive 3d scatterplot
+#'
 #' @param x data to plot on x axis
 #' @param y data to plot on y axis
 #' @param z data to plot on z axis
 #' @param ... any additional parameters used by rgl::plot3d
 #'
 #' @return a 3d scatter plot
+#'
+#' @references Adler, D., Nenadic, O. and Zucchini, W., 2003, March. Rgl: A r-library for 3d visualization with opengl. In Proceedings of the 35th Symposium of the Interface: Computing Science and Statistics, Salt Lake City (Vol. 35).
 #'
 #' @examples
 #' data("swift")

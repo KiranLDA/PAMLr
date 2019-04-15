@@ -2,15 +2,15 @@
 % Please edit documentation in R/rollPAM.R
 \name{rollPAM}
 \alias{rollPAM}
-\title{Derive classification data for soaring birds}
+\title{Rolling window}
 \usage{
-rollPAM(dta, interp_NA = TRUE, resolution_out = 15, window = 120,
+rollPAM(dta, interp = TRUE, resolution_out = 15, window = 120,
   units = "mins")
 }
 \arguments{
 \item{dta}{PAM data to be used in the analysis}
 
-\item{interp_NA}{By default TRUE. Whether or not to interpolate NAs in dataset that the rollapply is used on}
+\item{interp}{By default TRUE. Whether or not to interpolate NAs in dataset that the rollapply is used on.}
 
 \item{resolution_out}{Temporal resolution of output dataset. By defaukt 15 mins. Must be in minutes unless the units are changed}
 
@@ -22,9 +22,10 @@ rollPAM(dta, interp_NA = TRUE, resolution_out = 15, window = 120,
 a dataframe of derived metrics including the median, standard deviation, minimum, maximum, cumulative difference and range over the period
 }
 \description{
-Derive classification data for soaring birds
+This function merges all the data to a given output resolution and then progresses along the timeseries and creates summary statistics within a pre-defined time window. Can interpolate or not. Interpolations is only recommended if the analysis cannot handle NAs and if the window is smaller than the data (e.g. magnetic) with the worst temporal resolution
 }
 \examples{
+
 data(swift)
 PAM_data = swift
 
@@ -33,18 +34,9 @@ start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
 end = as.POSIXct("2017-04-21","\%Y-\%m-\%d", tz="UTC")
 PAM_data = cutPAM(PAM_data, start, end)
 
-
-TOclassify = rollPAM(dta = PAM_data,
-                     resolution_out = 60 ,
-                     window = 2*60,
-                     interp_NA = FALSE)
-
 TOclassify = rollPAM(dta = list(pressure = PAM_data$pressure,
                                 acceleration = PAM_data$acceleration),
                      resolution_out = 60 ,
                      window = 24*60)
-head(TOclassify)
-plot(TOclassify$cumu_diff_pressure, type="l")
-
 
 }

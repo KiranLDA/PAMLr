@@ -22,7 +22,7 @@
 #'                          toPLOT = FALSE)
 #'
 #' plotTHLD(dta = PAM_data$acceleration$act,
-#'          type = behaviour$type,
+#'          type = "flapping",
 #'          classification = behaviour$classification,
 #'          threshold = behaviour$threshold)
 #'

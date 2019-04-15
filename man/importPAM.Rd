@@ -16,7 +16,7 @@ importPAM(pathname = pathname, measurements = c(".pressure", ".glf",
 a list of measurements for the one individual
 }
 \description{
-Import PAM data
+Imports and formats many datasets into one big nested list containing all the data from the different sensors. A subset of sensors can be selected using `measurements`.
 }
 \examples{
 pathname = "R:/40 Data/20 Geolocator/10 Raw data/UpuEpoCH16/16AJ_20170809"

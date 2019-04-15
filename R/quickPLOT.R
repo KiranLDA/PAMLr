@@ -1,4 +1,4 @@
-#' quickly plot the pam data to have an idea of it's quality
+#' Quickly plot the pam data to have an idea of it's quality
 #'
 #' @param dta path where files are stored
 #' @param measurements a series of measurements logged by the PAM logger which are to be plotted. Currently supports these file extentions: "pressure","light", "acceleration", "temperature" and "magnetic"

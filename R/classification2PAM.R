@@ -1,9 +1,12 @@
-#' Integrate classification from classifyPAM into PAM data
+#' Timetable to timeseries
+#'
+#' @description convert a classification timetable into a classification timeseries
 #'
 #' @param from start of event that was classified (generally SOARprep output)
 #' @param to end of event that was classified (generally SOARprep output)
 #' @param classification of event (generally classifyPAM()$states output )
 #' @param addTO data which the classifications are to be added to (e.g. PAM_data$pressure)
+#' @param missing Missing value replacement. By default NA.
 #'
 #' @return the classification in addTO dataset
 #'
@@ -29,7 +32,8 @@
 #' pressure_classification = classification2PAM(from = TOclassify$start,
 #'                                              to =TOclassify$end,
 #'                                              classification = classification,
-#'                                              addTO = PAM_data$pressure)
+#'                                              addTO = PAM_data$pressure,
+#'                                              missing = NA)
 #'
 #' pressure_classification[pressure_classification == NA] = 0
 #'
@@ -40,22 +44,8 @@
 #' @importFrom dplyr last
 #'
 #' @export
-classification2PAM <- function(from, to, classification, addTO ){
-
-  # # for testing
-  # from = TOclassify$start
-  # to = TOclassify$end
-  # classification = TOclassify$hmm_classification
-  # addTO = PAM_data$pressure
-
-  addTO$classification  <- NA
-  # for(i in unique(classification)){
-  #   start <- which ( addTO$date %in% from[classification == i])
-  #   end <- which ( addTO$date %in% to[classification == i])
-  #   index <- unlist(sapply(1:length(start), function(i) start[i]:end[i]))
-  #   addTO$classification[index] <- i
-  # }
-
+classification2PAM <- function(from, to, classification, addTO, missing = NA ){
+  addTO$classification  <- missing
   for(i in 1:length(classification)){
     start = which(addTO$date >= from[i])[1]
     end = last(which(addTO$date <= to[i]))

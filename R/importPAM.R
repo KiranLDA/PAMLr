@@ -1,5 +1,7 @@
 #' Import PAM data
 #'
+#' @description Imports and formats many datasets into one big nested list containing all the data from the different sensors. A subset of sensors can be selected using `measurements`.
+#'
 #' @param pathname path where files are stored
 #' @param measurements a series of measurements logged by the PAM logger which are to be imported. Currently supports these file extentions: ".pressure", ".glf", ".gle",".acceleration", ".temperature" and ".magnetic"
 #'

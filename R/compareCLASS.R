@@ -1,9 +1,14 @@
 #' Combine classification results
 #'
+#' @description this function takes multiple classifications of the same data and compares the agreement between each, on a timepoint level.
+#'
 #' @param date datetime in POSIXCT format. See hoopoe$activity$date for example
 #' @param classifications a dataframe containing the results from different classifications in each column. The classifications must correspond to the same datetimes.
 #'
-#' @return a dataframe containing (i) date, (ii) the raw classifications, (iii) each state with the number of times it was used in a classification, and (iv) whether or not all classes provided the same state
+#' @return a dataframe containing date
+#' @return the raw classifications
+#' @return each state with the number of times it was used in a classification
+#' @return whether or not all classes provided the same state
 #'
 #' @examples
 #'

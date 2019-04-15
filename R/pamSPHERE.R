@@ -1,4 +1,6 @@
-#' Plot calibrated magnetic data on a sphere
+#' Plot 3d sphere
+#'
+#' @description This function takes a spherical projection of acceleration or magentic data and plots it on a sphere which can be turned and zoomed into.
 #'
 #' @param x data on x axis
 #' @param y data on y axis
@@ -13,6 +15,8 @@
 #' @param ... additional input for rgl::spheres3d for plotting points on the sphere using
 #'
 #' @return a 3d sphere plot
+#'
+#' @references Adler, D., Nenadic, O. and Zucchini, W., 2003, March. Rgl: A r-library for 3d visualization with opengl. In Proceedings of the 35th Symposium of the Interface: Computing Science and Statistics, Salt Lake City (Vol. 35).
 #'
 #' @examples
 #' data("swift")
@@ -32,12 +36,6 @@
 #'           spherecolor="royalblue4",
 #'           arrows=TRUE,
 #'           cex=2)
-#'
-#'
-#' #data("bee_eater")
-#' #start = as.POSIXct("2015-07-21","%Y-%m-%d", tz="UTC")
-#' #end = as.POSIXct("2016-06-01","%Y-%m-%d", tz="UTC")
-#' #PAM_data  = cutPAM(bee_eater, start, end)
 #'
 #' # plot an g-phere
 #' calibration = triACC(dta = PAM_data$magnetic)

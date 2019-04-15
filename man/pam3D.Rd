@@ -19,7 +19,7 @@ pam3D(x, y, z, ...)
 a 3d scatter plot
 }
 \description{
-3d scatterplot
+Creates an interactive 3d scatterplot
 }
 \examples{
 data("swift")
@@ -33,4 +33,7 @@ calibration = triMAG(dta = PAM_data$magnetic)
 pam3D(PAM_data$magnetic$mX, PAM_data$magnetic$mY, PAM_data$magnetic$mZ,
        xlab= "X", ylab= "Y", zlab= "Z")
 
+}
+\references{
+Adler, D., Nenadic, O. and Zucchini, W., 2003, March. Rgl: A r-library for 3d visualization with opengl. In Proceedings of the 35th Symposium of the Interface: Computing Science and Statistics, Salt Lake City (Vol. 35).
 }

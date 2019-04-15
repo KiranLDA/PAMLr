@@ -2,7 +2,7 @@
 % Please edit documentation in R/sensorIMG.R
 \name{sensorIMG}
 \alias{sensorIMG}
-\title{Plot Actogram}
+\title{sensor image}
 \usage{
 sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
   labelx = TRUE, labely = TRUE, offset = 0, dt = NA,
@@ -42,7 +42,7 @@ sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
 an image of the sensor data, for instance with activity it would produce an actogram
 }
 \description{
-Plot Actogram
+This function plots sensor data as an image. An actogram for instance is a type of sensor image.
 }
 \examples{
 #specify the data location

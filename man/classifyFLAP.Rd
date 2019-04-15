@@ -2,7 +2,7 @@
 % Please edit documentation in R/classifyFLAP.R
 \name{classifyFLAP}
 \alias{classifyFLAP}
-\title{Make timetable}
+\title{Classify flapping flight}
 \usage{
 classifyFLAP(dta, period = 12, toPLOT = TRUE, method = "kmeans",
   tz = "UTC")
@@ -19,10 +19,22 @@ classifyFLAP(dta, period = 12, toPLOT = TRUE, method = "kmeans",
 \item{tz}{timezone, default is "UTC"}
 }
 \value{
-a timetable for when the species was migrating or not
+timetable: a timetable for when the species was migrating or not,
+
+classification: a classification timeseries where datetime corresponds to activity, and
+
+no_movement: the value in classification which corresponds to no movement
+
+low_movement: the value in classification which corresponds to low activity
+
+high_movement: the value in classification which corresponds to high activity
+
+migration: the value in classification which corresponds to migratory flapping flight
+
+threshold: the threshold between low and high activity
 }
 \description{
-Make timetable
+This function uses activity data to classify migratory flapping flight.
 }
 \examples{
 #specify the data location
@@ -46,4 +58,11 @@ plot(PAM_data$acceleration$date[6000:8000],PAM_data$acceleration$act[6000:8000],
 
 behaviour$timetable
 
+}
+\references{
+Bäckman, J., Andersson, A., Alerstam, T., Pedersen, L., Sjöberg, S., Thorup, K. and Tøttrup, A.P., 2017. Activity and migratory flights of individual free‐flying songbirds throughout the annual cycle: method and first case study. Journal of avian biology, 48(2), pp.309-319.
+
+Liechti, F., Bauer, S., Dhanjal-Adams, K.L., Emmenegger, T., Zehtindjiev, P. and Hahn, S., 2018. Miniaturized multi-sensor loggers provide new insight into year-round flight behaviour of small trans-Sahara avian migrants. Movement ecology, 6(1), p.19.
+
+Bruderer, B., Peter, D., Boldt, A. and Liechti, F., 2010. Wing‐beat characteristics of birds recorded with tracking radar and cine camera. Ibis, 152(2), pp.272-291.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/triMAG.R
 \name{triMAG}
 \alias{triMAG}
-\title{Calibrate magnetic data and calculate roll, pitch and yaw}
+\title{Calibrate magnetic data}
 \usage{
 triMAG(dta)
 }
@@ -13,7 +13,7 @@ triMAG(dta)
 roll, pitch and yaw from acceleration data, as well as calibrated magnetic data for x, y and z axes
 }
 \description{
-Calibrate magnetic data and calculate roll, pitch and yaw
+This function calibrates tri-axial magnetic data and then also calculates yaw, pitch and roll
 }
 \examples{
 data(swift)
@@ -21,4 +21,7 @@ PAM_data = swift
 
 calibration = triMAG(dta = PAM_data$magnetic)
 
+}
+\references{
+Bidder, O.R., Walker, J.S., Jones, M.W., Holton, M.D., Urge, P., Scantlebury, D.M., Marks, N.J., Magowan, E.A., Maguire, I.E. and Wilson, R.P., 2015. Step by step: reconstruction of terrestrial animal movement paths by dead-reckoning. Movement ecology, 3(1), p.23.
 }

@@ -1,4 +1,4 @@
-#' PAM data collected from Bee Eater
+#' PAM data collected from European Bee-Eater
 #'
 #' A dataset containint pressure, light, acceleration, temperature and magnetism from a european bee-eater (id = 14SA)
 #'

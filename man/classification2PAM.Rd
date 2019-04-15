@@ -2,9 +2,9 @@
 % Please edit documentation in R/classification2PAM.R
 \name{classification2PAM}
 \alias{classification2PAM}
-\title{Integrate classification from classifyPAM into PAM data}
+\title{Timetable to timeseries}
 \usage{
-classification2PAM(from, to, classification, addTO)
+classification2PAM(from, to, classification, addTO, missing = NA)
 }
 \arguments{
 \item{from}{start of event that was classified (generally SOARprep output)}
@@ -14,12 +14,14 @@ classification2PAM(from, to, classification, addTO)
 \item{classification}{of event (generally classifyPAM()$states output )}
 
 \item{addTO}{data which the classifications are to be added to (e.g. PAM_data$pressure)}
+
+\item{missing}{Missing value replacement. By default NA.}
 }
 \value{
 the classification in addTO dataset
 }
 \description{
-Integrate classification from classifyPAM into PAM data
+convert a classification timetable into a classification timeseries
 }
 \examples{
 data(bee_eater)
@@ -43,7 +45,8 @@ classification = classifyPAM((TOclassify$total_daily_duration *
 pressure_classification = classification2PAM(from = TOclassify$start,
                                              to =TOclassify$end,
                                              classification = classification,
-                                             addTO = PAM_data$pressure)
+                                             addTO = PAM_data$pressure,
+                                             missing = NA)
 
 pressure_classification[pressure_classification == NA] = 0
 

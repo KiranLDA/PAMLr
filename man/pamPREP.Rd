@@ -2,7 +2,7 @@
 % Please edit documentation in R/pamPREP.R
 \name{pamPREP}
 \alias{pamPREP}
-\title{Derive classification data for soaring birds}
+\title{Prepare data for analysis}
 \usage{
 pamPREP(dta, availavariable = c("pressure", "light", "acceleration",
   "magnetic", "temperature"), Pdiff_thld = 2, light_thld = 1,
@@ -113,7 +113,7 @@ sd_temp : Standard deviation of temperature during the event (in celsius)
 cum_temp_change : Cumulative absolute difference in temperature during the event (in celsius)
 }
 \description{
-Derive classification data for soaring birds
+This function summarises the data based on different patterns such as sustained acitivity, sustained pressure changes, etc... and extracts these from the data as a timetable. It then creates summary statics for each of these periods or events, such as cumulative altitude change, mean pitch etc...
 }
 \examples{
 data(hoopoe)
@@ -125,9 +125,6 @@ TOclassify = pamPREP(PAM_data,
                      method= "flap",
                      twl = twl)
 
-
 str(TOclassify)
-
-
 
 }

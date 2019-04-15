@@ -1,11 +1,24 @@
-#' Make timetable
+#' Classify flapping flight
+#'
+#' @description This function uses activity data to classify migratory flapping flight.
 #'
 #' @param dta data stored as a list see str(data(PAM_data)) for example format
 #' @param period number of timepoints after which behaviour is considered migratory e.g. for hoopoes, 3x5min = 15 minutes of intense activity is considered flight
 #' @param toPLOT can be true or false. If true then threshold is plotted according to plotTHLD()
 #' @param method for the time being only supports "kmeans", but will later also include maybe
 #' @param tz timezone, default is "UTC"
-#' @return a timetable for when the species was migrating or not
+#'
+#' @return timetable: a timetable for when the species was migrating or not,
+#' @return classification: a classification timeseries where datetime corresponds to activity, and
+#' @return no_movement: the value in classification which corresponds to no movement
+#' @return low_movement: the value in classification which corresponds to low activity
+#' @return high_movement: the value in classification which corresponds to high activity
+#' @return migration: the value in classification which corresponds to migratory flapping flight
+#' @return threshold: the threshold between low and high activity
+#'
+#' @references Bäckman, J., Andersson, A., Alerstam, T., Pedersen, L., Sjöberg, S., Thorup, K. and Tøttrup, A.P., 2017. Activity and migratory flights of individual free‐flying songbirds throughout the annual cycle: method and first case study. Journal of avian biology, 48(2), pp.309-319.
+#' @references Liechti, F., Bauer, S., Dhanjal-Adams, K.L., Emmenegger, T., Zehtindjiev, P. and Hahn, S., 2018. Miniaturized multi-sensor loggers provide new insight into year-round flight behaviour of small trans-Sahara avian migrants. Movement ecology, 6(1), p.19.
+#' @references Bruderer, B., Peter, D., Boldt, A. and Liechti, F., 2010. Wing‐beat characteristics of birds recorded with tracking radar and cine camera. Ibis, 152(2), pp.272-291.
 #'
 #' @examples
 #' #specify the data location
@@ -68,7 +81,7 @@ classifyFLAP <- function(dta ,
   Duration_table$`Duration (h)` = as.numeric(Duration_table$`Duration (h)`)
 
   # now we take high activity, partition it into magration or not based on duration
-  high_movement = as.numeric(which(table(dta$clust) == min(table(dta$clust),na.rm= TRUE)))#-1
+  high_movement = as.numeric(which(table(dta$clust) == min(table(dta$clust),na.rm= TRUE)))
   low_movement = as.numeric(which(table(dta$clust) == max(table(dta$clust),na.rm= TRUE)))
   dta$clust[is.na(dta$clust)] =  low_movement
 
@@ -123,6 +136,7 @@ classifyFLAP <- function(dta ,
   # idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
   # dta$clust[idx+1] = 3
 
+
   #look for start and end of migration
   end = c(which(dta$clust ==3)[diff(which(dta$clust ==3)) > 1], which(dta$clust ==3)[length(which(dta$clust ==3))])
   start = c(which(dta$clust ==3)[1], (which(dta$clust ==3)[which(diff(which(dta$clust ==3)) > 1)+ 1] ))
@@ -132,15 +146,22 @@ classifyFLAP <- function(dta ,
   names(info) = c("start","end","Duration (h)")
   Duration_table = rbind(Duration_table, info)
 
+
+  # order so that low movement is lower than high movement
+  if (high_movement == 1){
+    dta$clust[dta$act == 1] = 999
+    dta$clust[dta$act == 2] = 1
+    dta$clust[dta$act == 999] =2
+  }
+
   Duration_table = Duration_table[-c(1,2),]
-  dta$clust[dta$act == 0] = 4
-  return(list(type = type,
-              timetable = Duration_table,
+  dta$clust[dta$act == 0] = 0
+  return(list(timetable = Duration_table,
               classification = dta$clust,
-              low_movement = low_movement,
-              high_movement = high_movement,
+              no_movement = 0,
+              low_movement = 1,
+              high_movement = 2,
               migration = 3,
-              no_movement = 4,
               threshold = threshold))
 }
 

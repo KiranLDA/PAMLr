@@ -1,8 +1,10 @@
-#' merges all the data into one table for interpolation
+#' Merges all sensors into one
+#'
+#' @description This function takesthe typical PAM_data input, which is a nested list of different sensor data, all formatted at different time resolutions, and merges them all into one big table. By default all times are kept, and not interpolated.
 #'
 #' @param dta raw pam data see `data(bee_eater` for example
-#' @param interp logical. Default TRUE. whether or not to interpolate if there are NAs
 #' @param all logical. Default TRUE. Whether or not to keep NAs (i.e. all the datasets)
+#' @param interp logical. Default FALSE. whether or not to interpolate if there are NAs. if all = FALSE then interp is not used.
 #'
 #' @return merged and interpolated dataset
 #'
@@ -16,8 +18,9 @@
 #'
 #' @export
 mergePAM <- function(dta,
-                     interp = TRUE,
-                     all = TRUE){
+                     all = TRUE,
+                     interp = FALSE
+                     ){
 
   PAM_data = dta
 
