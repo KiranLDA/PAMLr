@@ -91,7 +91,6 @@ classifyFLAP <- function(dta ,
   idx = idx[sapply(idx, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
   dta$clust[idx+1] = high_movement
 
-
   x = c(low_movement,high_movement)
   start = which(dta$clust == x[1])
   start = start[sapply(start, function(i) all(dta$clust[i:(i+(length(x)-1))] == x))]
@@ -149,9 +148,9 @@ classifyFLAP <- function(dta ,
 
   # order so that low movement is lower than high movement
   if (high_movement == 1){
-    dta$clust[dta$act == 1] = 999
-    dta$clust[dta$act == 2] = 1
-    dta$clust[dta$act == 999] =2
+    dta$clust[dta$clust == 1] = 999
+    dta$clust[dta$clust == 2] = 1
+    dta$clust[dta$clust == 999] = 2
   }
 
   Duration_table = Duration_table[-c(1,2),]
