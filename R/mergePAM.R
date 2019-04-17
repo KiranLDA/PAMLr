@@ -44,5 +44,7 @@ mergePAM <- function(dta,
     new[,2:ncol(new)] = na.approx(new[,2:ncol(new)])
   }
 
+  rownames(new) = c()
+
   return(new)
 }

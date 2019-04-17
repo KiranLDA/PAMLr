@@ -92,6 +92,7 @@ reducePAM <- function(dta,
   test=data.frame(new$date,  new[,varint], test)
   colnames(test) = c("date", varint, colnames(new)[to_change])
   test = test[complete.cases(test[,varint]),]
+  rownames(test) = c()
 
   return(test)
 }
