@@ -15,11 +15,10 @@ To install this package from github, make sure the user first have `devtools` in
 ```r
 install.packages("devtools")
 ```
-This package relies on two packages which are not on CRAN: SGAT and TwGeos which can be installed as follows (in this order): 
+Then the package can be installed from github:
 
 ```r
-devtools::install_github("SWotherspoon/SGAT")
-devtools::install_github("SLisovski/TwGeos")
+devtools::install_github("KiranLDA/PAMLr")
 ```
 
 ## Authors
