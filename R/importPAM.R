@@ -3,7 +3,7 @@
 #' @description Imports and formats many datasets into one big nested list containing all the data from the different sensors. A subset of sensors can be selected using `measurements`.
 #'
 #' @param pathname path where files are stored
-#' @param measurements a series of measurements logged by the PAM logger which are to be imported. Currently supports these file extentions: ".pressure", ".glf", ".gle",".acceleration", ".temperature" and ".magnetic"
+#' @param measurements a series of measurements logged by the PAM logger which are to be imported. Currently supports these file extentions: ".pressure", ".glf", ".gle",".acceleration", ".temperature", "AirTemperature" and ".magnetic"
 #'
 #' @return a list of measurements for the one individual
 #'
@@ -33,7 +33,7 @@ importPAM <- function(pathname = pathname,measurements = c(".pressure", ".glf", 
     acceleration = read.delim(list.files(pathname,pattern=".acceleration",full.names = TRUE),skip=6,sep="",header = FALSE)
     acceleration = as.data.frame(list(date=as.POSIXct(strptime(paste(acceleration[,1],acceleration[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),pit=acceleration[,3], act=acceleration[,4]))
   }
-  if(".temperature" %in% measurements){
+  if((".temperature" %in% measurements)| (".AirTemperature" %in% measurements)){
     temperature = read.delim(list.files(pathname,pattern=".temperature",full.names = TRUE),skip=6,sep="",header = FALSE)
     temperature = as.data.frame(list(date=as.POSIXct(strptime(paste(temperature[,1],temperature[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),obs=temperature[,3]))
   }
