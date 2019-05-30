@@ -10,7 +10,7 @@ importPAM(pathname = pathname, measurements = c(".pressure", ".glf",
 \arguments{
 \item{pathname}{path where files are stored}
 
-\item{measurements}{a series of measurements logged by the PAM logger which are to be imported. Currently supports these file extentions: ".pressure", ".glf", ".gle",".acceleration", ".temperature", "AirTemperature" and ".magnetic"}
+\item{measurements}{a series of measurements logged by the PAM logger which are to be imported. Currently supports these file extentions: ".pressure", ".glf", ".gle",".acceleration", ".temperature", "AirTemperature", ".BodyTemperature" and ".magnetic"}
 }
 \value{
 a list of measurements for the one individual
