@@ -217,8 +217,7 @@ legend( PAM_data$acceleration$date[index[1]],60 ,
                     behaviour$high_movement, behaviour$migration)+1],
         pch=20)
 ```
-<img align="center" src="https://github.com/KiranLDA/PAMLrManual/blob/master/_bookdown_files/PAMLrManual_files/figure-html/unnamed-chunk-51-1.png">
-
+<img align="center" src="https://github.com/KiranLDA/PAMLrManual/blob/master/docs/08-flapping_files/figure-html/unnamed-chunk-5-1.png">
 
 ## Plot the classification as a sensor image
 
@@ -254,6 +253,10 @@ legend("bottomright",cex=1.2,
 
 
 ```
+
+<img align="center" src="https://github.com/KiranLDA/PAMLrManual/blob/master/docs/08-flapping_files/figure-html/unnamed-chunk-6-1.png">
+
+
 
 ## Authors
 
