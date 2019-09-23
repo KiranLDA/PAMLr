@@ -102,7 +102,7 @@ It is possible to select areas to zoom into by right clicking and highighting ce
 
 Actograms are often used to plot activity over time at different hours of the day. However, the same approach can be used to plot any sensor data, not just activity. For simplicity, we name these “sensor images”. Plotting all sensors side by side is an important step for visualising data and developing an understanding of data patterns, and to start thinking about the behaviours that may be driving the observed patterns. __PAMLr__ offers a function `sensorIMG()`for plotting sensor images, which can be implemented as follows.
 
-```{r}
+```r
 # Create plots with 3 together (mfrow)
 par( mfrow= c(1,3), oma=c(0,2,0,6))
 
