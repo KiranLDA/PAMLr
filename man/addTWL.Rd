@@ -7,9 +7,9 @@
 addTWL(date, offset, ...)
 }
 \arguments{
-\item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}
+\item{date}{Date data in POSIXct format, most commonly \code{PAM_data$acceleration$date}}
 
-\item{offset}{This parameter determines where the center of the graph is. When `offset = 0`, then midday is at the center of the graph. when `offset=12` midnight`}
+\item{offset}{This parameter determines where the center of the graph is. When \code{offset = 0}, then midday is at the center of the graph. when \code{offset=12} midnight`}
 
 \item{...}{Any additional parameters taken by graphics::points which the user may want to use to modify the graphic}
 }

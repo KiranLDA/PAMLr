@@ -2,7 +2,7 @@
 % Please edit documentation in R/pamPREP.R
 \name{pamPREP}
 \alias{pamPREP}
-\title{Prepare data for analysis}
+\title{Prepare data for analysis by deriving summary statistics}
 \usage{
 pamPREP(dta, availavariable = c("pressure", "light", "acceleration",
   "magnetic", "temperature"), Pdiff_thld = 2, light_thld = 1,
@@ -11,7 +11,7 @@ pamPREP(dta, availavariable = c("pressure", "light", "acceleration",
 \arguments{
 \item{dta}{PAM data to be used in the analysis e.g. str(hoopoe)}
 
-\item{availavariable}{Variables to be used to derive metrics for classification. must have "pressure", but ideally `availavariable = c("pressure", "light", "acceleration")` if any of these are incomplete, do not use them}
+\item{availavariable}{Variables to be used to derive metrics for classification. must have "pressure", but ideally \code{availavariable = c("pressure", "light", "acceleration")} if any of these are incomplete, do not use them}
 
 \item{Pdiff_thld}{Pressure threshold. Only used when method="pressure".  This if pressure changes more than e.g. 2hpa over 30 minutes, then the bird is flying}
 

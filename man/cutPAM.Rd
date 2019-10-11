@@ -2,7 +2,7 @@
 % Please edit documentation in R/cutPAM.R
 \name{cutPAM}
 \alias{cutPAM}
-\title{cut PAM data}
+\title{Crop all sensor data to the same time}
 \usage{
 cutPAM(dta, start, end)
 }

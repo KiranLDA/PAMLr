@@ -14,7 +14,7 @@ dygraphPAM(dta, from = dta$light$date[1],
 
 \item{to}{date that plotting ends}
 
-\item{toPLOT}{names of the variables to plot. For now this includes `light`, `pressure`, `acceleration` and `temperature`}
+\item{toPLOT}{names of the variables to plot. For now this includes \code{light}, \code{pressure}, \code{acceleration} and \code{temperature}}
 }
 \value{
 a plot of all the measurements

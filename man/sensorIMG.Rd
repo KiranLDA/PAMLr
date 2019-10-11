@@ -10,9 +10,9 @@ sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
   viridis::magma(90)), ...)
 }
 \arguments{
-\item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}
+\item{date}{Date data in POSIXct format, most commonly \code{PAM_data$acceleration$date}}
 
-\item{sensor_data}{sensor data, for example look at `PAM_data$acceleration$act`}
+\item{sensor_data}{sensor data, for example look at \code{PAM_data$acceleration$act}}
 
 \item{tz}{Time zone for POSIXct, default set to "UTC"}
 
@@ -24,9 +24,9 @@ sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
 
 \item{labely}{wherether or not to write the name of the y axis (for instance when compiling multifigures)}
 
-\item{offset}{This parameter determines where the center of the graph is. When `offset = 0`, then midday is at the center of the graph. when `offset=12` midnight`}
+\item{offset}{This parameter determines where the center of the graph is. When \code{offset = 0}, then midday is at the center of the graph. when \code{offset=12} midnight`}
 
-\item{dt}{the time interval to which the data are resampled (secs). Default is `NA`}
+\item{dt}{the time interval to which the data are resampled (secs). Default is \code{NA}}
 
 \item{xlab}{label for x-axis (as a character string)}
 
@@ -34,7 +34,7 @@ sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
 
 \item{cex}{size of labels}
 
-\item{col}{Colour scheme of plot. Default `col = c("black",viridis::magma(90))`}
+\item{col}{Colour scheme of plot. Default \code{col = c("black",viridis::magma(90))}}
 
 \item{...}{Any additional parameters used by graphics::image}
 }

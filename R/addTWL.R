@@ -56,12 +56,12 @@ addTWL <- function(date, offset, ...){
 
 #' Utilities for manipulating hours
 #'
-#' Given a vector of POSIXct dates, \code{as.hour} extracts the time
+#' Given a vector of POSIXct dates, `as.hour` extracts the time
 #' of day component of the date and returns it as decimal hours.
-#' Given a vector of decimal hours, \code{hourOffset} recodes the
+#' Given a vector of decimal hours, `hourOffset` recodes the
 #' decimal hour into a new 24 hour interval.
-#' @title Hour Manipulation
-#' @rdname hours
+#' @title Hour Manipulation 1
+#' @rdname hours1
 #' @param tm them timestamp as POSIXct.
 #' @param hr the decimal hour to be wrap.
 #' @param offset minimum hour of the interval to wrap into.
@@ -74,8 +74,7 @@ as.hour <- function(tm) {
   (as.numeric(tm)-as.numeric(as.POSIXct(as.Date(tm))))/3600
 }
 
-
-#' @rdname hours
+#' @rdname hours1
 #' @export
 hourOffset <-  function(hr,offset=0) {
   (hr-offset)%%24+(offset%%24)

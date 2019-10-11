@@ -1,4 +1,4 @@
-#' Prepare data for analysis
+#' Prepare data for analysis by deriving summary statistics
 #'
 #' @description This function summarises the data based on different patterns such as sustained acitivity, sustained pressure changes, etc... and extracts these from the data as a timetable. It then creates summary statics for each of these periods or events, such as cumulative altitude change, mean pitch etc...
 #'

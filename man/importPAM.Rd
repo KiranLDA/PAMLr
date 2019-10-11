@@ -16,14 +16,14 @@ importPAM(pathname = pathname, measurements = c(".pressure", ".glf",
 a list of measurements for the one individual
 }
 \description{
-Imports and formats many datasets into one big nested list containing all the data from the different sensors. A subset of sensors can be selected using `measurements`.
+Imports and formats many datasets into one big nested list containing all the data from the different sensors. A subset of sensors can be selected using \code{measurements}.
 }
 \examples{
-pathname = "R:/40 Data/20 Geolocator/10 Raw data/UpuEpoCH16/16AJ_20170809"
-measurements = c(".pressure", ".glf")
-PAM_data = importPAM(pathname, measurements)
-str(PAM_data)
-plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
-type="l", xlab="Date", ylab="Light Intensity")
+#pathname = "your/filepath"
+#measurements = c(".pressure", ".glf")
+#PAM_data = importPAM(pathname, measurements)
+#str(PAM_data)
+#plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
+#type="l", xlab="Date", ylab="Light Intensity")
 
 }

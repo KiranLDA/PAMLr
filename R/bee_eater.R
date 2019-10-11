@@ -11,5 +11,5 @@
 #'   \item{temperature}{Date in UTC and temperature on bird in celcius(every 15 minutes)}
 #'   \item{magnetic}{Date in UTC and magnetic measurements on 3 axes(every 15 minutes)}
 #' }
-#' @source \url{www.vogelwarte.ch/en}
+#' @source <www.vogelwarte.ch/en>
 "bee_eater"

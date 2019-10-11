@@ -14,7 +14,7 @@ classifyPAM(dta, method = c("kmeans", "hmm", "embc", "agnes", "diana"),
 
 \item{states}{number of states to classify the data into}
 
-\item{family}{By default `gaussian()`. Parameter only used in the hmm method. Must be the same as the parameters used by `depmixS4::depmix`}
+\item{family}{By default \code{gaussian()}. Parameter only used in the hmm method. Must be the same as the parameters used by \code{depmixS4::depmix}}
 
 \item{...}{any additional inputs for depmixs4::depmix, stats::kmeans, cluster::diana, cluster::diana  or EMbC::embc functions, depending on method selected}
 }

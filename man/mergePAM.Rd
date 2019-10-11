@@ -7,7 +7,7 @@
 mergePAM(dta, all = TRUE, interp = FALSE)
 }
 \arguments{
-\item{dta}{raw pam data see `data(bee_eater` for example}
+\item{dta}{raw pam data see \code{data(bee_eater} for example}
 
 \item{all}{logical. Default TRUE. Whether or not to keep NAs (i.e. all the datasets)}
 

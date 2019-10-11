@@ -21,11 +21,10 @@ a plot of PAM data
 Quickly plot the pam data to have an idea of it's quality
 }
 \examples{
-data(hoopoe)
-PAM_data=hoopoe
-str(PAM_data)
+PAM_data = hoopoe
 
 #plot everything in 2 windows
+par(mar=c(2.5,4,0.5,1))
 quickPLOT(PAM_data)
 
 # only subset some measurements

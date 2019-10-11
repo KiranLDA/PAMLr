@@ -1,4 +1,4 @@
-#' cut PAM data
+#' Crop all sensor data to the same time
 #'
 #' @description Get rid of excess data. e.g. when a logger is kept in a rucksack or a lab before being downloaded.
 #'

@@ -4,9 +4,7 @@ Title: Suite of functions for manipulating Pressure, Activity, Magnetism, Temper
 Version: 1.1
 Author: Kiran Dhanjal-Adams
 Maintainer: Kiran Dhanjal-Adams <kiran.dhanjaladams@uqconnect.edu.au>
-Description: This package combines a set of functions for analysing multisensor geolocator data such as Pressure, 
-Activity, Magnetism, Temperature or Light. This includes functions for visualising the data, deriving visual classification,
-and finally for comparing classification accuracy between different models.
+Description: This package combines a set of functions for analysing multisensor geolocator data such as Pressure, Activity, Magnetism, Temperature or Light. This includes functions for visualising the data, deriving visual classification, and finally for comparing classification accuracy between different models.
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -34,3 +32,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)

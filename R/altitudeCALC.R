@@ -4,7 +4,7 @@
 #'
 #' @param P on-bird pressure in hectopascals
 #' @param P0 pressure at sea level in hectopascals
-#' @param T0 temperature at sea level in kelvin (i.e. [celcius + 273.15] OR [(Farenheit − 32) * 5/9 + 273.15])
+#' @param T0 temperature at sea level in kelvin (i.e. celcius + 273.15 OR (Farenheit − 32) * 5/9 + 273.15)
 #'
 #' @return altitude in metres, default is calculated according to International Standard Atmosphere model (International Organization for Standardization 1975: ISO 2533:1975)
 #' @references Atmosphere, S., 1975. International organization for standardization. ISO, 2533, p.1975.
