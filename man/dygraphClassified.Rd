@@ -4,9 +4,13 @@
 \alias{dygraphClassified}
 \title{Plot PAM data with dygraphs}
 \usage{
-dygraphClassified(dta, from = dta$light$date[1],
-  to = dta$light$date[length(dta$light$date)], toPLOT = names(dta),
-  timetable = timetable)
+dygraphClassified(
+  dta,
+  from = dta$light$date[1],
+  to = dta$light$date[length(dta$light$date)],
+  toPLOT = names(dta),
+  timetable = timetable
+)
 }
 \arguments{
 \item{dta}{PAM data to be plotted}

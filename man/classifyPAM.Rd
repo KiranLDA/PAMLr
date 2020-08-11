@@ -4,8 +4,13 @@
 \alias{classifyPAM}
 \title{Derive classification data for soaring birds}
 \usage{
-classifyPAM(dta, method = c("kmeans", "hmm", "embc", "agnes", "diana"),
-  states = 2, family = stats::gaussian(), ...)
+classifyPAM(
+  dta,
+  method = c("kmeans", "hmm", "embc", "agnes", "diana"),
+  states = 2,
+  family = stats::gaussian(),
+  ...
+)
 }
 \arguments{
 \item{dta}{data to be classified, can be anything}

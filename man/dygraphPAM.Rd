@@ -4,8 +4,12 @@
 \alias{dygraphPAM}
 \title{Plot PAM data with dygraphs}
 \usage{
-dygraphPAM(dta, from = dta$light$date[1],
-  to = dta$light$date[length(dta$light$date)], toPLOT = names(dta))
+dygraphPAM(
+  dta,
+  from = dta$light$date[1],
+  to = dta$light$date[length(dta$light$date)],
+  toPLOT = names(dta)
+)
 }
 \arguments{
 \item{dta}{PAM data to be plotted}

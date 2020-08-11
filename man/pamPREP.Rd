@@ -4,9 +4,16 @@
 \alias{pamPREP}
 \title{Prepare data for analysis}
 \usage{
-pamPREP(dta, availavariable = c("pressure", "light", "acceleration",
-  "magnetic", "temperature"), Pdiff_thld = 2, light_thld = 1,
-  method = "pressure", twl, interp = FALSE, tz = "UTC")
+pamPREP(
+  dta,
+  availavariable = c("pressure", "light", "acceleration", "magnetic", "temperature"),
+  Pdiff_thld = 2,
+  light_thld = 1,
+  method = "pressure",
+  twl,
+  interp = FALSE,
+  tz = "UTC"
+)
 }
 \arguments{
 \item{dta}{PAM data to be used in the analysis e.g. str(hoopoe)}

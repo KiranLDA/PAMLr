@@ -4,8 +4,14 @@
 \alias{changePAM}
 \title{Changepoint analysis}
 \usage{
-changePAM(dta, cpt.method = "meanvar", method = "PELT",
-  penalty = "Manual", pen.value = "100*log(n)", ...)
+changePAM(
+  dta,
+  cpt.method = "meanvar",
+  method = "PELT",
+  penalty = "Manual",
+  pen.value = "100*log(n)",
+  ...
+)
 }
 \arguments{
 \item{dta}{data to be classified (vector)}

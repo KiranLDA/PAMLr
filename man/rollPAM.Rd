@@ -4,8 +4,7 @@
 \alias{rollPAM}
 \title{Rolling window}
 \usage{
-rollPAM(dta, interp = TRUE, resolution_out = 15, window = 120,
-  units = "mins")
+rollPAM(dta, interp = TRUE, resolution_out = 15, window = 120, units = "mins")
 }
 \arguments{
 \item{dta}{PAM data to be used in the analysis}

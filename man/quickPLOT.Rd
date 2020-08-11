@@ -4,8 +4,11 @@
 \alias{quickPLOT}
 \title{Quickly plot the pam data to have an idea of it's quality}
 \usage{
-quickPLOT(dta, measurements = c("pressure", "light", "acceleration",
-  "temperature", "magnetic"), ...)
+quickPLOT(
+  dta,
+  measurements = c("pressure", "light", "acceleration", "temperature", "magnetic"),
+  ...
+)
 }
 \arguments{
 \item{dta}{path where files are stored}

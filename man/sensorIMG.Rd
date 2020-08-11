@@ -4,10 +4,22 @@
 \alias{sensorIMG}
 \title{sensor image}
 \usage{
-sensorIMG(date, sensor_data, tz = "UTC", plotx = TRUE, ploty = TRUE,
-  labelx = TRUE, labely = TRUE, offset = 0, dt = NA,
-  xlab = "Hour", ylab = "Date", cex = 2, col = c("black",
-  viridis::magma(90)), ...)
+sensorIMG(
+  date,
+  sensor_data,
+  tz = "UTC",
+  plotx = TRUE,
+  ploty = TRUE,
+  labelx = TRUE,
+  labely = TRUE,
+  offset = 0,
+  dt = NA,
+  xlab = "Hour",
+  ylab = "Date",
+  cex = 2,
+  col = c("black", viridis::magma(90)),
+  ...
+)
 }
 \arguments{
 \item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}

@@ -4,9 +4,19 @@
 \alias{pamSPHERE}
 \title{Plot 3d sphere}
 \usage{
-pamSPHERE(x, y, z, spherecolor = "white", linecolor = "black",
-  linewidth = 2, ptcol = "black", ptsize = 0.02, arrows = TRUE,
-  cex = 1.5, ...)
+pamSPHERE(
+  x,
+  y,
+  z,
+  spherecolor = "white",
+  linecolor = "black",
+  linewidth = 2,
+  ptcol = "black",
+  ptsize = 0.02,
+  arrows = TRUE,
+  cex = 1.5,
+  ...
+)
 }
 \arguments{
 \item{x}{data on x axis}

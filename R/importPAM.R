@@ -8,12 +8,12 @@
 #' @return a list of measurements for the one individual
 #'
 #' @examples
-#' pathname = "R:/40 Data/20 Geolocator/10 Raw data/UpuEpoCH16/16AJ_20170809"
-#' measurements = c(".pressure", ".glf")
-#' PAM_data = importPAM(pathname, measurements)
-#' str(PAM_data)
-#' plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
-#' type="l", xlab="Date", ylab="Light Intensity")
+#' #pathname = "your/filepath/here"
+#' #measurements = c(".pressure", ".glf")
+#' #PAM_data = importPAM(pathname, measurements)
+#' #str(PAM_data)
+#' #plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
+#' #type="l", xlab="Date", ylab="Light Intensity")
 #'
 #' @importFrom utils read.delim
 #' @export
