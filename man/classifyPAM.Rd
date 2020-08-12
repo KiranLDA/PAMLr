@@ -4,8 +4,13 @@
 \alias{classifyPAM}
 \title{Derive classification data for soaring birds}
 \usage{
-classifyPAM(dta, method = c("kmeans", "hmm", "embc", "agnes", "diana"),
-  states = 2, family = stats::gaussian(), ...)
+classifyPAM(
+  dta,
+  method = c("kmeans", "hmm", "embc", "agnes", "diana"),
+  states = 2,
+  family = stats::gaussian(),
+  ...
+)
 }
 \arguments{
 \item{dta}{data to be classified, can be anything}
@@ -30,119 +35,119 @@ This function takes data, typically a dataframe of events, which are classified 
 #  data prep
 #######################################################
 
-data(bee_eater)
-start = as.POSIXct("2015-07-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2016-06-01","\%Y-\%m-\%d", tz="UTC")
-PAM_data = cutPAM(bee_eater, start, end)
+#data(bee_eater)
+#start = as.POSIXct("2015-07-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2016-06-01","\%Y-\%m-\%d", tz="UTC")
+#PAM_data = cutPAM(bee_eater, start, end)
 
-twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
-LightThreshold = 2, ask = FALSE)
-availavariable = c("pressure", "light", "acceleration")
+# twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+#LightThreshold = 2, ask = FALSE)
+#availavariable = c("pressure", "light", "acceleration")
 
-TOclassify = pamPREP(PAM_data,
-                      method= "flap",
-                      twl = twl)
+#TOclassify = pamPREP(PAM_data,
+#                      method= "flap",
+#                      twl = twl)
 
-TOclassify = TOclassify[complete.cases(TOclassify),]
+#TOclassify = TOclassify[complete.cases(TOclassify),]
 
 #######################################################
 # k-means example
 #######################################################
 
-classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )],
-                             states=2, "kmeans")$cluster
-pressure_classification = classification2PAM(from = TOclassify$start,
-to =TOclassify$end,
-classification = classification,
-addTO = PAM_data$pressure)
+#classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )],
+#                             states=2, "kmeans")$cluster
+#pressure_classification = classification2PAM(from = TOclassify$start,
+#to =TOclassify$end,
+#classification = classification,
+#addTO = PAM_data$pressure)
 
-plot(PAM_data$pressure$date, PAM_data$pressure$obs,
-     type="l")
-points(PAM_data$pressure$date, PAM_data$pressure$obs,
-       col= pressure_classification+1,
-       pch=16)
+#plot(PAM_data$pressure$date, PAM_data$pressure$obs,
+#     type="l")
+#points(PAM_data$pressure$date, PAM_data$pressure$obs,
+#       col= pressure_classification+1,
+#       pch=16)
 
 #######################################################
 # HMM example
 #######################################################
 
-classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )]
-                             #TOclassify$night_P_diff +
-                             #TOclassify$cum_altitude_change
-                             ,
-                             states=2, "hmm")$cluster
-pressure_classification = classification2PAM(from = TOclassify$start,
-to =TOclassify$end,
-classification = classification,
-addTO = PAM_data$pressure)
+#classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )]
+#                             #TOclassify$night_P_diff +
+#                             #TOclassify$cum_altitude_change
+#                             ,
+#                             states=2, "hmm")$cluster
+#pressure_classification = classification2PAM(from = TOclassify$start,
+#to =TOclassify$end,
+#classification = classification,
+#addTO = PAM_data$pressure)
 
-plot(PAM_data$pressure$date, PAM_data$pressure$obs,
-     type="l")
-points(PAM_data$pressure$date, PAM_data$pressure$obs,
-       col= pressure_classification+1,
-       pch=16)
+#plot(PAM_data$pressure$date, PAM_data$pressure$obs,
+#     type="l")
+#points(PAM_data$pressure$date, PAM_data$pressure$obs,
+#       col= pressure_classification+1,
+#       pch=16)
 
 
 #######################################################
 # EMBC example
 #######################################################
 
-classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )],
-                             "embc")
+#classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )],
+#                             "embc")
 
-pressure_classification = classification2PAM(from = TOclassify$start,
-                                             to =TOclassify$end,
-                                             classification = classification$cluster,
-                                             addTO = PAM_data$pressure)
+#pressure_classification = classification2PAM(from = TOclassify$start,
+#                                             to =TOclassify$end,
+#                                             classification = classification$cluster,
+#                                             addTO = PAM_data$pressure)
 
-plot(PAM_data$pressure$date, PAM_data$pressure$obs,
-     type="l")
-points(PAM_data$pressure$date, PAM_data$pressure$obs,
-       col= classification$output@C[pressure_classification+1],
-       pch=16)
+#plot(PAM_data$pressure$date, PAM_data$pressure$obs,
+#     type="l")
+#points(PAM_data$pressure$date, PAM_data$pressure$obs,
+#       col= classification$output@C[pressure_classification+1],
+#       pch=16)
 
 
 #######################################################
 # agnes example
 #######################################################
 
-classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )],
-                             states = 2,
-                             "agnes")
+#classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )],
+#                             states = 2,
+#                            "agnes")
 
-plot(classification$output, main="agnes", which.plot = 2)
+#plot(classification$output, main="agnes", which.plot = 2)
 
-pressure_classification = classification2PAM(from = TOclassify$start,
-                                             to =TOclassify$end,
-                                             classification = classification$cluster,
-                                             addTO = PAM_data$pressure)
+#pressure_classification = classification2PAM(from = TOclassify$start,
+#                                             to =TOclassify$end,
+#                                             classification = classification$cluster,
+#                                             addTO = PAM_data$pressure)
 
-plot(PAM_data$pressure$date, PAM_data$pressure$obs,
-     type="l")
-points(PAM_data$pressure$date, PAM_data$pressure$obs,
-       col= pressure_classification+1,
-       pch=16)
+#plot(PAM_data$pressure$date, PAM_data$pressure$obs,
+#     type="l")
+#points(PAM_data$pressure$date, PAM_data$pressure$obs,
+#       col= pressure_classification+1,
+#       pch=16)
 
 #######################################################
 # diana example
 #######################################################
 
-classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )],
-                             states = 2,
-                             "diana")
+#classification = classifyPAM(TOclassify[,c("cum_altitude_change", "night_P_diff" )],
+#                             states = 2,
+#                             "diana")
 
-plot(classification$output, which.plot = 2, main="diana")
+#plot(classification$output, which.plot = 2, main="diana")
 
-pressure_classification = classification2PAM(from = TOclassify$start,
-                                             to =TOclassify$end,
-                                             classification = classification$cluster,
-                                             addTO = PAM_data$pressure)
+#pressure_classification = classification2PAM(from = TOclassify$start,
+#                                             to =TOclassify$end,
+#                                             classification = classification$cluster,
+#                                             addTO = PAM_data$pressure)
 
-plot(PAM_data$pressure$date, PAM_data$pressure$obs,
-     type="l")
-points(PAM_data$pressure$date, PAM_data$pressure$obs,
-       col= pressure_classification+1,
-       pch=16)
+#plot(PAM_data$pressure$date, PAM_data$pressure$obs,
+#     type="l")
+#points(PAM_data$pressure$date, PAM_data$pressure$obs,
+#       col= pressure_classification+1,
+#       pch=16)
 
 
 

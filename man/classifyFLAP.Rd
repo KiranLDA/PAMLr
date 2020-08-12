@@ -4,8 +4,7 @@
 \alias{classifyFLAP}
 \title{Classify flapping flight}
 \usage{
-classifyFLAP(dta, period = 12, toPLOT = TRUE, method = "kmeans",
-  tz = "UTC")
+classifyFLAP(dta, period = 12, toPLOT = TRUE, method = "kmeans", tz = "UTC")
 }
 \arguments{
 \item{dta}{data stored as a list see str(data(PAM_data)) for example format}
@@ -37,26 +36,26 @@ threshold: the threshold between low and high activity
 This function uses activity data to classify migratory flapping flight.
 }
 \examples{
-#specify the data location
-data(hoopoe)
-# make sure the cropping period is in the correct date format
-start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
+##specify the data location
+#data(hoopoe)
+## make sure the cropping period is in the correct date format
+#start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
 
-# Crop the data
-PAM_data= cutPAM(hoopoe,start,end)
-str(PAM_data)
+## Crop the data
+#PAM_data= cutPAM(hoopoe,start,end)
+#str(PAM_data)
 
-behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 12)
+#behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 12)
 
-col=c("brown","cyan4","black","gold")
-plot(PAM_data$acceleration$date[6000:8000],PAM_data$acceleration$act[6000:8000],
-     col=col[behaviour$classification][6000:8000],
-     type="o", pch=20,
-     xlab="Date",
-     ylab="Activity")
+#col=c("brown","cyan4","black","gold")
+#plot(PAM_data$acceleration$date[6000:8000],PAM_data$acceleration$act[6000:8000],
+#     col=col[behaviour$classification][6000:8000],
+#     type="o", pch=20,
+#     xlab="Date",
+#     ylab="Activity")
 
-behaviour$timetable
+#behaviour$timetable
 
 }
 \references{

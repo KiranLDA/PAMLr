@@ -4,8 +4,13 @@
 \alias{wrangle_rolling_window}
 \title{Rolling window}
 \usage{
-wrangle_rolling_window(dta, interp = TRUE, resolution_out = 15,
-  window = 120, units = "mins")
+wrangle_rolling_window(
+  dta,
+  interp = TRUE,
+  resolution_out = 15,
+  window = 120,
+  units = "mins"
+)
 }
 \arguments{
 \item{dta}{PAM data to be used in the analysis}
@@ -32,7 +37,7 @@ PAM_data = swift
 # crop the data to get rid of no good periods
 start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
 end = as.POSIXct("2017-04-21","\%Y-\%m-\%d", tz="UTC")
-PAM_data = cutPAM(PAM_data, start, end)
+PAM_data = wrangle_crop(PAM_data, start, end)
 
 TOclassify = wrangle_rolling_window(dta = list(pressure = PAM_data$pressure,
                                 acceleration = PAM_data$acceleration),

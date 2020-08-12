@@ -21,11 +21,11 @@ Linearly rescale a sequence of dates to a new start and end time
 to correct for clock drift in the tag.
 }
 \examples{
-dates = hoopoe$magnetic$date
-drift = 12
-adjusted_end = as.POSIXct(dplyr::last(hoopoe$magnetic$date) + 12*60, tz="UTC")
-drift_corrected = clockDRIFT(time = dates,
-                             start= dates[1],
-                             end = adjusted_end)
+#dates = hoopoe$magnetic$date
+#drift = 12
+#adjusted_end = as.POSIXct(dplyr::last(hoopoe$magnetic$date) + 12*60, tz="UTC")
+#drift_corrected = clockDRIFT(time = dates,
+#                             start= dates[1],
+#                             end = adjusted_end)
 
 }

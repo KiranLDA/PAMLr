@@ -4,8 +4,7 @@
 \alias{plot_histogram}
 \title{Plot threshold}
 \usage{
-plot_histogram(dta, classification, threshold, type, new_window = FALSE,
-  ...)
+plot_histogram(dta, classification, threshold, type, new_window = FALSE, ...)
 }
 \arguments{
 \item{dta}{Raw acceleration or pressure data used to make the classification}

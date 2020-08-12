@@ -48,7 +48,7 @@ wrangle_import <- function(pathname = pathname,
   }
   if (".BodyTemperature" %in% measurements){
     bodytemperature = read.delim(list.files(pathname,pattern=".BodyTemperature",full.names = TRUE),skip=6,sep="",header = FALSE)
-    bodytemperature = as.data.frame(list(date=as.POSIXct(strptime(paste(temperature[,1],temperature[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),obs=temperature[,3]))
+    bodytemperature = as.data.frame(list(date=as.POSIXct(strptime(paste(bodytemperature[,1],bodytemperature[,2]),tz="UTC",format="%d.%m.%Y %H:%M")),obs=bodytemperature[,3]))
   }
   if(".magnetic" %in% measurements){
     magnetic = read.delim(list.files(pathname,pattern=".magnetic",full.names = TRUE),skip=6,sep="",header = FALSE)
@@ -69,8 +69,11 @@ wrangle_import <- function(pathname = pathname,
     dta$temperature = temperature
   }, error = function(e) return("no temperature data"))
   tryCatch({
+    dta$bodytemperature = bodytemperature
+  }, error = function(e) return("no body temperature data"))
+  tryCatch({
     dta$magnetic = magnetic
-  }, error = function(e) return("no magnetism data"))
+  }, error = function(e) return("no magnetic data"))
 
   return(dta)
 }

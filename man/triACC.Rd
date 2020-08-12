@@ -16,10 +16,10 @@ roll, pitch and yaw from acceleration data
 This function calculates roll, pitch and yaw from tri-axial acceleration data. It also centeres the acceleration data (for plotting on a sphere).
 }
 \examples{
-data(swift)
-PAM_data = swift
+#data(swift)
+#PAM_data = swift
 
-triACC(dta = PAM_data$magnetic)
+#triACC(dta = PAM_data$magnetic)
 
 }
 \references{

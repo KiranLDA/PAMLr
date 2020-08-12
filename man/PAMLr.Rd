@@ -3,7 +3,6 @@
 \docType{package}
 \name{PAMLr}
 \alias{PAMLr}
-\alias{PAMLr-package}
 \title{PAMLr}
 \description{
 This package manipulates data from SOI-GDL3pam loggers (developped by the Swiss Ornithological Institute). These measure Pressure, Activity, Magnetism and Light.

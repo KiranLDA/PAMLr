@@ -51,7 +51,7 @@
 #' ######################################################
 #'
 #' # Classification
-#' classification  =  classifyFLAP(dta = PAM_data$acceleration, period = 10, toPLOT=FALSE)
+#' classification  =  classify_flap(dta = PAM_data$acceleration, period = 10, to_plot=FALSE)
 #'
 #' par( mfrow= c(1,3), oma=c(0,2,0,6),mar =  c(4,2,4,2))
 #'

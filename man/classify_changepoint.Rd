@@ -4,8 +4,14 @@
 \alias{classify_changepoint}
 \title{Changepoint analysis}
 \usage{
-classify_changepoint(dta, cpt.method = "meanvar", method = "PELT",
-  penalty = "Manual", pen.value = "100*log(n)", ...)
+classify_changepoint(
+  dta,
+  cpt.method = "meanvar",
+  method = "PELT",
+  penalty = "Manual",
+  pen.value = "100*log(n)",
+  ...
+)
 }
 \arguments{
 \item{dta}{data to be classified (vector)}

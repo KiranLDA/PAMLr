@@ -4,8 +4,13 @@
 \alias{classify_summary_statistics}
 \title{Derive classification data for soaring birds}
 \usage{
-classify_summary_statistics(dta, method = "hmm", states = 2,
-  family = stats::gaussian(), ...)
+classify_summary_statistics(
+  dta,
+  method = "hmm",
+  states = 2,
+  family = stats::gaussian(),
+  ...
+)
 }
 \arguments{
 \item{dta}{data to be classified, can be anything}

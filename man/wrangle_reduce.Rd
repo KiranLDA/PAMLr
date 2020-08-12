@@ -7,7 +7,7 @@
 wrangle_reduce(dta, varint, interp = TRUE, summary = "median")
 }
 \arguments{
-\item{dta}{raw pam data see \code{data(bee_eater} for example}
+\item{dta}{raw pam data see \verb{data(bee_eater} for example}
 
 \item{varint}{the variable of interest.Sipprots c("pressure","light","acceleration","temperature","magnetic"). For instance if all other variables should be summarised at the same temporal resolution as this specified variable.}
 

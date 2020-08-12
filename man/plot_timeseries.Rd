@@ -4,8 +4,11 @@
 \alias{plot_timeseries}
 \title{Quickly plot the pam data to have an idea of it's quality}
 \usage{
-plot_timeseries(dta, measurements = c("pressure", "light",
-  "acceleration", "temperature", "magnetic"), ...)
+plot_timeseries(
+  dta,
+  measurements = c("pressure", "light", "acceleration", "temperature", "magnetic"),
+  ...
+)
 }
 \arguments{
 \item{dta}{path where files are stored}

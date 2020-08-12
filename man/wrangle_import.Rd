@@ -4,8 +4,10 @@
 \alias{wrangle_import}
 \title{Import PAM data}
 \usage{
-wrangle_import(pathname = pathname, measurements = c(".pressure",
-  ".glf", ".acceleration", ".temperature", ".magnetic"))
+wrangle_import(
+  pathname = pathname,
+  measurements = c(".pressure", ".glf", ".acceleration", ".temperature", ".magnetic")
+)
 }
 \arguments{
 \item{pathname}{path where files are stored}

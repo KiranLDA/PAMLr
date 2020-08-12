@@ -9,10 +9,10 @@
 #' @return merged and interpolated dataset
 #'
 #' @examples
-#' data(bee_eater)
-#' PAM_data = bee_eater
-#' merged_dta = mergePAM(PAM_data, interp = TRUE)
-#' head(merged_dta)
+#' #data(bee_eater)
+#' #PAM_data = bee_eater
+#' #merged_dta = mergePAM(PAM_data, interp = TRUE)
+#' #head(merged_dta)
 #'
 #' @importFrom zoo na.approx
 #'
@@ -21,30 +21,32 @@ mergePAM <- function(dta,
                      all = TRUE,
                      interp = FALSE
                      ){
+  print("Error: This function is deprecated, use wrangle_merge, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
 
-  PAM_data = dta
 
-  if("id" %in% names(PAM_data)){
-    to_remove = which(names(PAM_data) == "id")
-    PAM_data[[to_remove]] <- NULL
-  }
-  if("obs" %in% colnames(PAM_data$light)){
-    colnames(PAM_data$light)[which(colnames(PAM_data$light) == "obs")] = "light"
-  }
-  if("obs" %in% colnames(PAM_data$pressure)){
-    colnames(PAM_data$pressure)[which(colnames(PAM_data$pressure) == "obs")] = "pressure"
-  }
-  if("obs" %in% colnames(PAM_data$temperature)){
-    colnames(PAM_data$temperature)[which(colnames(PAM_data$temperature) == "obs")] = "temperature"
-  }
-
-  new = Reduce(function(...) merge(..., all = all), PAM_data)
-
-  if(interp == TRUE){
-    new[,2:ncol(new)] = na.approx(new[,2:ncol(new)])
-  }
-
-  rownames(new) = c()
-
-  return(new)
+  # PAM_data = dta
+  #
+  # if("id" %in% names(PAM_data)){
+  #   to_remove = which(names(PAM_data) == "id")
+  #   PAM_data[[to_remove]] <- NULL
+  # }
+  # if("obs" %in% colnames(PAM_data$light)){
+  #   colnames(PAM_data$light)[which(colnames(PAM_data$light) == "obs")] = "light"
+  # }
+  # if("obs" %in% colnames(PAM_data$pressure)){
+  #   colnames(PAM_data$pressure)[which(colnames(PAM_data$pressure) == "obs")] = "pressure"
+  # }
+  # if("obs" %in% colnames(PAM_data$temperature)){
+  #   colnames(PAM_data$temperature)[which(colnames(PAM_data$temperature) == "obs")] = "temperature"
+  # }
+  #
+  # new = Reduce(function(...) merge(..., all = all), PAM_data)
+  #
+  # if(interp == TRUE){
+  #   new[,2:ncol(new)] = na.approx(new[,2:ncol(new)])
+  # }
+  #
+  # rownames(new) = c()
+  #
+  # return(new)
 }

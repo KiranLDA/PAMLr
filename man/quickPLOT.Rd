@@ -4,8 +4,11 @@
 \alias{quickPLOT}
 \title{Quickly plot the pam data to have an idea of it's quality}
 \usage{
-quickPLOT(dta, measurements = c("pressure", "light", "acceleration",
-  "temperature", "magnetic"), ...)
+quickPLOT(
+  dta,
+  measurements = c("pressure", "light", "acceleration", "temperature", "magnetic"),
+  ...
+)
 }
 \arguments{
 \item{dta}{path where files are stored}
@@ -21,13 +24,13 @@ a plot of PAM data
 Quickly plot the pam data to have an idea of it's quality
 }
 \examples{
-PAM_data = hoopoe
+#PAM_data = hoopoe
 
-#plot everything in 2 windows
-par(mar=c(2.5,4,0.5,1))
-quickPLOT(PAM_data)
+##plot everything in 2 windows
+#par(mar=c(2.5,4,0.5,1))
+#quickPLOT(PAM_data)
 
-# only subset some measurements
-quickPLOT(PAM_data, measurements = c("light", "pressure", "acceleration"))
+## only subset some measurements
+#quickPLOT(PAM_data, measurements = c("light", "pressure", "acceleration"))
 
 }

@@ -4,10 +4,22 @@
 \alias{plot_sensorimage}
 \title{sensor image}
 \usage{
-plot_sensorimage(date, sensor_data, tz = "UTC", plotx = TRUE,
-  ploty = TRUE, labelx = TRUE, labely = TRUE, offset = 0,
-  dt = NA, xlab = "Hour", ylab = "Date", cex = 2,
-  col = c("black", viridis::magma(90)), ...)
+plot_sensorimage(
+  date,
+  sensor_data,
+  tz = "UTC",
+  plotx = TRUE,
+  ploty = TRUE,
+  labelx = TRUE,
+  labely = TRUE,
+  offset = 0,
+  dt = NA,
+  xlab = "Hour",
+  ylab = "Date",
+  cex = 2,
+  col = c("black", viridis::magma(90)),
+  ...
+)
 }
 \arguments{
 \item{date}{Date data in POSIXct format, most commonly \code{PAM_data$acceleration$date}}
@@ -74,7 +86,7 @@ plot_sensorimage(PAM_data$temperature$date, labely=FALSE,
 ######################################################
 
 # Classification
-classification  =  classifyFLAP(dta = PAM_data$acceleration, period = 10, toPLOT=FALSE)
+classification  =  classify_flap(dta = PAM_data$acceleration, period = 10, to_plot=FALSE)
 
 par( mfrow= c(1,3), oma=c(0,2,0,6),mar =  c(4,2,4,2))
 

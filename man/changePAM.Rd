@@ -4,8 +4,14 @@
 \alias{changePAM}
 \title{Changepoint analysis}
 \usage{
-changePAM(dta, cpt.method = "meanvar", method = "PELT",
-  penalty = "Manual", pen.value = "100*log(n)", ...)
+changePAM(
+  dta,
+  cpt.method = "meanvar",
+  method = "PELT",
+  penalty = "Manual",
+  pen.value = "100*log(n)",
+  ...
+)
 }
 \arguments{
 \item{dta}{data to be classified (vector)}
@@ -28,27 +34,27 @@ This function implements a changepoint analysis to find changes in variance, mea
 }
 \examples{
 
-# Import and crop PAM data
-data("swift")
-start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
-swift = cutPAM(swift, start, end)
-PAM_data = swift
+## Import and crop PAM data
+#data("swift")
+#start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
+#swift = cutPAM(swift, start, end)
+#PAM_data = swift
 
 # data(bee_eater)
 # start = as.POSIXct("2015-08-01","\%Y-\%m-\%d", tz="UTC")
 # end = as.POSIXct("2016-06-01","\%Y-\%m-\%d", tz="UTC")
 # PAM_data = cutPAM(bee_eater, start, end)
 
-changepoints  = changePAM(PAM_data$pressure$obs)
+#changepoints  = changePAM(PAM_data$pressure$obs)
 
 # plot the timeseries with the changepoint
-par(mfrow=c(2,1))
-plot(PAM_data$pressure$obs, type="l")
-abline(v=changepoints$changepoints, col="red",lwd=2)
+#par(mfrow=c(2,1))
+#plot(PAM_data$pressure$obs, type="l")
+#abline(v=changepoints$changepoints, col="red",lwd=2)
 
-# plot using changepoint package output
-changepoint::plot(changepoints$output, cpt.width=3)
+## plot using changepoint package output
+#changepoint::plot(changepoints$output, cpt.width=3)
 
 }
 \references{

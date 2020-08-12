@@ -4,9 +4,19 @@
 \alias{pamSPHERE}
 \title{Plot 3d sphere}
 \usage{
-pamSPHERE(x, y, z, spherecolor = "white", linecolor = "black",
-  linewidth = 2, ptcol = "black", ptsize = 0.02, arrows = TRUE,
-  cex = 1.5, ...)
+pamSPHERE(
+  x,
+  y,
+  z,
+  spherecolor = "white",
+  linecolor = "black",
+  linewidth = 2,
+  ptcol = "black",
+  ptsize = 0.02,
+  arrows = TRUE,
+  cex = 1.5,
+  ...
+)
 }
 \arguments{
 \item{x}{data on x axis}
@@ -38,34 +48,34 @@ a 3d sphere plot
 This function takes a spherical projection of acceleration or magentic data and plots it on a sphere which can be turned and zoomed into.
 }
 \examples{
-data("swift")
-start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
-swift = cutPAM(swift, start, end)
-PAM_data = swift
+#data("swift")
+#start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
+#swift = cutPAM(swift, start, end)
+#PAM_data = swift
 
-# plot an m-phere
-calibration = triMAG(dta = PAM_data$magnetic)
-pamSPHERE(x = calibration$calib_magx,
-          y = calibration$calib_magy,
-          z = calibration$calib_magz,
-          ptcol = "goldenrod",
-          ptsize = 0.03,
-          linecolor ="black",
-          spherecolor="royalblue4",
-          arrows=TRUE,
-          cex=2)
+## plot an m-phere
+#calibration = triMAG(dta = PAM_data$magnetic)
+#pamSPHERE(x = calibration$calib_magx,
+#          y = calibration$calib_magy,
+#          z = calibration$calib_magz,
+#          ptcol = "goldenrod",
+#          ptsize = 0.03,
+#          linecolor ="black",
+#          spherecolor="royalblue4",
+#          arrows=TRUE,
+#          cex=2)
 
-# plot an g-phere
-calibration = triACC(dta = PAM_data$magnetic)
-pamSPHERE(x = calibration$centered_accx,
-          y = calibration$centered_accy,
-          z = calibration$centered_accz,
-          ptcol = "royalblue4",
-          ptsize = 0.03,
-          linecolor ="black",
-          spherecolor="goldenrod",
-          arrows=TRUE)
+## plot an g-phere
+#calibration = triACC(dta = PAM_data$magnetic)
+#pamSPHERE(x = calibration$centered_accx,
+#          y = calibration$centered_accy,
+#          z = calibration$centered_accz,
+#          ptcol = "royalblue4",
+#          ptsize = 0.03,
+#          linecolor ="black",
+#          spherecolor="goldenrod",
+#          arrows=TRUE)
 
 }
 \references{

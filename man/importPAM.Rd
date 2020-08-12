@@ -4,8 +4,10 @@
 \alias{importPAM}
 \title{Import PAM data}
 \usage{
-importPAM(pathname = pathname, measurements = c(".pressure", ".glf",
-  ".acceleration", ".temperature", ".magnetic"))
+importPAM(
+  pathname = pathname,
+  measurements = c(".pressure", ".glf", ".acceleration", ".temperature", ".magnetic")
+)
 }
 \arguments{
 \item{pathname}{path where files are stored}

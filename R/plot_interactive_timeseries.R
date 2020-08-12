@@ -63,6 +63,17 @@ plot_interactive_timeseries <- function(dta,
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
       dyOptions(colors ="#A6D854")
   }
+  if ("bodytemperature" %in% to_plot ){
+    dy_graph$bodytemperature = dygraph(xts(x = dta$bodytemperature$obs, order.by = dta$bodytemperature$date),
+                                   xlab = "Time",
+                                   ylab = "Temperature (C)",
+                                   group = dta$light$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
+                                   main="Body temperature as a function of time") %>%
+      dyRangeSelector(dateWindow = c(from, to)) %>%
+      dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
+      dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
+      dyOptions(colors ="#FC8D62")
+  }
   if ("pressure" %in% to_plot ){
     dy_graph$pressure = dygraph(xts(x = dta$pressure$obs, order.by = dta$pressure$date),
                                 xlab = "Time",

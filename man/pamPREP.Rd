@@ -4,9 +4,16 @@
 \alias{pamPREP}
 \title{Prepare data for analysis by deriving summary statistics}
 \usage{
-pamPREP(dta, availavariable = c("pressure", "light", "acceleration",
-  "magnetic", "temperature"), Pdiff_thld = 2, light_thld = 1,
-  method = "pressure", twl, interp = FALSE, tz = "UTC")
+pamPREP(
+  dta,
+  availavariable = c("pressure", "light", "acceleration", "magnetic", "temperature"),
+  Pdiff_thld = 2,
+  light_thld = 1,
+  method = "pressure",
+  twl,
+  interp = FALSE,
+  tz = "UTC"
+)
 }
 \arguments{
 \item{dta}{PAM data to be used in the analysis e.g. str(hoopoe)}
@@ -116,15 +123,15 @@ cum_temp_change : Cumulative absolute difference in temperature during the event
 This function summarises the data based on different patterns such as sustained acitivity, sustained pressure changes, etc... and extracts these from the data as a timetable. It then creates summary statics for each of these periods or events, such as cumulative altitude change, mean pitch etc...
 }
 \examples{
-data(hoopoe)
-PAM_data=hoopoe
-twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
-                             LightThreshold = 2, ask = FALSE)
+#data(hoopoe)
+#PAM_data=hoopoe
+#twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+#                             LightThreshold = 2, ask = FALSE)
 
-TOclassify = pamPREP(PAM_data,
-                     method= "flap",
-                     twl = twl)
+#TOclassify = pamPREP(PAM_data,
+#                     method= "flap",
+#                     twl = twl)
 
-str(TOclassify)
+#str(TOclassify)
 
 }

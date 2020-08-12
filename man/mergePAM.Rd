@@ -7,7 +7,7 @@
 mergePAM(dta, all = TRUE, interp = FALSE)
 }
 \arguments{
-\item{dta}{raw pam data see \code{data(bee_eater} for example}
+\item{dta}{raw pam data see \verb{data(bee_eater} for example}
 
 \item{all}{logical. Default TRUE. Whether or not to keep NAs (i.e. all the datasets)}
 
@@ -20,9 +20,9 @@ merged and interpolated dataset
 This function takesthe typical PAM_data input, which is a nested list of different sensor data, all formatted at different time resolutions, and merges them all into one big table. By default all times are kept, and not interpolated.
 }
 \examples{
-data(bee_eater)
-PAM_data = bee_eater
-merged_dta = mergePAM(PAM_data, interp = TRUE)
-head(merged_dta)
+#data(bee_eater)
+#PAM_data = bee_eater
+#merged_dta = mergePAM(PAM_data, interp = TRUE)
+#head(merged_dta)
 
 }

@@ -4,10 +4,16 @@
 \alias{wrangle_summary_statistics}
 \title{Prepare data for analysis by deriving summary statistics}
 \usage{
-wrangle_summary_statistics(dta, availavariable = c("pressure", "light",
-  "acceleration", "magnetic", "temperature"), Pdiff_thld = 2,
-  light_thld = 1, method = "pressure", twl, interp = FALSE,
-  tz = "UTC")
+wrangle_summary_statistics(
+  dta,
+  availavariable = c("pressure", "light", "acceleration", "magnetic", "temperature"),
+  Pdiff_thld = 2,
+  light_thld = 1,
+  method = "pressure",
+  twl,
+  interp = FALSE,
+  tz = "UTC"
+)
 }
 \arguments{
 \item{dta}{PAM data to be used in the analysis e.g. str(hoopoe)}

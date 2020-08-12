@@ -4,9 +4,19 @@
 \alias{plot_interactive_sphere}
 \title{Plot 3d sphere}
 \usage{
-plot_interactive_sphere(x, y, z, spherecolor = "white",
-  linecolor = "black", linewidth = 2, ptcol = "black",
-  ptsize = 0.02, arrows = TRUE, cex = 1.5, ...)
+plot_interactive_sphere(
+  x,
+  y,
+  z,
+  spherecolor = "white",
+  linecolor = "black",
+  linewidth = 2,
+  ptcol = "black",
+  ptsize = 0.02,
+  arrows = TRUE,
+  cex = 1.5,
+  ...
+)
 }
 \arguments{
 \item{x}{data on x axis}
@@ -41,7 +51,7 @@ This function takes a spherical projection of acceleration or magentic data and 
 data("swift")
 start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
 end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
-swift = cutPAM(swift, start, end)
+swift = wrangle_crop(swift, start, end)
 PAM_data = swift
 
 # plot an m-phere

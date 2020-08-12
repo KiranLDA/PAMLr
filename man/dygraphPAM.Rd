@@ -4,8 +4,12 @@
 \alias{dygraphPAM}
 \title{Plot PAM data with dygraphs}
 \usage{
-dygraphPAM(dta, from = dta$light$date[1],
-  to = dta$light$date[length(dta$light$date)], toPLOT = names(dta))
+dygraphPAM(
+  dta,
+  from = dta$light$date[1],
+  to = dta$light$date[length(dta$light$date)],
+  toPLOT = names(dta)
+)
 }
 \arguments{
 \item{dta}{PAM data to be plotted}
@@ -23,20 +27,20 @@ a plot of all the measurements
 This opens a java dygraph application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 }
 \examples{
-#load dummy data
-data(hoopoe)
-PAM_data=hoopoe
+##load dummy data
+#data(hoopoe)
+#PAM_data=hoopoe
 
-# This bit is for Rstudio users to prevent html from opening in Viewer pane and crashing
-# It opens in web browser instead
-backup_options <- options()
-options(viewer=NULL)
+## This bit is for Rstudio users to prevent html from opening in Viewer pane and crashing
+## It opens in web browser instead
+#backup_options <- options()
+#options(viewer=NULL)
 
-# Plot interactive graphics
-dygraphPAM(dta = PAM_data)
+## Plot interactive graphics
+#dygraphPAM(dta = PAM_data)
 
-# restore Rstudio settings from before plot
-options(backup_options)
+## restore Rstudio settings from before plot
+#options(backup_options)
 
 
 }

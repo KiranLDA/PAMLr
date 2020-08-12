@@ -7,7 +7,7 @@
 reducePAM(dta, varint, interp = TRUE, summary = "median")
 }
 \arguments{
-\item{dta}{raw pam data see \code{data(bee_eater} for example}
+\item{dta}{raw pam data see \verb{data(bee_eater} for example}
 
 \item{varint}{the variable of interest.Sipprots c("pressure","light","acceleration","temperature","magnetic"). For instance if all other variables should be summarised at the same temporal resolution as this specified variable.}
 
@@ -22,17 +22,17 @@ reduced/summarised and interpolated dataset
 This function takesthe typical PAM_data input, which is a nested list of different sensor data, all formatted at different time resolutions. By specifying a particular sensor, all data are formatted at the same temporal resolution as this data. By default, the median of data with smaller temporal resolution are kept, and data are interpolated.
 }
 \examples{
-data(bee_eater)
-PAM_data = bee_eater
+#data(bee_eater)
+#PAM_data = bee_eater
 
-start = as.POSIXct("2015-08-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2016-06-21","\%Y-\%m-\%d", tz="UTC")
-PAM_data = cutPAM(PAM_data, start, end)
+#start = as.POSIXct("2015-08-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2016-06-21","\%Y-\%m-\%d", tz="UTC")
+#PAM_data = cutPAM(PAM_data, start, end)
 
-reduced_dta = reducePAM(PAM_data , "pressure", interp = FALSE)
-head(reduced_dta)
+#reduced_dta = reducePAM(PAM_data , "pressure", interp = FALSE)
+#head(reduced_dta)
 
-reduced_dta = reducePAM(PAM_data , "act", interp = FALSE)
-head(reduced_dta)
+#reduced_dta = reducePAM(PAM_data , "act", interp = FALSE)
+#head(reduced_dta)
 
 }

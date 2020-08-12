@@ -4,8 +4,12 @@
 \alias{plot_interactive_timeseries}
 \title{Plot PAM data as an interactive timeseries}
 \usage{
-plot_interactive_timeseries(dta, from = dta$light$date[1],
-  to = dta$light$date[length(dta$light$date)], to_plot = names(dta))
+plot_interactive_timeseries(
+  dta,
+  from = dta$light$date[1],
+  to = dta$light$date[length(dta$light$date)],
+  to_plot = names(dta)
+)
 }
 \arguments{
 \item{dta}{PAM data to be plotted}

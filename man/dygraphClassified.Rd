@@ -4,9 +4,13 @@
 \alias{dygraphClassified}
 \title{Plot PAM data with dygraphs}
 \usage{
-dygraphClassified(dta, from = dta$light$date[1],
-  to = dta$light$date[length(dta$light$date)], toPLOT = names(dta),
-  timetable = timetable)
+dygraphClassified(
+  dta,
+  from = dta$light$date[1],
+  to = dta$light$date[length(dta$light$date)],
+  toPLOT = names(dta),
+  timetable = timetable
+)
 }
 \arguments{
 \item{dta}{PAM data to be plotted}
@@ -26,22 +30,22 @@ a plot of all the measurements
 This opens a java application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 }
 \examples{
-#load dummy data
-data(hoopoe)
-PAM_data=hoopoe
+##load dummy data
+#data(hoopoe)
+#PAM_data=hoopoe
 
-# This bit is for Rstudio users to prevent html from opening in Viewer pane and crashing
-# It opens in web browser instead
-backup_options <- options()
-options(viewer=NULL)
+## This bit is for Rstudio users to prevent html from opening in Viewer pane and crashing
+## It opens in web browser instead
+#backup_options <- options()
+#options(viewer=NULL)
 
-# Classify bir's behaviour
-behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 5)
+## Classify bir's behaviour
+#behaviour = classifyFLAP(dta = PAM_data$acceleration, period = 5)
 
-# Plot interactive graphics
-dygraphClassified(dta = PAM_data, timetable = behaviour$timetable)
+## Plot interactive graphics
+#dygraphClassified(dta = PAM_data, timetable = behaviour$timetable)
 
-# restore Rstudio settings from before plot
-options(backup_options)
+## restore Rstudio settings from before plot
+#options(backup_options)
 
 }

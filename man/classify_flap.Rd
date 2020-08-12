@@ -4,8 +4,7 @@
 \alias{classify_flap}
 \title{Classify flapping flight}
 \usage{
-classify_flap(dta, period = 12, to_plot = TRUE, method = "kmeans",
-  tz = "UTC")
+classify_flap(dta, period = 12, to_plot = TRUE, method = "kmeans", tz = "UTC")
 }
 \arguments{
 \item{dta}{data stored as a list see str(data(PAM_data)) for example format}
