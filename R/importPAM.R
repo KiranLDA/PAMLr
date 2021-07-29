@@ -8,7 +8,7 @@
 #' @return a list of measurements for the one individual
 #'
 #' @examples
-#' #pathname = "your/filepath"
+#' #pathname = "your/filepath/here"
 #' #measurements = c(".pressure", ".glf")
 #' #PAM_data = importPAM(pathname, measurements)
 #' #str(PAM_data)
