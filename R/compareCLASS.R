@@ -12,67 +12,69 @@
 #'
 #' @examples
 #'
-#' # Import data
-#' data(hoopoe)
-#' start = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
-#' end = as.POSIXct("2017-06-01","%Y-%m-%d", tz="UTC")
-#' PAM_data= cutPAM(hoopoe,start,end)
+#' ## Import data
+#' #data(hoopoe)
+#' #start = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
+#' #end = as.POSIXct("2017-06-01","%Y-%m-%d", tz="UTC")
+#' #PAM_data= cutPAM(hoopoe,start,end)
 #'
-#' # perform one classification using classifyFLAP
-#' classification = classifyFLAP(dta = PAM_data$acceleration, period = 12)
-#' # Put the classification in the same resolution as pressure
-#' class1 = classification2PAM(from = classification$timetable$start,
-#'                             to = classification$timetable$end,
-#'                             # because the timetable only contains migration periods
-#'                             classification = rep_len(1,length(classification$timetable$end)),
-#'                             addTO = PAM_data$pressure)
-#' # Convert to categories
-#' class1 = ifelse(class1 == classification$migration, "Migration", "Other")
+#' ## perform one classification using classifyFLAP
+#' #classification = classifyFLAP(dta = PAM_data$acceleration, period = 12)
+#' ## Put the classification in the same resolution as pressure
+#' #class1 = classification2PAM(from = classification$timetable$start,
+#' #                            to = classification$timetable$end,
+#' #                            # because the timetable only contains migration periods
+#' #                            classification = rep_len(1,length(classification$timetable$end)),
+#' #                            addTO = PAM_data$pressure)
+#' ## Convert to categories
+#' #class1 = ifelse(class1 == classification$migration, "Migration", "Other")
 #'
 #'
-#' # Perform another classification using pressure difference
-#' class2 = c(0,ifelse(abs(diff(PAM_data$pressure$obs))>2, "Migration", "Other"))
+#' ## Perform another classification using pressure difference
+#' #class2 = c(0,ifelse(abs(diff(PAM_data$pressure$obs))>2, "Migration", "Other"))
 #'
-#' # both classes have been converted to the same time intervals as pressure,
-#  # so date should also be the same
-#' date = PAM_data$pressure$date
+#' ## both classes have been converted to the same time intervals as pressure,
+#  ## so date should also be the same
+#' #date = PAM_data$pressure$date
 #'
-#' # Combine the classifications into a dataframe
-#' classifications = data.frame(flap = class1, # flapping classification
-#'                             Pdiff = class2) # pressure difference classification
+#' ## Combine the classifications into a dataframe
+#' #classifications = data.frame(flap = class1, # flapping classification
+#' #                            Pdiff = class2) # pressure difference classification
 #'
-#' class_comparison = compareCLASS(date=date,
-#'                                 classifications=classifications)
+#' #class_comparison = compareCLASS(date=date,
+#' #                                classifications=classifications)
 #'
-#' plot(PAM_data$pressure$date,
-#'      PAM_data$pressure$obs,
-#'      type = "l",
-#'      xlab = "Date",
-#'      ylab = "Pressure (hPa)",
-#'      col = "royalblue3")
+#' #plot(PAM_data$pressure$date,
+#' #     PAM_data$pressure$obs,
+#' #     type = "l",
+#' #     xlab = "Date",
+#' #     ylab = "Pressure (hPa)",
+#' #     col = "royalblue3")
 #'
-#' points(PAM_data$pressure$date,
-#'        PAM_data$pressure$obs,
-#'        cex = class_comparison$Migration / 2,
-#'        col ="orange",
-#'        pch = 16)
+#' #points(PAM_data$pressure$date,
+#' #       PAM_data$pressure$obs,
+#' #      cex = class_comparison$Migration / 2,
+#' #       col ="orange",
+#' #       pch = 16)
 #'
 #' @importFrom stats setNames
 #' @export
 compareCLASS <- function(date,
                          classifications){
+  print("Error: This function is deprecated, use compare_classifications, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
 
-  classes = colnames(classifications)
-  states = colnames(table(classifications))
-
-  classifications = cbind(classifications, setNames( lapply(states, function(x) x=NA), states) )
-
-  classifications[,states] = do.call(cbind,
-                             lapply(1:length(states), function(st) unlist(
-                               lapply(1:nrow(classifications), function(r)length(which(
-                                 classifications[r, which(colnames(classifications) %in% classes)] == states[st]))
-                               ))))
-
-  classifications$agreement = apply(classifications[,states],1, function(x) any(x == length(classes)))
-  return(classifications)
+#
+#   classes = colnames(classifications)
+#   states = colnames(table(classifications))
+#
+#   classifications = cbind(classifications, setNames( lapply(states, function(x) x=NA), states) )
+#
+#   classifications[,states] = do.call(cbind,
+#                              lapply(1:length(states), function(st) unlist(
+#                                lapply(1:nrow(classifications), function(r)length(which(
+#                                  classifications[r, which(colnames(classifications) %in% classes)] == states[st]))
+#                                ))))
+#
+#   classifications$agreement = apply(classifications[,states],1, function(x) any(x == length(classes)))
+#   return(classifications)
   }

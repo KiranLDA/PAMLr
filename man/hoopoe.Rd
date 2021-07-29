@@ -7,16 +7,16 @@
 \format{
 List of 6 variables
 \describe{
-  \item{id}{Logger id}
-  \item{pressure}{Date in UTC and Atmospheric pressure measurements in hectopascals (every 15 minutes)}
-  \item{light}{Date in UTC and Light intensity (every 5 minutes)}
-  \item{acceleration}{Date in UTC, pitch of the accelerometer (i.e. an angle), and derived activity (every 5 minutes)}
-  \item{temperature}{Date in UTC and temperature on bird in celcius(every 15 minutes)}
-  \item{magnetic}{Date in UTC and magnetic measurements on 3 axes(every 15 minutes)}
+\item{id}{Logger id}
+\item{pressure}{Date in UTC and Atmospheric pressure measurements in hectopascals (every 15 minutes)}
+\item{light}{Date in UTC and Light intensity (every 5 minutes)}
+\item{acceleration}{Date in UTC, pitch of the accelerometer (i.e. an angle), and derived activity (every 5 minutes)}
+\item{temperature}{Date in UTC and temperature on bird in celcius(every 15 minutes)}
+\item{magnetic}{Date in UTC and magnetic measurements on 3 axes(every 15 minutes)}
 }
 }
 \source{
-\url{www.vogelwarte.ch/en}
+<www.vogelwarte.ch/en>
 }
 \usage{
 hoopoe

@@ -7,9 +7,9 @@
 addTWL(date, offset, ...)
 }
 \arguments{
-\item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}
+\item{date}{Date data in POSIXct format, most commonly \code{PAM_data$acceleration$date}}
 
-\item{offset}{This parameter determines where the center of the graph is. When `offset = 0`, then midday is at the center of the graph. when `offset=12` midnight`}
+\item{offset}{This parameter determines where the center of the graph is. When \code{offset = 0}, then midday is at the center of the graph. when \code{offset=12} midnight`}
 
 \item{...}{Any additional parameters taken by graphics::points which the user may want to use to modify the graphic}
 }
@@ -18,46 +18,4 @@ a plot
 }
 \description{
 Add sunrise sunset to Actogram
-}
-\examples{
-
-data(hoopoe)
-
-# Calculate twilights
-twilights <- GeoLight::twilightCalc(hoopoe$light$date, hoopoe$light$obs,
-LightThreshold = 2, ask = FALSE)
-
-par(mar=c(4,4,4,2),mfrow=c(1,2), oma= c(0,0,0,8))
-
-# Plot daytime in middle
-sensorIMG(hoopoe$acceleration$date,
-          hoopoe$acceleration$act,
-          main = "Day in middle",ploty=FALSE,
-          offset=0,
-          col=c("black",viridis::cividis(90)),
-          cex=1.2, cex.main = 2)
-#Add sunrises and sunsets
-addTWL(twilights$tFirst,
-       offset=0,
-       col= ifelse(twilights$type == 1,
-                   "goldenrod","cornflowerblue"),
-       pch=16, cex=0.5)
-
-# Plot nightime in the middle
-offset=12
-sensorIMG(hoopoe$acceleration$date,
-          hoopoe$acceleration$act,
-          main = "Night in middle",ploty=TRUE,
-          offset=offset,
-          col=c("black",viridis::cividis(90)),
-          cex=1.2, cex.main = 2)
-
-addTWL(twilights$tFirst,
-       offset=offset,
-       col= ifelse(twilights$type == 1,
-                   "goldenrod","cornflowerblue"),
-       pch=16, cex=0.5)
-
-
-
 }

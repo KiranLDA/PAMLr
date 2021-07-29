@@ -22,16 +22,16 @@ a 3d scatter plot
 Creates an interactive 3d scatterplot
 }
 \examples{
-data("swift")
-start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
-swift = cutPAM(swift, start, end)
-PAM_data = swift
+#data("swift")
+#start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
+#swift = cutPAM(swift, start, end)
+#PAM_data = swift
 
-calibration = triMAG(dta = PAM_data$magnetic)
+#calibration = triMAG(dta = PAM_data$magnetic)
 
-pam3D(PAM_data$magnetic$mX, PAM_data$magnetic$mY, PAM_data$magnetic$mZ,
-       xlab= "X", ylab= "Y", zlab= "Z")
+#pam3D(PAM_data$magnetic$mX, PAM_data$magnetic$mY, PAM_data$magnetic$mZ,
+#       xlab= "X", ylab= "Y", zlab= "Z")
 
 }
 \references{

@@ -25,48 +25,48 @@ this function takes multiple classifications of the same data and compares the a
 }
 \examples{
 
-# Import data
-data(hoopoe)
-start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
-PAM_data= cutPAM(hoopoe,start,end)
+## Import data
+#data(hoopoe)
+#start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
+#PAM_data= cutPAM(hoopoe,start,end)
 
-# perform one classification using classifyFLAP
-classification = classifyFLAP(dta = PAM_data$acceleration, period = 12)
-# Put the classification in the same resolution as pressure
-class1 = classification2PAM(from = classification$timetable$start,
-                            to = classification$timetable$end,
-                            # because the timetable only contains migration periods
-                            classification = rep_len(1,length(classification$timetable$end)),
-                            addTO = PAM_data$pressure)
-# Convert to categories
-class1 = ifelse(class1 == classification$migration, "Migration", "Other")
+## perform one classification using classifyFLAP
+#classification = classifyFLAP(dta = PAM_data$acceleration, period = 12)
+## Put the classification in the same resolution as pressure
+#class1 = classification2PAM(from = classification$timetable$start,
+#                            to = classification$timetable$end,
+#                            # because the timetable only contains migration periods
+#                            classification = rep_len(1,length(classification$timetable$end)),
+#                            addTO = PAM_data$pressure)
+## Convert to categories
+#class1 = ifelse(class1 == classification$migration, "Migration", "Other")
 
 
-# Perform another classification using pressure difference
-class2 = c(0,ifelse(abs(diff(PAM_data$pressure$obs))>2, "Migration", "Other"))
+## Perform another classification using pressure difference
+#class2 = c(0,ifelse(abs(diff(PAM_data$pressure$obs))>2, "Migration", "Other"))
 
-# both classes have been converted to the same time intervals as pressure,
-date = PAM_data$pressure$date
+## both classes have been converted to the same time intervals as pressure,
+#date = PAM_data$pressure$date
 
-# Combine the classifications into a dataframe
-classifications = data.frame(flap = class1, # flapping classification
-                            Pdiff = class2) # pressure difference classification
+## Combine the classifications into a dataframe
+#classifications = data.frame(flap = class1, # flapping classification
+#                            Pdiff = class2) # pressure difference classification
 
-class_comparison = compareCLASS(date=date,
-                                classifications=classifications)
+#class_comparison = compareCLASS(date=date,
+#                                classifications=classifications)
 
-plot(PAM_data$pressure$date,
-     PAM_data$pressure$obs,
-     type = "l",
-     xlab = "Date",
-     ylab = "Pressure (hPa)",
-     col = "royalblue3")
+#plot(PAM_data$pressure$date,
+#     PAM_data$pressure$obs,
+#     type = "l",
+#     xlab = "Date",
+#     ylab = "Pressure (hPa)",
+#     col = "royalblue3")
 
-points(PAM_data$pressure$date,
-       PAM_data$pressure$obs,
-       cex = class_comparison$Migration / 2,
-       col ="orange",
-       pch = 16)
+#points(PAM_data$pressure$date,
+#       PAM_data$pressure$obs,
+#      cex = class_comparison$Migration / 2,
+#       col ="orange",
+#       pch = 16)
 
 }

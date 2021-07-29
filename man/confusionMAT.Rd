@@ -19,29 +19,29 @@ The function populates a confusion matrix using predicted and reference points a
 }
 \examples{
 
-# Get hoopoe data and crop where appropriate
-data("hoopoe")
-start = as.POSIXct("2016-08-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-05-15","\%Y-\%m-\%d", tz="UTC")
-PAM_data = cutPAM(hoopoe, start, end)
+## Get hoopoe data and crop where appropriate
+#data("hoopoe")
+#start = as.POSIXct("2016-08-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-05-15","\%Y-\%m-\%d", tz="UTC")
+#PAM_data = cutPAM(hoopoe, start, end)
 
-# Generate a classification from activity
-activity_classification = classifyFLAP(PAM_data$acceleration, period = 10)
-reference = activity_classification$classification
-reference[reference != activity_classification$migration] = "Not Migrating"
-reference[(activity_classification$classification ==
-          activity_classification$high_movement)] = "Flying"
-reference[reference == activity_classification$migration] = "Migrating"
+## Generate a classification from activity
+#activity_classification = classifyFLAP(PAM_data$acceleration, period = 10)
+#reference = activity_classification$classification
+#reference[reference != activity_classification$migration] = "Not Migrating"
+#reference[(activity_classification$classification ==
+#          activity_classification$high_movement)] = "Flying"
+#reference[reference == activity_classification$migration] = "Migrating"
 
-# Generate a very simple pressure classification based on pressure changes
-classified  = ifelse( abs(diff(PAM_data$pressure$obs)) >2, "Migrating", "Not Migrating")
+## Generate a very simple pressure classification based on pressure changes
+#classified  = ifelse( abs(diff(PAM_data$pressure$obs)) >2, "Migrating", "Not Migrating")
 
-# Remove dates from activity which are not also present in pressure
-to_keep = which(PAM_data$acceleration$date \%in\% PAM_data$pressure$date)
-reference = reference[to_keep]
-reference = reference[-1]
+## Remove dates from activity which are not also present in pressure
+#to_keep = which(PAM_data$acceleration$date \%in\% PAM_data$pressure$date)
+#reference = reference[to_keep]
+#reference = reference[-1]
 
-confusionMAT(reference, classified)
+#confusionMAT(reference, classified)
 
 }
 \references{

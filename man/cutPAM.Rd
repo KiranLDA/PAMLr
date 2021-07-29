@@ -2,7 +2,7 @@
 % Please edit documentation in R/cutPAM.R
 \name{cutPAM}
 \alias{cutPAM}
-\title{cut PAM data}
+\title{Crop all sensor data to the same time}
 \usage{
 cutPAM(dta, start, end)
 }
@@ -20,13 +20,13 @@ shortened PAM data
 Get rid of excess data. e.g. when a logger is kept in a rucksack or a lab before being downloaded.
 }
 \examples{
-data(hoopoe)
-PAM_data=hoopoe
-str(PAM_data)
+#data(hoopoe)
+#PAM_data=hoopoe
+#str(PAM_data)
 
-start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
+#start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
 
-newPAM = cutPAM(PAM_data,start,end)
+#newPAM = cutPAM(PAM_data,start,end)
 
 }

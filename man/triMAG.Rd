@@ -16,10 +16,10 @@ roll, pitch and yaw from acceleration data, as well as calibrated magnetic data 
 This function calibrates tri-axial magnetic data and then also calculates yaw, pitch and roll
 }
 \examples{
-data(swift)
-PAM_data = swift
+#data(swift)
+#PAM_data = swift
 
-calibration = triMAG(dta = PAM_data$magnetic)
+#calibration = triMAG(dta = PAM_data$magnetic)
 
 }
 \references{

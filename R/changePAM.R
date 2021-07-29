@@ -15,27 +15,27 @@
 #'
 #' @examples
 #'
-#' # Import and crop PAM data
-#' data("swift")
-#' start = as.POSIXct("2016-09-01","%Y-%m-%d", tz="UTC")
-#' end = as.POSIXct("2017-04-15","%Y-%m-%d", tz="UTC")
-#' swift = cutPAM(swift, start, end)
-#' PAM_data = swift
+#' ## Import and crop PAM data
+#' #data("swift")
+#' #start = as.POSIXct("2016-09-01","%Y-%m-%d", tz="UTC")
+#' #end = as.POSIXct("2017-04-15","%Y-%m-%d", tz="UTC")
+#' #swift = cutPAM(swift, start, end)
+#' #PAM_data = swift
 #'
 #' # data(bee_eater)
 #' # start = as.POSIXct("2015-08-01","%Y-%m-%d", tz="UTC")
 #' # end = as.POSIXct("2016-06-01","%Y-%m-%d", tz="UTC")
 #' # PAM_data = cutPAM(bee_eater, start, end)
 #'
-#' changepoints  = changePAM(PAM_data$pressure$obs)
+#' #changepoints  = changePAM(PAM_data$pressure$obs)
 #'
 #' # plot the timeseries with the changepoint
-#' par(mfrow=c(2,1))
-#' plot(PAM_data$pressure$obs, type="l")
-#' abline(v=changepoints$changepoints, col="red",lwd=2)
+#' #par(mfrow=c(2,1))
+#' #plot(PAM_data$pressure$obs, type="l")
+#' #abline(v=changepoints$changepoints, col="red",lwd=2)
 #'
-#' # plot using changepoint package output
-#' changepoint::plot(changepoints$output, cpt.width=3)
+#' ## plot using changepoint package output
+#' #changepoint::plot(changepoints$output, cpt.width=3)
 #'
 #' @importFrom changepoint cpt.mean cpt.var cpt.meanvar cpts
 #'
@@ -46,33 +46,33 @@ changePAM <- function(dta,
                       penalty='Manual',
                       pen.value='100*log(n)',
                       ...){
-
-  if(any(is.na(dta))){
-    stop('NAs are present in the dataset and should be removed')
-  }
-  changepoints = list()
-  if(cpt.method == "meanvar"){
-    changepoints$output  = cpt.meanvar(dta,
-                                       method=method,
-                                       penalty=penalty,
-                                       pen.value=pen.value,
-                                       ...)
-  }
-  if(cpt.method == "mean"){
-    changepoints$output  = cpt.mean(dta,
-                                    method=method,
-                                    penalty=penalty,
-                                    pen.value=pen.value,
-                                    ...)
-  }
-  if(cpt.method == "variance"){
-    changepoints$output  = cpt.var(dta,
-                                   method=method,
-                                   penalty=penalty,
-                                   pen.value=pen.value,
-                                   ...)
-  }
-  changepoints$changepoints = cpts(changepoints$output)
-
-  return(changepoints)
+  print("Error: This function is deprecated, use classify_changepoint, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  # if(any(is.na(dta))){
+  #   stop('NAs are present in the dataset and should be removed')
+  # }
+  # changepoints = list()
+  # if(cpt.method == "meanvar"){
+  #   changepoints$output  = cpt.meanvar(dta,
+  #                                      method=method,
+  #                                      penalty=penalty,
+  #                                      pen.value=pen.value,
+  #                                      ...)
+  # }
+  # if(cpt.method == "mean"){
+  #   changepoints$output  = cpt.mean(dta,
+  #                                   method=method,
+  #                                   penalty=penalty,
+  #                                   pen.value=pen.value,
+  #                                   ...)
+  # }
+  # if(cpt.method == "variance"){
+  #   changepoints$output  = cpt.var(dta,
+  #                                  method=method,
+  #                                  penalty=penalty,
+  #                                  pen.value=pen.value,
+  #                                  ...)
+  # }
+  # changepoints$changepoints = cpts(changepoints$output)
+  #
+  # return(changepoints)
 }

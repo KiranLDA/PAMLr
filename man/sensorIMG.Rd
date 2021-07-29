@@ -22,9 +22,9 @@ sensorIMG(
 )
 }
 \arguments{
-\item{date}{Date data in POSIXct format, most commonly `PAM_data$acceleration$date`}
+\item{date}{Date data in POSIXct format, most commonly \code{PAM_data$acceleration$date}}
 
-\item{sensor_data}{sensor data, for example look at `PAM_data$acceleration$act`}
+\item{sensor_data}{sensor data, for example look at \code{PAM_data$acceleration$act}}
 
 \item{tz}{Time zone for POSIXct, default set to "UTC"}
 
@@ -36,9 +36,9 @@ sensorIMG(
 
 \item{labely}{wherether or not to write the name of the y axis (for instance when compiling multifigures)}
 
-\item{offset}{This parameter determines where the center of the graph is. When `offset = 0`, then midday is at the center of the graph. when `offset=12` midnight`}
+\item{offset}{This parameter determines where the center of the graph is. When \code{offset = 0}, then midday is at the center of the graph. when \code{offset=12} midnight`}
 
-\item{dt}{the time interval to which the data are resampled (secs). Default is `NA`}
+\item{dt}{the time interval to which the data are resampled (secs). Default is \code{NA}}
 
 \item{xlab}{label for x-axis (as a character string)}
 
@@ -46,7 +46,7 @@ sensorIMG(
 
 \item{cex}{size of labels}
 
-\item{col}{Colour scheme of plot. Default `col = c("black",viridis::magma(90))`}
+\item{col}{Colour scheme of plot. Default \code{col = c("black",viridis::magma(90))}}
 
 \item{...}{Any additional parameters used by graphics::image}
 }
@@ -57,65 +57,65 @@ an image of the sensor data, for instance with activity it would produce an acto
 This function plots sensor data as an image. An actogram for instance is a type of sensor image.
 }
 \examples{
-#specify the data location
-data(hoopoe)
-start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
-PAM_data = cutPAM(hoopoe,start,end)
+##specify the data location
+#data(hoopoe)
+#start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-06-01","\%Y-\%m-\%d", tz="UTC")
+#PAM_data = cutPAM(hoopoe,start,end)
 
-# Create plots with 3 together (mfrow)
-par( mfrow= c(1,3), oma=c(0,2,0,6))
+## Create plots with 3 together (mfrow)
+#par( mfrow= c(1,3), oma=c(0,2,0,6))
 
-par(mar =  c(4,2,4,2))
-sensorIMG(PAM_data$acceleration$date, ploty=FALSE,
-          PAM_data$acceleration$act, main = "Activity",
-          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
+#par(mar =  c(4,2,4,2))
+#sensorIMG(PAM_data$acceleration$date, ploty=FALSE,
+#          PAM_data$acceleration$act, main = "Activity",
+#          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
 
-par(mar =  c(4,2,4,2))
-sensorIMG(PAM_data$pressure$date, plotx=TRUE, ploty=FALSE, labely=FALSE,
-          PAM_data$pressure$obs,  main="Pressure",
-          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
+#par(mar =  c(4,2,4,2))
+#sensorIMG(PAM_data$pressure$date, plotx=TRUE, ploty=FALSE, labely=FALSE,
+#          PAM_data$pressure$obs,  main="Pressure",
+#          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
 
-par(mar =  c(4,2,4,2))
-sensorIMG(PAM_data$temperature$date, labely=FALSE,
-          PAM_data$temperature$obs,  main="Temperature",
-          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
+#par(mar =  c(4,2,4,2))
+#sensorIMG(PAM_data$temperature$date, labely=FALSE,
+#          PAM_data$temperature$obs,  main="Temperature",
+#          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
 
 ######################################################
 # Look at a classification output
 ######################################################
 
-# Classification
-classification  =  classifyFLAP(dta = PAM_data$acceleration, period = 10, toPLOT=FALSE)
+## Classification
+#classification  =  classifyFLAP(dta = PAM_data$acceleration, period = 10, toPLOT=FALSE)
 
-par( mfrow= c(1,3), oma=c(0,2,0,6),mar =  c(4,2,4,2))
+#par( mfrow= c(1,3), oma=c(0,2,0,6),mar =  c(4,2,4,2))
 
-sensorIMG(PAM_data$pressure$date, c(0,abs(diff(PAM_data$pressure$obs))),
-          main="Pressure  difference",
-          ploty=FALSE,
-          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
+#sensorIMG(PAM_data$pressure$date, c(0,abs(diff(PAM_data$pressure$obs))),
+#          main="Pressure  difference",
+#          ploty=FALSE,
+#          col=c("black",viridis::cividis(90)), cex=1.2, cex.main = 2)
 
-sensorIMG(PAM_data$acceleration$date, PAM_data$acceleration$act,  main="Activity",
-          ploty=FALSE, labely=FALSE,
-          col=c(viridis::cividis(90)), cex=1.2, cex.main = 2)
+#sensorIMG(PAM_data$acceleration$date, PAM_data$acceleration$act,  main="Activity",
+#          ploty=FALSE, labely=FALSE,
+#          col=c(viridis::cividis(90)), cex=1.2, cex.main = 2)
 
-sensorIMG(PAM_data$acceleration$date,
-          ifelse(classification$classification == classification$migration, 1,2),
-          main="Migration Classification",
-          labely=FALSE,
-          col = c("orange","black"),
-          cex=1.2, cex.main = 2)
+#sensorIMG(PAM_data$acceleration$date,
+#          ifelse(classification$classification == classification$migration, 1,2),
+#          main="Migration Classification",
+#          labely=FALSE,
+#          col = c("orange","black"),
+#          cex=1.2, cex.main = 2)
 
 
-twilights <- GeoLight::twilightCalc(PAM_data$light$date,
-                                    PAM_data$light$obs,
-                                    LightThreshold = 2,
-                                    ask = FALSE)
+#twilights <- GeoLight::twilightCalc(PAM_data$light$date,
+#                                    PAM_data$light$obs,
+#                                    LightThreshold = 2,
+#                                    ask = FALSE)
 
-addTWL(twilights$tFirst, offset=0,
-       col= ifelse(twilights$type == 1,
-                   "goldenrod","cornflowerblue"),
-       pch=16, cex=0.5)
+#addTWL(twilights$tFirst, offset=0,
+#       col= ifelse(twilights$type == 1,
+#                   "goldenrod","cornflowerblue"),
+#       pch=16, cex=0.5)
 
 
 }

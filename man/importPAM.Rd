@@ -18,10 +18,10 @@ importPAM(
 a list of measurements for the one individual
 }
 \description{
-Imports and formats many datasets into one big nested list containing all the data from the different sensors. A subset of sensors can be selected using `measurements`.
+Imports and formats many datasets into one big nested list containing all the data from the different sensors. A subset of sensors can be selected using \code{measurements}.
 }
 \examples{
-#pathname = "your/filepath/here"
+#pathname = "your/filepath"
 #measurements = c(".pressure", ".glf")
 #PAM_data = importPAM(pathname, measurements)
 #str(PAM_data)

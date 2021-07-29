@@ -25,17 +25,17 @@ This function merges all the data to a given output resolution and then progress
 }
 \examples{
 
-data(swift)
-PAM_data = swift
+#data(swift)
+#PAM_data = swift
 
-# crop the data to get rid of no good periods
-start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
-end = as.POSIXct("2017-04-21","\%Y-\%m-\%d", tz="UTC")
-PAM_data = cutPAM(PAM_data, start, end)
+## crop the data to get rid of no good periods
+#start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
+#end = as.POSIXct("2017-04-21","\%Y-\%m-\%d", tz="UTC")
+#PAM_data = cutPAM(PAM_data, start, end)
 
-TOclassify = rollPAM(dta = list(pressure = PAM_data$pressure,
-                                acceleration = PAM_data$acceleration),
-                     resolution_out = 60 ,
-                     window = 24*60)
+#TOclassify = rollPAM(dta = list(pressure = PAM_data$pressure,
+#                                acceleration = PAM_data$acceleration),
+#                     resolution_out = 60 ,
+#                     window = 24*60)
 
 }

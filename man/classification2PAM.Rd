@@ -24,34 +24,34 @@ the classification in addTO dataset
 convert a classification timetable into a classification timeseries
 }
 \examples{
-data(bee_eater)
-PAM_data = bee_eater
+#data(bee_eater)
+#PAM_data = bee_eater
 
-twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
-                             LightThreshold = 2, ask = FALSE)
+#twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+#                             LightThreshold = 2, ask = FALSE)
 
 
-TOclassify = pamPREP(PAM_data,
-                     method="pressure",
-                     twl = twl,
-                     Pdiff_thld = 2,
-                     light_thld = 2)
+#TOclassify = pamPREP(PAM_data,
+#                     method="pressure",
+#                     twl = twl,
+#                     Pdiff_thld = 2,
+#                     light_thld = 2)
 
-classification = classifyPAM((TOclassify$total_daily_duration *
-                              log(TOclassify$night_P_diff+0.001 )
-                              * TOclassify$total_daily_P_change),
-                             states=3, "hmm")$cluster
+#classification = classifyPAM((TOclassify$total_daily_duration *
+#                              log(TOclassify$night_P_diff+0.001 )
+#                              * TOclassify$total_daily_P_change),
+#                             states=3, "hmm")$cluster
 
-pressure_classification = classification2PAM(from = TOclassify$start,
-                                             to =TOclassify$end,
-                                             classification = classification,
-                                             addTO = PAM_data$pressure,
-                                             missing = NA)
+#pressure_classification = classification2PAM(from = TOclassify$start,
+#                                             to =TOclassify$end,
+#                                             classification = classification,
+#                                             addTO = PAM_data$pressure,
+#                                             missing = NA)
 
-pressure_classification[pressure_classification == NA] = 0
+#pressure_classification[pressure_classification == NA] = 0
 
-plot(PAM_data$pressure$date, PAM_data$pressure$obs,
-     col= viridis::viridis(4)[pressure_classification+1],
-     type="o", pch=16, cex=0.6)
+#plot(PAM_data$pressure$date, PAM_data$pressure$obs,
+#     col= viridis::viridis(4)[pressure_classification+1],
+#     type="o", pch=16, cex=0.6)
 
 }

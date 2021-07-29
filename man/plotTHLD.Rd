@@ -26,20 +26,20 @@ a graphic with the output from the classifications
 Plot threshold
 }
 \examples{
-#specify the data location
-data(hoopoe)
-PAM_data=hoopoe
+##specify the data location
+#data(hoopoe)
+#PAM_data=hoopoe
 
-PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
-& (PAM_data$acceleration$date <= "2017-06-01")),]
+#PAM_data$acceleration = PAM_data$acceleration[((PAM_data$acceleration$date >= "2016-07-30")
+#& (PAM_data$acceleration$date <= "2017-06-01")),]
 
-behaviour = classifyFLAP(dta = PAM_data$acceleration,
-                         period = 3,
-                         toPLOT = FALSE)
+#behaviour = classifyFLAP(dta = PAM_data$acceleration,
+#                         period = 3,
+#                         toPLOT = FALSE)
 
-plotTHLD(dta = PAM_data$acceleration$act,
-         type = "flapping",
-         classification = behaviour$classification,
-         threshold = behaviour$threshold)
+#plotTHLD(dta = PAM_data$acceleration$act,
+#         type = "flapping",
+#         classification = behaviour$classification,
+#         threshold = behaviour$threshold)
 
 }
