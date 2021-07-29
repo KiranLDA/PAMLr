@@ -26,7 +26,7 @@
 #' data(hoopoe)
 #' start = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
 #' end = as.POSIXct("2017-06-01","%Y-%m-%d", tz="UTC")
-#' PAM_data = wrangle_crop(hoopoe,start,end)
+#' PAM_data = create_crop(hoopoe,start,end)
 #'
 #' # Create plots with 3 together (mfrow)
 #' par( mfrow= c(1,3), oma=c(0,2,0,6))

@@ -32,7 +32,7 @@ reducePAM <- function(dta,
                       varint,
                       interp = TRUE,
                       summary = "median"){
-  print("Error: This function is deprecated, use wrangle_reduce, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use create_custom_interpolation, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
 
 
   # PAM_data = dta

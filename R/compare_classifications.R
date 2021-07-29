@@ -16,12 +16,12 @@
 #' data(hoopoe)
 #' start = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
 #' end = as.POSIXct("2017-06-01","%Y-%m-%d", tz="UTC")
-#' PAM_data= wrangle_crop(hoopoe,start,end)
+#' PAM_data= create_crop(hoopoe,start,end)
 #'
 #' # perform one classification using classifyFLAP
 #' classification = classify_flap(dta = PAM_data$acceleration, period = 12)
 #' # Put the classification in the same resolution as pressure
-#' class1 = wrangle_classification(from = classification$timetable$start,
+#' class1 = create_merged_classification(from = classification$timetable$start,
 #'                             to = classification$timetable$end,
 #'                             # because the timetable only contains migration periods
 #'                             classification = rep_len(1,length(classification$timetable$end)),

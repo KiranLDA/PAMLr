@@ -38,13 +38,13 @@ This function takes data, typically a dataframe of events, which are classified 
 data(bee_eater)
 start = as.POSIXct("2015-07-01","\%Y-\%m-\%d", tz="UTC")
 end = as.POSIXct("2016-06-01","\%Y-\%m-\%d", tz="UTC")
-PAM_data = wrangle_crop(bee_eater, start, end)
+PAM_data = create_crop(bee_eater, start, end)
 
 twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 LightThreshold = 2, ask = FALSE)
 availavariable = c("pressure", "light", "acceleration")
 
-to_classify= wrangle_summary_statistics(PAM_data,
+to_classify= create_summary_statistics(PAM_data,
                       method= "flap",
                       twl = twl)
 
@@ -57,7 +57,7 @@ to_classify= to_classify[complete.cases(to_classify),]
 classification = classify_summary_statistics(to_classify[,c("cum_altitude_change",
                              "night_P_diff" )],
                              states=2, "kmeans")$cluster
-pressure_classification = wrangle_classification(from = to_classify$start,
+pressure_classification = create_merged_classification(from = to_classify$start,
 to =to_classify$end,
 classification = classification,
 add_to = PAM_data$pressure)
@@ -78,7 +78,7 @@ classification = classify_summary_statistics(to_classify[,c("cum_altitude_change
                              #to_classify$cum_altitude_change
                              ,
                              states=2, "hmm")$cluster
-pressure_classification = wrangle_classification(from = to_classify$start,
+pressure_classification = create_merged_classification(from = to_classify$start,
 to =to_classify$end,
 classification = classification,
 add_to = PAM_data$pressure)
@@ -98,7 +98,7 @@ classification = classify_summary_statistics(to_classify[,c("cum_altitude_change
                              "night_P_diff" )],
                              "embc")
 
-pressure_classification = wrangle_classification(from = to_classify$start,
+pressure_classification = create_merged_classification(from = to_classify$start,
                                              to =to_classify$end,
                                              classification = classification$cluster,
                                              add_to = PAM_data$pressure)
@@ -121,7 +121,7 @@ classification = classify_summary_statistics(to_classify[,c("cum_altitude_change
 
 plot(classification$output, main="agnes", which.plot = 2)
 
-pressure_classification = wrangle_classification(from = to_classify$start,
+pressure_classification = create_merged_classification(from = to_classify$start,
                                              to =to_classify$end,
                                              classification = classification$cluster,
                                              add_to = PAM_data$pressure)
@@ -143,7 +143,7 @@ classification = classify_summary_statistics(to_classify[,c("cum_altitude_change
 
 plot(classification$output, which.plot = 2, main="diana")
 
-pressure_classification = wrangle_classification(from = to_classify$start,
+pressure_classification = create_merged_classification(from = to_classify$start,
                                              to =to_classify$end,
                                              classification = classification$cluster,
                                              add_to = PAM_data$pressure)

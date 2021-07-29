@@ -15,7 +15,7 @@
 #' data("hoopoe")
 #' start = as.POSIXct("2016-08-01","%Y-%m-%d", tz="UTC")
 #' end = as.POSIXct("2017-05-15","%Y-%m-%d", tz="UTC")
-#' PAM_data = wrangle_crop(hoopoe, start, end)
+#' PAM_data = create_crop(hoopoe, start, end)
 #'
 #' # Generate a classification from activity
 #' activity_classification = classify_flap(PAM_data$acceleration, period = 10)

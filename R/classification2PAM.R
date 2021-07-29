@@ -45,7 +45,7 @@
 #'
 #' @export
 classification2PAM <- function(from, to, classification, addTO, missing = NA ){
-  print("Error: This function is deprecated, use wrangle_classification, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use create_merged_classification, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
 
   # addTO$classification  <- missing
   # for(i in 1:length(classification)){

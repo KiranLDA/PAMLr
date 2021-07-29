@@ -28,7 +28,7 @@
 #' end = as.POSIXct("2017-06-01","%Y-%m-%d", tz="UTC")
 #'
 #' # Crop the data
-#' PAM_data= wrangle_crop(hoopoe,start,end)
+#' PAM_data= create_crop(hoopoe,start,end)
 #' str(PAM_data)
 #'
 #' behaviour = classify_flap(dta = PAM_data$acceleration, period = 12)

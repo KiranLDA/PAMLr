@@ -25,7 +25,7 @@ Creates an interactive 3d scatterplot
 data("swift")
 start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
 end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
-swift = wrangle_crop(swift, start, end)
+swift = create_crop(swift, start, end)
 PAM_data = swift
 
 calibration = calculate_triaxial_magnetic(dta = PAM_data$magnetic)

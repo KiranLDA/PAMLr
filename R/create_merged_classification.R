@@ -29,11 +29,11 @@
 #'                               * to_classify$total_daily_P_change),
 #'                              states=3, "hmm")$cluster
 #'
-#' pressure_classification = wrangle_classification(from = to_classify$start,
-#'                                              to =to_classify$end,
-#'                                              classification = classification,
-#'                                              add_to = PAM_data$pressure,
-#'                                              missing = NA)
+#' pressure_classification = create_merged_classification(from = to_classify$start,
+#'                                                        to =to_classify$end,
+#'                                                        classification = classification,
+#'                                                        add_to = PAM_data$pressure,
+#'                                                        missing = NA)
 #'
 #' pressure_classification[pressure_classification == NA] = 0
 #'
@@ -44,7 +44,7 @@
 #' @importFrom dplyr last
 #'
 #' @export
-wrangle_classification <- function(from, to, classification, add_to, missing = NA ){
+create_merged_classification <- function(from, to, classification, add_to, missing = NA ){
   add_to$classification  <- missing
   for(i in 1:length(classification)){
     start = which(add_to$date >= from[i])[1]

@@ -10,14 +10,14 @@
 #' @examples
 #' #pathname = "your/path/here"
 #' #measurements = c(".pressure", ".glf")
-#' #PAM_data = wrangle_import(pathname, measurements)
+#' #PAM_data = create_import(pathname, measurements)
 #' #str(PAM_data)
 #' #plot(PAM_data$light$date[3000:5000], PAM_data$light$obs[3000:5000],
 #' #type="l", xlab="Date", ylab="Light Intensity")
 #'
 #' @importFrom utils read.delim
 #' @export
-wrangle_import <- function(pathname = pathname,
+create_import <- function(pathname = pathname,
                       measurements = c(".pressure", ".glf", ".acceleration", ".temperature", ".magnetic")){
   dta=list()
 

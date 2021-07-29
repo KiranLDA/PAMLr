@@ -38,12 +38,12 @@ This function implements a changepoint analysis to find changes in variance, mea
 data("swift")
 start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
 end = as.POSIXct("2017-04-15","\%Y-\%m-\%d", tz="UTC")
-PAM_data =  wrangle_crop(swift, start, end)
+PAM_data =  create_crop(swift, start, end)
 
 # data(bee_eater)
 # start = as.POSIXct("2015-08-01","\%Y-\%m-\%d", tz="UTC")
 # end = as.POSIXct("2016-06-01","\%Y-\%m-\%d", tz="UTC")
-# PAM_data = wrangle_crop(bee_eater, start, end)
+# PAM_data = create_crop(bee_eater, start, end)
 
 changepoints  = classify_changepoint(PAM_data$pressure$obs)
 
