@@ -20,7 +20,7 @@ install.packages("devtools")
 Then the package can be installed from github:
 
 ```r
-devtools::install_github("KiranLDA/PAMLr")
+devtools::install_github("KiranLDA/pamlr")
 ```
 ## Import data
 
