@@ -35,11 +35,11 @@
 #'
 #' @export
 plot_sensorimage_legend <- function(dta, col_palette, inset=c(0.5,-0.12), cex=1, ncol=5, bg=NA, ...){
-  scaLAb = max(dta) - min(dta)
-  minLab = min(dta)
+  scaLAb = max(dta, na.rm=TRUE) - min(dta, na.rm=TRUE)
+  minLab = min(dta, na.rm=TRUE)
   legend("bottom",
          inset=inset, cex=cex, ncol=ncol,bg=bg,
-         legend = c(minLab, round(minLab+scaLAb*0.25),
+         legend = c(round(minLab), round(minLab+scaLAb*0.25),
                     round(minLab+scaLAb*0.50),
                     round(minLab+scaLAb*0.75),
                     round(minLab+scaLAb)),

@@ -17,6 +17,7 @@ plot_sensorimage(
   xlab = "Hour",
   ylab = "Date",
   cex = 2,
+  na.col = "white",
   col = c("black", viridis::magma(90)),
   ...
 )
@@ -45,6 +46,8 @@ plot_sensorimage(
 \item{ylab}{label for y axis (as a character string)}
 
 \item{cex}{size of labels}
+
+\item{na.col}{colour given to NA values, default is "white"}
 
 \item{col}{Colour scheme of plot. Default \code{col = c("black",viridis::magma(90))}}
 
@@ -103,6 +106,7 @@ plot_sensorimage(PAM_data$acceleration$date,
           ifelse(classification$classification == classification$migration, 1,2),
           main="Migration Classification",
           labely=FALSE,
+          na.col="white",
           col = c("orange","black"),
           cex=1.2, cex.main = 2)
 

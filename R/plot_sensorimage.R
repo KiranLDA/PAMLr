@@ -14,6 +14,7 @@
 #' @param labelx wherether or not to write the name of the x axis (for instance when compiling multifigures)
 #' @param labely wherether or not to write the name of the y axis (for instance when compiling multifigures)
 #' @param cex size of labels
+#' @param na.col colour given to NA values, default is "white"
 #' @param col Colour scheme of plot. Default `col = c("black",viridis::magma(90))`
 #' @param ... Any additional parameters used by graphics::image
 #'
@@ -68,6 +69,7 @@
 #'           ifelse(classification$classification == classification$migration, 1,2),
 #'           main="Migration Classification",
 #'           labely=FALSE,
+#'           na.col="white",
 #'           col = c("orange","black"),
 #'           cex=1.2, cex.main = 2)
 #'
@@ -87,11 +89,13 @@
 #' @importFrom viridis magma viridis
 #' @importFrom stats approx
 #' @importFrom raster rotate
+#' @importFrom zoo na.approx
 #'
 #' @export
 plot_sensorimage  <- function (date, sensor_data , tz="UTC", plotx=TRUE, ploty=TRUE,
                         labelx = TRUE, labely=TRUE,
                       offset = 0, dt = NA, xlab = "Hour", ylab = "Date", cex=2,
+                      na.col = "white",
                       col = c("black",viridis::magma(90)), ...) {
 
   dts <- c(5, 10, 15, 20, 30, 60, 90, 120, 180, 240, 300, 360,
@@ -108,8 +112,12 @@ plot_sensorimage  <- function (date, sensor_data , tz="UTC", plotx=TRUE, ploty=T
   tmax <- .POSIXct(as.POSIXct(as.Date(date[length(date)])) +
                      offset * 60 * 60, tz)
   if (as.numeric(tmax) < as.numeric(date[length(date)])) tmax <- tmax + 24 * 60 * 60
-  sensor_data <- approx(as.numeric(date), sensor_data, seq(as.numeric(tmin) + dt/2,
-                                                     as.numeric(tmax) - dt/2, dt))$y
+  # sensor_data <- approx(as.numeric(date), sensor_data, seq(as.numeric(tmin) + dt/2,
+  #                                                    as.numeric(tmax) - dt/2, dt))$y
+
+
+  sensor_data <- na.approx(sensor_data, as.numeric(date), seq(as.numeric(tmin) + dt/2,as.numeric(tmax) - dt/2, dt),na.rm=FALSE, maxgap=2)
+
   m <- 24 * 60 * 60/dt
   n <- length(sensor_data)/m
   sensor_data <- matrix(sensor_data, m, n)
@@ -121,10 +129,18 @@ plot_sensorimage  <- function (date, sensor_data , tz="UTC", plotx=TRUE, ploty=T
   # ploti = as.matrix(raster::flip(raster::flip(t(raster::raster(sensor_data)), 1),1))
 
   # par(par)
-  image( hour, as.numeric(day),rotate(t(sensor_data)),
+  figData <- rotate(t(sensor_data))
+  image( hour, as.numeric(day),figData,
          col= col,
          axes=F,
          xlab = "", ylab="", ...)
+
+
+
+  if (any(is.na(figData))) {
+    mmat <- ifelse(is.na(figData), 1, NA)
+    image(hour, as.numeric(day), mmat, axes = FALSE, xlab = "", ylab = "", col = na.col, useRaster=TRUE, add = TRUE)
+  }
 
   if(plotx){
     axis(1, at = seq(0, 48, by = 4),
