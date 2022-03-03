@@ -57,6 +57,7 @@
 #'
 #'
 #' @examples
+#' \dontrun{
 #' data(hoopoe)
 #' PAM_data=hoopoe
 #' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
@@ -67,6 +68,8 @@
 #'                      twl = twl)
 #'
 #' str(to_classify)
+#'
+#' }
 #'
 #' @importFrom stats aggregate sd kmeans median
 #' @importFrom data.table data.table

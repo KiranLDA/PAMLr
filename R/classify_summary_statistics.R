@@ -26,7 +26,7 @@
 #' @references Garriga, J., Palmer, J.R.B., Oltra, A. and Bartumeus, F., 2014. EMbC: expectation-maximization binary clustering. arXiv preprint arxiv:1503.04059, 1.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' #######################################################
 #' #  data prep
 #' #######################################################
@@ -150,7 +150,7 @@
 #'        col= pressure_classification+1,
 #'        pch=16)
 #'
-#'
+#' }
 #'
 #' @importFrom depmixS4 depmix fit posterior
 #' @importFrom stats kmeans gaussian cutree as.formula binomial Gamma inverse.gaussian poisson quasipoisson quasibinomial quasi

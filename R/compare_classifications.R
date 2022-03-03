@@ -11,7 +11,7 @@
 #' @return whether or not all classes provided the same state
 #'
 #' @examples
-#'
+#' \dontrun{
 #' # Import data
 #' data(hoopoe)
 #' start = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
@@ -56,6 +56,7 @@
 #'        cex = class_comparison$Migration / 2,
 #'        col ="orange",
 #'        pch = 16)
+#' }
 #'
 #' @importFrom stats setNames
 #' @export

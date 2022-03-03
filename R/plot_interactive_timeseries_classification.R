@@ -12,6 +12,7 @@
 #' @references Vanderkam, D., Allaire, J., Owen, J., Gromer, D., Shevtsov, P. and Thieurmel, B., dygraphs: Interface to Dygraphs Interactive Time Series Charting Library, 2015. URL http://CRAN. R-project. org/package= dygraphs. R package version 0.4, 5, p.7.
 #'
 #' @examples
+#' \dontrun{
 #' #load dummy data
 #' data(hoopoe)
 #' PAM_data=hoopoe
@@ -26,7 +27,7 @@
 #'
 #' # restore Rstudio settings from before plot
 #' options(backup_options)
-#'
+#' }
 #'
 #' @importFrom dygraphs dygraph dyRangeSelector dyHighlight dyLegend dyOptions dyShading "%>%"
 #' @importFrom htmltools browsable tagList

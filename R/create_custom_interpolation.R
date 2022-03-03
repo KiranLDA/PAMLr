@@ -11,6 +11,7 @@
 #' @return reduced/summarised and interpolated dataset
 #'
 #' @examples
+#' \dontrun{
 #' data(bee_eater)
 #' PAM_data = bee_eater
 #'
@@ -23,7 +24,7 @@
 #'
 #' reduced_dta = create_custom_interpolation(PAM_data , "act", interp = FALSE)
 #' head(reduced_dta)
-#'
+#' }
 #' @importFrom zoo na.approx
 #' @importFrom stats complete.cases
 #'
