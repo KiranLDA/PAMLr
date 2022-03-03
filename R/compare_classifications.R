@@ -75,5 +75,6 @@ compare_classifications <- function(date,
                                        ))))
 
   classifications$agreement = apply(classifications[,states],1, function(x) any(x == length(classes)))
+  classification$date = date
   return(classifications)
 }
