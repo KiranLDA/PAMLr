@@ -27,6 +27,7 @@ a plot of all the measurements
 This opens a java dygraph application which allows the user to zoom in and out. In Rstudio it will open in the viewer pane and in base R in an html readers. Note that this can be a bit slow
 }
 \examples{
+\dontrun{
 #load dummy data
 data(hoopoe)
 PAM_data=hoopoe
@@ -41,7 +42,7 @@ plot_interactive_timeseries(dta = PAM_data)
 
 # restore Rstudio settings from before plot
 options(backup_options)
-
+}
 
 }
 \references{

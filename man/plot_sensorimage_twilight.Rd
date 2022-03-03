@@ -20,7 +20,7 @@ a plot
 Add sunrise and unset to a sensor image
 }
 \examples{
-
+\dontrun{
 data(hoopoe)
 
 # Calculate twilights
@@ -58,6 +58,6 @@ plot_sensorimage_twilight(twilights$tFirst,
                    "goldenrod","cornflowerblue"),
        pch=16, cex=0.5)
 
-
+}
 
 }

@@ -24,7 +24,7 @@ whether or not all classes provided the same state
 this function takes multiple classifications of the same data and compares the agreement between each, on a timepoint level.
 }
 \examples{
-
+\dontrun{
 # Import data
 data(hoopoe)
 start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
@@ -68,5 +68,6 @@ points(PAM_data$pressure$date,
        cex = class_comparison$Migration / 2,
        col ="orange",
        pch = 16)
+}
 
 }

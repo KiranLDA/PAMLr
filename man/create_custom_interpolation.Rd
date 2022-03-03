@@ -22,6 +22,7 @@ reduced/summarised and interpolated dataset
 This function takesthe typical PAM_data input, which is a nested list of different sensor data, all formatted at different time resolutions. By specifying a particular sensor, all data are formatted at the same temporal resolution as this data. By default, the median of data with smaller temporal resolution are kept, and data are interpolated.
 }
 \examples{
+\dontrun{
 data(bee_eater)
 PAM_data = bee_eater
 
@@ -34,5 +35,5 @@ head(reduced_dta)
 
 reduced_dta = create_custom_interpolation(PAM_data , "act", interp = FALSE)
 head(reduced_dta)
-
+}
 }

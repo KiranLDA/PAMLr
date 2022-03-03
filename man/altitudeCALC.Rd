@@ -9,7 +9,7 @@ altitudeCALC(P, T0 = 288.15, P0 = 1013.25)
 \arguments{
 \item{P}{on-bird pressure in hectopascals}
 
-\item{T0}{temperature at sea level in kelvin (i.e. celcius + 273.15 OR (Farenheit − 32) * 5/9 + 273.15)}
+\item{T0}{temperature at sea level in kelvin (i.e. celcius + 273.15 OR (Farenheit - 32) * 5/9 + 273.15)}
 
 \item{P0}{pressure at sea level in hectopascals}
 }

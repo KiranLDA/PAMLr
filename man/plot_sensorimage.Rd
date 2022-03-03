@@ -60,6 +60,7 @@ an image of the sensor data, for instance with activity it would produce an acto
 This function plots sensor data as an image. An actogram for instance is a type of sensor image.
 }
 \examples{
+\dontrun{
 #specify the data location
 data(hoopoe)
 start = as.POSIXct("2016-07-01","\%Y-\%m-\%d", tz="UTC")
@@ -121,5 +122,5 @@ plot_sensorimage_twilight(twilights$tFirst, offset=0,
                    "goldenrod","cornflowerblue"),
        pch=16, cex=0.5)
 
-
+}
 }

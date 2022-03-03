@@ -14,7 +14,7 @@
 #' @references Killick, R. and Eckley, I., 2014. changepoint: An R package for changepoint analysis. Journal of statistical software, 58(3), pp.1-19.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' # Import and crop PAM data
 #' data("swift")
 #' start = as.POSIXct("2016-09-01","%Y-%m-%d", tz="UTC")
@@ -35,7 +35,7 @@
 #'
 #' # plot using changepoint package output
 #' changepoint::plot(changepoints$output, cpt.width=3)
-#'
+#' }
 #' @importFrom changepoint cpt.mean cpt.var cpt.meanvar cpts
 #'
 #' @export

@@ -33,7 +33,7 @@ Changepoints in the data.
 This function implements a changepoint analysis to find changes in variance, mean or both. By default it is set to look for changes in the pressure data to identify migration periods, however it can be altered to any form of changepoint analysis in the package changepoint.
 }
 \examples{
-
+\dontrun{
 # Import and crop PAM data
 data("swift")
 start = as.POSIXct("2016-09-01","\%Y-\%m-\%d", tz="UTC")
@@ -54,7 +54,7 @@ abline(v=changepoints$changepoints, col="red",lwd=2)
 
 # plot using changepoint package output
 changepoint::plot(changepoints$output, cpt.width=3)
-
+}
 }
 \references{
 Killick, R. and Eckley, I., 2014. changepoint: An R package for changepoint analysis. Journal of statistical software, 58(3), pp.1-19.

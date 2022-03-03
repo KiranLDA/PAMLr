@@ -30,7 +30,7 @@ the data's classification based on the chosen algorithm
 This function takes data, typically a dataframe of events, which are classified into different behavioural states using different algorithms.
 }
 \examples{
-
+\dontrun{
 #######################################################
 #  data prep
 #######################################################
@@ -154,7 +154,7 @@ points(PAM_data$pressure$date, PAM_data$pressure$obs,
        col= pressure_classification+1,
        pch=16)
 
-
+}
 
 }
 \references{

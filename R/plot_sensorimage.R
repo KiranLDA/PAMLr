@@ -23,6 +23,7 @@
 #' @importFrom graphics image
 #'
 #' @examples
+#' \dontrun{
 #' #specify the data location
 #' data(hoopoe)
 #' start = as.POSIXct("2016-07-01","%Y-%m-%d", tz="UTC")
@@ -84,7 +85,7 @@
 #'                    "goldenrod","cornflowerblue"),
 #'        pch=16, cex=0.5)
 #'
-#'
+#' }
 #' @importFrom graphics image mtext axis.POSIXct axis box
 #' @importFrom viridis magma viridis
 #' @importFrom stats approx

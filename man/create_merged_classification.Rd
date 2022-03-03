@@ -24,6 +24,7 @@ the classification in add_to dataset
 convert a classification timetable into a classification timeseries
 }
 \examples{
+\dontrun{
 data(bee_eater)
 PAM_data = bee_eater
 
@@ -53,5 +54,5 @@ pressure_classification[pressure_classification == NA] = 0
 plot(PAM_data$pressure$date, PAM_data$pressure$obs,
      col= viridis::viridis(4)[pressure_classification+1],
      type="o", pch=16, cex=0.6)
-
+}
 }

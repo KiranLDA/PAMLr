@@ -1,12 +1,12 @@
-#' PAMLr
+#' pamlr
 #'
 #' This package manipulates data from SOI-GDL3pam loggers (developped by the Swiss Ornithological Institute). These measure Pressure, Activity, Magnetism and Light.
 #'
 #' @docType package
 #'
-#' @author Kiran Dhanjal-Adams \email{kiran.dhanjal.adams@gmail.com}
+#' @author Kiran Dhanjal-Adams \email{kiran.dhanjaladams@uqconnect.edu.au}
 #'
-#' @name PAMLr
+#' @name pamlr
 #' @importFrom changepoint cpt.mean cpt.var cpt.meanvar cpts
 #' @importFrom cluster daisy agnes diana
 #' @importFrom data.table data.table

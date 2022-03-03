@@ -7,7 +7,7 @@
 #' @return a plot
 #'
 #' @examples
-#'
+#' \dontrun{
 #' data(hoopoe)
 #'
 #' # Calculate twilights
@@ -45,7 +45,7 @@
 #'                    "goldenrod","cornflowerblue"),
 #'        pch=16, cex=0.5)
 #'
-#'
+#' }
 #'
 #' @importFrom graphics points
 #'
