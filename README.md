@@ -41,6 +41,42 @@ An example dataset is
 data(hoopoe)
 ```
 
+## Working with Migrate Tech?
+
+Although package was not developped for these tags specifically, it is still possible to import the data in the package using the following code:
+
+```r
+pathname = “path/where/both/files/stored/” # this is assuming each individual is kept in it’s own folders
+
+dta=list()
+dta$id = "ID00" # put your own id code here
+
+# import light
+light = read.delim(list.files(pathname,pattern=".lux",full.names = TRUE)[1],
+                              skip=20, # this is the number of lines skipped, you may need to change it (same for temperature and pressure)
+                              sep="",header = FALSE)
+light = as.data.frame(list(date=as.POSIXct(strptime(paste(light[,1],light[,2]),
+                                                    tz="UTC",format="%d/%m/%Y %H:%M:%S")),obs=light[,3]))
+dta$light = light
+
+# import temperature
+temperature = read.delim(list.files(pathname,pattern=".deg",full.names = TRUE),skip=20,sep="",header = FALSE)
+temperature = as.data.frame(list(date=as.POSIXct(strptime(paste(temperature[,1],temperature[,2]),
+                                                          tz="UTC",format="%d/%m/%Y %H:%M:%S")),obs=temperature[,3]))
+dta$temperature = temperature
+
+# import pressure
+pressure = read.delim(list.files(pathname,pattern=".deg",full.names = TRUE),skip=20,sep="",header = FALSE)
+pressure = as.data.frame(list(date=as.POSIXct(strptime(paste(pressure[,1],pressure[,2]),
+                                                          tz="UTC",format="%d/%m/%Y %H:%M:%S")),obs=pressure[,4]))
+dta$pressure = pressure
+
+# this is just to rename it so it works with examples in the user manual
+PAM_data=dta
+
+```
+
+
 ## Cropping the data
 
 Note that very often, a logger continues to record data before and after it is removed from a bird. For example, it might be transported in a rucksack or left in a laboratory until data are downloaded. It's therefore important to remove these incorrect datapoints. This can be done using `create_crop`.
