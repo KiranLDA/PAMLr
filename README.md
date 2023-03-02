@@ -7,6 +7,9 @@ This package combines a set of functions for analysing multisensor geolocator da
 The manual is the best way to get started with the package, and can be found at the following link:
 [https://kiranlda.github.io/PAMLrManual/index.html](https://kiranlda.github.io/PAMLrManual/index.html)
 
+## Cite the package
+
+Dhanjal‐Adams, K. L., Willener, A. S., & Liechti, F. (2022). [pamlr: A toolbox for analysing animal behaviour using pressure, acceleration, temperature, magnetic or light data in R](https://doi.org/10.1111/1365-2656.13695). Journal of Animal Ecology, 91(7), 1345-1360.
 
 ## Installation
 
