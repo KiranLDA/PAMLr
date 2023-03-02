@@ -46,7 +46,7 @@ data(hoopoe)
 Although package was not developped for these tags specifically, it is still possible to import the data in the package using the following code:
 
 ```r
-pathname = “path/where/both/files/stored/” # this is assuming each individual is kept in it’s own folders
+pathname = "path/where/both/files/stored/" # this is assuming each individual is kept in it’s own folders
 
 dta=list()
 dta$id = "ID00" # put your own id code here
