@@ -37,7 +37,8 @@
 #'
 #' @export
 confusionMAT <- function(reference, classified){
-  print("Error: This function is deprecated, use compare_confusion_matrix, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use compare_confusion_matrix in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
+
 
   # states = base::unique(c(reference, classified))
   # nstates = length(states)

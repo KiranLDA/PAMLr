@@ -26,7 +26,7 @@
 #' @importFrom rgl plot3d
 #' @export
 pam3D <- function(x ,y, z , ... ){
-  print("Error: This function is deprecated, use plot_interactive_3d, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use plot_interactive_3d in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
  # rgl::plot3d(x, y, z, ...)
 }

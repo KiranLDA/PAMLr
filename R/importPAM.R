@@ -18,7 +18,7 @@
 #' @importFrom utils read.delim
 #' @export
 importPAM <- function(pathname = pathname,measurements = c(".pressure", ".glf", ".acceleration", ".temperature", ".magnetic")){
-  print("Error: This function is deprecated, use create_import, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use create_import in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
   # id = substring(list.files(pathname,pattern=".pressure",full.names = FALSE),1,4)
   #

@@ -51,7 +51,7 @@ classifyFLAP <- function(dta ,
                          toPLOT = TRUE,
                          method = "kmeans",
                          tz= "UTC"){
-  print("Error: This function is deprecated, use classify_flap, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use classify_flap in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
   # if (method == "kmeans"){
   #   km = kmeans(dta$act,centers=2)

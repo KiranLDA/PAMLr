@@ -18,9 +18,9 @@
 calculate_triaxial_magnetic <- function(dta){
 
   # acceleration conversion
-  Sx = dta$mX#/10000
-  Sy = dta$mY#/10000
-  Sz = dta$mZ#/10000
+  Sx = dta$gX#mX#/10000
+  Sy = dta$gY#mY#/10000
+  Sz = dta$gZ#mZ#/10000
 
   roll  = atan2(Sx,(sqrt(Sy^2 + Sz^2)))*(180/pi)
   pitch = atan2(Sy,(sqrt(Sx^2 + Sz^2)))*(180/pi)
@@ -28,15 +28,21 @@ calculate_triaxial_magnetic <- function(dta){
 
 
   # Calculate the offset "hard distortion"
-  Ox = (max(dta$gX * 0.00016 , na.rm=T) - min(dta$gX * 0.00016, na.rm=T))/2
-  Oy = (max(dta$gY * 0.00016, na.rm=T) - min(dta$gY * 0.00016, na.rm=T))/2
-  Oz = (max(dta$gZ * 0.00016, na.rm=T) - min(dta$gZ * 0.00016, na.rm=T))/2
+  # Ox = (max(dta$gX * 0.00016 , na.rm=T) - min(dta$gX * 0.00016, na.rm=T))/2
+  # Oy = (max(dta$gY * 0.00016, na.rm=T) - min(dta$gY * 0.00016, na.rm=T))/2
+  # Oz = (max(dta$gZ * 0.00016, na.rm=T) - min(dta$gZ * 0.00016, na.rm=T))/2
+  Ox = (max(dta$mX * 0.00016 , na.rm=T) - min(dta$mX * 0.00016, na.rm=T))/2
+  Oy = (max(dta$mY * 0.00016, na.rm=T) - min(dta$mY * 0.00016, na.rm=T))/2
+  Oz = (max(dta$mZ * 0.00016, na.rm=T) - min(dta$mZ * 0.00016, na.rm=T))/2
 
 
   # correct  the magnetometer output by the offset
-  Mx = (dta$gX * 0.00016 ) - Ox
-  My = (dta$gY * 0.00016 ) - Oy
-  Mz = (dta$gZ * 0.00016 ) - Oz
+  # Mx = (dta$gX * 0.00016 ) - Ox
+  # My = (dta$gY * 0.00016 ) - Oy
+  # Mz = (dta$gZ * 0.00016 ) - Oz
+  Mx = (dta$mX * 0.00016 ) - Ox
+  My = (dta$mY * 0.00016 ) - Oy
+  Mz = (dta$mZ * 0.00016 ) - Oz
 
 
   # normalise the compass using the normalising factor

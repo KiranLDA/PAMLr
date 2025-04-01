@@ -31,7 +31,7 @@
 #'
 #' @export
 plotTHLD <- function(dta , classification, threshold, type, new_window = FALSE, ...){
-  print("Error: This function is deprecated, use plot_histogram, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use plot_histogram in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
   # if(new_window == TRUE) dev.new()
   # if (type == "flapping"){

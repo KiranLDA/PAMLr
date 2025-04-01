@@ -37,7 +37,7 @@ create_custom_interpolation <- function(dta,
   PAM_data = dta
 
   if (varint == "acceleration") varint <- "act"
-  if (varint == "magnetic") varint <- "gX"
+  if (varint == "magnetic") varint <- "mX" #"gX"
 
   if("id" %in% names(PAM_data)){
     to_remove = which(names(PAM_data) == "id")

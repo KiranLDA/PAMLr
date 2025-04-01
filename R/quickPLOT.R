@@ -20,7 +20,7 @@
 #' @export
 quickPLOT <- function(dta,
                       measurements = c("pressure","light", "acceleration", "temperature", "magnetic"), ...){
-  print("Error: This function is deprecated, use plot_timeseries, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use plot_timeseries in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
   # for testing the function
   # dta = PAM_data

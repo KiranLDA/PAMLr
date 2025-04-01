@@ -13,7 +13,7 @@
 #'
 #' @export
 addTWL <- function(date, offset, ...){
-  print("Error: This function is deprecated, use image_add_twilight, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use image_add_twilight in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
   # points(hourOffset(as.hour(date), offset%%24), rev(date),  ...)
 }
 

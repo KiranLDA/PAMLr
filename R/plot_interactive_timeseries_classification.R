@@ -150,11 +150,11 @@ plot_interactive_timeseries_classification <- function(to_classify,
     }
   }
   if ("magnetic" %in% to_plot ){
-    dy_graph$magneticg = dygraph(xts(x = to_classify[,c("gX","gY","gZ")], order.by = to_classify$date),
+    dy_graph$magneticg = dygraph(xts(x = to_classify[,c("mX","mY","mZ")], order.by = to_classify$date),
                                  xlab = "Time",
-                                 ylab = "Magnetic gX, gY,and gZ",
+                                 ylab = "Magnetic mX, mY,and mZ",
                                  group = to_classify$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
-                                 main="Mgnetism g as a function of time") %>%
+                                 main="Mgnetism m as a function of time") %>%
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%
@@ -163,11 +163,11 @@ plot_interactive_timeseries_classification <- function(to_classify,
       dy_graph$magneticg <- dy_graph$magneticg %>% dyShading(from =dates[i], to = dates[i+1],
                                                                  color= class_colors[classification[i+1]])#colors()[classification+2][i+1])
     }
-    dy_graph$magneticm = dygraph(xts(x = to_classify[,c("mX", "mY","mZ")], order.by = to_classify$date),
+    dy_graph$magneticm = dygraph(xts(x = to_classify[,c("gX", "gY","gZ")], order.by = to_classify$date),
                                  xlab = "Time",
-                                 ylab = "Magnetic mX, mY,and mZ",
+                                 ylab = "Magnetic gX, gY,and gZ",
                                  group = to_classify$date,#dta$temperature$date, #This is useful for synchronosing multiple graphs
-                                 main="Magnetism m as a function of time") %>%
+                                 main="Magnetism g as a function of time") %>%
       dyRangeSelector(dateWindow = c(from, to)) %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 2)) %>%
       dyLegend(hideOnMouseOut = TRUE, width = 600) %>%

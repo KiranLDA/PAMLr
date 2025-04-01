@@ -38,7 +38,7 @@ dygraphClassified <- function(dta,
                        to = dta$light$date[length(dta$light$date)],
                        toPLOT = names(dta),
                        timetable = timetable) {
-  print("Error: This function is deprecated, use plot_interactive_timeseries, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use plot_interactive_timeseries in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
 #   # backup_options <- options()
 #   # col = c("#66C2A5","#A6D854","#FC8D62","#8DA0CB")

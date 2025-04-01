@@ -60,7 +60,7 @@ pamSPHERE <- function(x ,y ,z,
                       arrows= TRUE,
                       cex = 1.5,
                       ...){
-  print("Error: This function is deprecated, use plot_interactive_sphere, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use plot_interactive_sphere in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
   # open3d()
   # spheres3d(0,0,0,radius=0.97,lit=FALSE,color=spherecolor)

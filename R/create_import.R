@@ -70,8 +70,8 @@ create_import <- function(pathname = pathname,
     magnetic = read.delim(list.files(pathname,pattern=".magnetic",full.names = TRUE),skip=6,sep="",header = FALSE)
     magnetic = as.data.frame(list(date=as.POSIXct(strptime(paste(magnetic[,1],magnetic[,2]),
                                                            tz="UTC",format="%d.%m.%Y %H:%M")),
-                                  gX=magnetic[,4],gY=magnetic[,5],gZ=magnetic[,6],
-                                  mX=magnetic[,7],mY=magnetic[,8],mZ=magnetic[,9]))
+                                  mX=magnetic[,4],mY=magnetic[,5],mZ=magnetic[,6],
+                                  gX=magnetic[,7],gY=magnetic[,8],gZ=magnetic[,9]))
     dta$magnetic = magnetic
   }
 

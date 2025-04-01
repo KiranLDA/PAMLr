@@ -45,9 +45,9 @@
 #' @return sd_pitch : The standard deviation of pitch during that event
 #' @return median_light : The median light recordings during that event
 #' @return nightime : Whether or not it was night during the majority of the event (1= night, 0 = day)
-#' @return median_gX : Median raw acceledation on the x axis during the event
-#' @return median_gY : Median raw acceledation on the y axis during the event
-#' @return median_gZ : Median raw acceledation on the z axis during the event
+#' @return median_gX : Median raw acceleration on the x axis during the event
+#' @return median_gY : Median raw acceleration on the y axis during the event
+#' @return median_gZ : Median raw acceleration on the z axis during the event
 #' @return median_mX : Median raw magnetic field on the x axis during the event
 #' @return median_mY : Median raw magnetic field on the y axis during the event
 #' @return median_mZ : Median raw magnetic field on the z axis

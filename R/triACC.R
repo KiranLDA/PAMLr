@@ -16,7 +16,7 @@
 #'
 #' @export
 triACC <- function(dta){
-  print("Error: This function is deprecated, use calculate_triaxial_acceleration, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use calculate_triaxial_acceleration in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
   # # acceleration conversion
   # Sx = dta$mX#/10000

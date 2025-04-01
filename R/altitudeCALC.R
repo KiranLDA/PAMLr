@@ -13,8 +13,7 @@
 altitudeCALC <- function( P,
                           T0 = 288.15,
                           P0 = 1013.25) {
-  print("Error: This function is deprecated, use calculate_altitude, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
-
+  print("Error: This function is deprecated, use calculate_altitude in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
   # L = -0.0065
   # altitude = -(T0 / L)*(1-((P/P0)^(1/5.2561)))
   # return(altitude)

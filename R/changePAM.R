@@ -46,7 +46,7 @@ changePAM <- function(dta,
                       penalty='Manual',
                       pen.value='100*log(n)',
                       ...){
-  print("Error: This function is deprecated, use classify_changepoint, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use classify_changepoint in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
   # if(any(is.na(dta))){
   #   stop('NAs are present in the dataset and should be removed')
   # }

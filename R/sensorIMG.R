@@ -93,7 +93,7 @@ sensorIMG  <- function (date, sensor_data , tz="UTC", plotx=TRUE, ploty=TRUE,
                         labelx = TRUE, labely=TRUE,
                       offset = 0, dt = NA, xlab = "Hour", ylab = "Date", cex=2,
                       col = c("black",viridis::magma(90)), ...) {
-  print("Error: This function is deprecated, use plot_sensorimage, or install v.1.0 of PAMLr by running devtools::install_github('KiranLDA/PAMLr', ref = 'v.1.0')")
+  print("Error: This function is deprecated, use plot_sensorimage in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
 
 #

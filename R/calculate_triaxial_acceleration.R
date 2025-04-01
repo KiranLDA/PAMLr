@@ -18,9 +18,9 @@
 calculate_triaxial_acceleration <- function(dta){
 
   # acceleration conversion
-  Sx = dta$mX#/10000
-  Sy = dta$mY#/10000
-  Sz = dta$mZ#/10000
+  Sx = dta$gX#mX#/10000
+  Sy = dta$gY#mY#/10000
+  Sz = dta$gZ#mZ#/10000
 
   roll  = atan2(Sx,(sqrt(Sy^2 + Sz^2)))*(180/pi)
   pitch = atan2(Sy,(sqrt(Sx^2 + Sz^2)))*(180/pi)
