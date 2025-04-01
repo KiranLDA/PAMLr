@@ -38,7 +38,7 @@ rollPAM  <- function(dta,
                      window = 120, # mist be in minutes unless the units are changed
                      units="mins" # supports "hours" and "secs"
                      ){
-  print("Error: This function is deprecated, use create_rolling_window in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')") in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
+  print("Error: This function is deprecated, use create_rolling_window in latest version of PAMLr which can be installed by running devtools::install_github('KiranLDA/PAMLr')")
 
 
   # PAM_data = dta
