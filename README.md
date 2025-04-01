@@ -20,7 +20,12 @@ To install this package from github, make sure the user first have `devtools` in
 ```r
 install.packages("devtools")
 ```
-Then the package can be installed from github:
+You will also need to install GeoLight
+
+```r
+devtools::install_github("SLisovski/GeoLight")
+```
+Then pamlr package can also be installed from github:
 
 ```r
 devtools::install_github("KiranLDA/pamlr")
