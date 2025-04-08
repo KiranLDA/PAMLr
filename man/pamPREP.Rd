@@ -125,7 +125,7 @@ This function summarises the data based on different patterns such as sustained 
 \examples{
 #data(hoopoe)
 #PAM_data=hoopoe
-#twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+#twl = twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 #                             LightThreshold = 2, ask = FALSE)
 
 #TOclassify = pamPREP(PAM_data,

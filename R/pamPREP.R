@@ -59,7 +59,7 @@
 #' @examples
 #' #data(hoopoe)
 #' #PAM_data=hoopoe
-#' #twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+#' #twl = twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 #' #                             LightThreshold = 2, ask = FALSE)
 #'
 #' #TOclassify = pamPREP(PAM_data,
@@ -70,7 +70,6 @@
 #'
 #' @importFrom stats aggregate sd kmeans median
 #' @importFrom data.table data.table
-#' @importFrom GeoLight twilightCalc
 #' @importFrom dplyr "%>%" distinct last
 #' @importFrom zoo na.approx
 #'

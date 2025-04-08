@@ -40,7 +40,7 @@ This function takes data, typically a dataframe of events, which are classified 
 #end = as.POSIXct("2016-06-01","\%Y-\%m-\%d", tz="UTC")
 #PAM_data = cutPAM(bee_eater, start, end)
 
-# twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+# twl = twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 #LightThreshold = 2, ask = FALSE)
 #availavariable = c("pressure", "light", "acceleration")
 
