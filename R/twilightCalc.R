@@ -142,7 +142,8 @@ twilightCalc <- function(datetime, light, LightThreshold=TRUE, preSelection=TRUE
 
 i.preSelection <- function(date, light, LightThreshold){
 
-  dt <- cut(datetime,"1 hour")
+  # dt <- cut(datetime,"1 hour")
+  dt <- cut(date,"1 hour")
   st <- as.POSIXct(levels(dt),"UTC")
 
   raw <- data.frame(datetime=dt,light=light)
