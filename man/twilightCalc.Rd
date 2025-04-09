@@ -11,6 +11,8 @@ twilightCalc(
   LightThreshold = TRUE,
   preSelection = TRUE,
   maxLight = NULL,
+  ask = TRUE,
+  nsee = 500,
   allTwilights = FALSE
 )
 }
@@ -32,6 +34,11 @@ twiligth events will be offered within the interactive process (ask=TRUE).}
 \item{maxLight}{if the geolocator record the maximum light value of a
 certain time span, give the interval of maximum recordings in minutes (e.g.
 5).}
+
+\item{ask}{\code{logical}, if TRUE the interactive plot will start after the
+calculation.}
+
+\item{nsee}{number of points to plot per screen.}
 
 \item{allTwilights}{\code{logical}, if TRUE the function returns a list with
 two tables}

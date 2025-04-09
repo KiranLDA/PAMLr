@@ -19,6 +19,7 @@ Imports: changepoint,
   graphics,
   grDevices,
   htmltools,
+  lubridate,
   raster,
   rgl,
   RColorBrewer,
@@ -31,7 +32,6 @@ Depends: R (>= 2.10)
 Suggests: 
     knitr,
     rmarkdown,
-    GeoLight,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
