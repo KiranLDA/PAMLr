@@ -46,15 +46,10 @@ describing whether each row refers to sunrise (1), sunset (2) or to none of
 these categories (0).
 }
 \description{
-This is a simplified version (no plotting) of the old Function from GeoLight to define twilight
-events (sunrise/sunset) at times when the light intensity
+Defines twilight events (sunrise/sunset) at times when the light intensity
 measurements (\emph{light}) pass the defined light intensity threshold. An
 interactive plot can be drawn to assess the calculations and improve e.g.
 select only the realistic events.
-}
-\details{
-The R Package TwGeos has far better ways to calculate twilight times from ligth recordings.
-See https://geolocationmanual.vogelwarte.ch/ for details.
 }
 \note{
 Depending on shading during light intensity measurements (e.g. due to

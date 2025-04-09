@@ -1,14 +1,11 @@
 #' Calculate twilight events (sunrise/sunset) from light intensity measurements
 #' over time
 #'
-#' This is a simplified version (no plotting) of the old Function from GeoLight to define twilight
-#' events (sunrise/sunset) at times when the light intensity
+#' Defines twilight events (sunrise/sunset) at times when the light intensity
 #' measurements (\emph{light}) pass the defined light intensity threshold. An
 #' interactive plot can be drawn to assess the calculations and improve e.g.
 #' select only the realistic events.
 #'
-#' The R Package TwGeos has far better ways to calculate twilight times from ligth recordings.
-#' See https://geolocationmanual.vogelwarte.ch/ for details.
 #'
 #' @param datetime date and time of light intensity measurements e.g.
 #' 2008-12-01 08:30 "UTC" (see:
@@ -42,7 +39,12 @@
 #' series forward. Note, that a backward option is not included.
 #' @author Simeon Lisovski
 #' @export twilightCalc
-twilightCalc <- function(datetime, light, LightThreshold=TRUE, preSelection=TRUE, maxLight=NULL, allTwilights=FALSE)
+twilightCalc <- function(datetime,
+                         light,
+                         LightThreshold=TRUE,
+                         preSelection=TRUE,
+                         maxLight=NULL,
+                         allTwilights=FALSE)
 {
   if(class(datetime)[1]!="POSIXct") {
     stop(sprintf("datetime need to be provided as POSIXct class object."), call. = F)
@@ -139,11 +141,9 @@ twilightCalc <- function(datetime, light, LightThreshold=TRUE, preSelection=TRUE
     return (opt)}
 }
 
+i.preSelection <- function(datetime, light, LightThreshold){
 
-i.preSelection <- function(date, light, LightThreshold){
-
-  # dt <- cut(datetime,"1 hour")
-  dt <- cut(date,"1 hour")
+  dt <- cut(datetime,"1 hour")
   st <- as.POSIXct(levels(dt),"UTC")
 
   raw <- data.frame(datetime=dt,light=light)
@@ -166,33 +166,31 @@ i.preSelection <- function(date, light, LightThreshold){
   }
 
 
-i.twilightEvents <- function (datetime, light, LightThreshold)
-  {
-    df <- data.frame(datetime, light)
-    ind1 <- which((df$light[-nrow(df)] < LightThreshold & df$light[-1] >
-                     LightThreshold) | (df$light[-nrow(df)] > LightThreshold &
-                                          df$light[-1] < LightThreshold) | df$light[-nrow(df)] ==
-                    LightThreshold)
-    bas1 <- cbind(df[ind1, ], df[ind1 + 1, ])
-    bas1 <- bas1[bas1[, 2] != bas1[, 4], ]
-    x1 <- as.numeric(unclass(bas1[, 1]))
-    x2 <- as.numeric(unclass(bas1[, 3]))
-    y1 <- bas1[, 2]
-    y2 <- bas1[, 4]
-    m <- (y2 - y1)/(x2 - x1)
-    b <- y2 - (m * x2)
-    xnew <- (LightThreshold - b)/m
-    type <- ifelse(bas1[, 2] < bas1[, 4], 1, 2)
-    res <- data.frame(datetime = as.POSIXct(xnew, origin = "1970-01-01",
-                                            tz = "UTC"), type)
-    return(res)
-  }
-
-
-
   res <- data.frame(raw,mod=1)
   res$mod[ind2] <- 0
 
   return(res)
-
 }
+i.twilightEvents <- function (datetime, light, LightThreshold)
+{
+  df <- data.frame(datetime, light)
+  ind1 <- which((df$light[-nrow(df)] < LightThreshold & df$light[-1] >
+                   LightThreshold) | (df$light[-nrow(df)] > LightThreshold &
+                                        df$light[-1] < LightThreshold) | df$light[-nrow(df)] ==
+                  LightThreshold)
+  bas1 <- cbind(df[ind1, ], df[ind1 + 1, ])
+  bas1 <- bas1[bas1[, 2] != bas1[, 4], ]
+  x1 <- as.numeric(unclass(bas1[, 1]))
+  x2 <- as.numeric(unclass(bas1[, 3]))
+  y1 <- bas1[, 2]
+  y2 <- bas1[, 4]
+  m <- (y2 - y1)/(x2 - x1)
+  b <- y2 - (m * x2)
+  xnew <- (LightThreshold - b)/m
+  type <- ifelse(bas1[, 2] < bas1[, 4], 1, 2)
+  res <- data.frame(datetime = as.POSIXct(xnew, origin = "1970-01-01",
+                                          tz = "UTC"), type)
+  return(res)
+}
+
+
