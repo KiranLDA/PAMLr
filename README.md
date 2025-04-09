@@ -20,11 +20,7 @@ To install this package from github, make sure the user first have `devtools` in
 ```r
 install.packages("devtools")
 ```
-You will also need to install GeoLight
 
-```r
-devtools::install_github("SLisovski/GeoLight")
-```
 Then pamlr package can also be installed from github:
 
 ```r

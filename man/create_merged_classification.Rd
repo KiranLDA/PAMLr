@@ -28,7 +28,7 @@ convert a classification timetable into a classification timeseries
 data(bee_eater)
 PAM_data = bee_eater
 
-twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+twl = twilightCalc(PAM_data$light$date, PAM_data$light$obs,
                              LightThreshold = 2, ask = FALSE)
 
 

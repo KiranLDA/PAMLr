@@ -24,7 +24,7 @@ Add sunrise and unset to a sensor image
 data(hoopoe)
 
 # Calculate twilights
-twilights <- GeoLight::twilightCalc(hoopoe$light$date, hoopoe$light$obs,
+twilights <- twilightCalc(hoopoe$light$date, hoopoe$light$obs,
 LightThreshold = 2, ask = FALSE)
 
 par(mar=c(4,4,4,2),mfrow=c(1,2), oma= c(0,0,0,8))

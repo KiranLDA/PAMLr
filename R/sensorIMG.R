@@ -72,7 +72,7 @@
 #' #          cex=1.2, cex.main = 2)
 #'
 #'
-#' #twilights <- GeoLight::twilightCalc(PAM_data$light$date,
+#' #twilights <- twilightCalc(PAM_data$light$date,
 #' #                                    PAM_data$light$obs,
 #' #                                    LightThreshold = 2,
 #' #                                    ask = FALSE)

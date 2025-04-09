@@ -26,7 +26,7 @@ create_summary_statistics(
 
 \item{method}{The type of event that is being classified. Can be "flap", "endurance", "rest", "pressure","light" or "darkness".If method = "pressure" then  it find periods where pressure has changed more than a certain threshold. If method = "flap", then the algorithm looks for sustained periods of high activity. If method = "endurance" it looks for sustained activity (low or high). If method = "rest+ then it looks for sustained periods of no activity. If method = "light" if looks for periods of sustained sunlight. If method = "darkness" if looks for periods of darkness}
 
-\item{twl}{twilight estimates formatted according to twilightCalc in GeoLight package}
+\item{twl}{twilight estimates formatted according to twilightCalc}
 
 \item{interp}{whether or not to interpolate the magnetic data. If FALSE, then NAs are left in the dataset}
 
@@ -101,11 +101,11 @@ median_light : The median light recordings during that event
 
 nightime : Whether or not it was night during the majority of the event (1= night, 0 = day)
 
-median_gX : Median raw acceledation on the x axis during the event
+median_gX : Median raw acceleration on the x axis during the event
 
-median_gY : Median raw acceledation on the y axis during the event
+median_gY : Median raw acceleration on the y axis during the event
 
-median_gZ : Median raw acceledation on the z axis during the event
+median_gZ : Median raw acceleration on the z axis during the event
 
 median_mX : Median raw magnetic field on the x axis during the event
 
@@ -126,7 +126,7 @@ This function summarises the data based on different patterns such as sustained 
 \dontrun{
 data(hoopoe)
 PAM_data=hoopoe
-twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+twl = twilightCalc(PAM_data$light$date, PAM_data$light$obs,
                              LightThreshold = 2, ask = FALSE)
 
 to_classify = create_summary_statistics(PAM_data,

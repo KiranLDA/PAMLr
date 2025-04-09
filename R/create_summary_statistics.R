@@ -7,7 +7,7 @@
 #' @param Pdiff_thld Pressure threshold. Only used when method="pressure".  This if pressure changes more than e.g. 2hpa over 30 minutes, then the bird is flying
 #' @param light_thld Light threshold. Only used when method="darkness". This is the the light threshold for finding darkness, should be the same as for GeoLight::twilightCalc
 #' @param method The type of event that is being classified. Can be "flap", "endurance", "rest", "pressure","light" or "darkness".If method = "pressure" then  it find periods where pressure has changed more than a certain threshold. If method = "flap", then the algorithm looks for sustained periods of high activity. If method = "endurance" it looks for sustained activity (low or high). If method = "rest+ then it looks for sustained periods of no activity. If method = "light" if looks for periods of sustained sunlight. If method = "darkness" if looks for periods of darkness
-#' @param twl twilight estimates formatted according to twilightCalc in GeoLight package
+#' @param twl twilight estimates formatted according to twilightCalc
 #' @param tz Timeuzone. default is "UTC"
 #' @param interp whether or not to interpolate the magnetic data. If FALSE, then NAs are left in the dataset
 #'
@@ -60,7 +60,7 @@
 #' \dontrun{
 #' data(hoopoe)
 #' PAM_data=hoopoe
-#' twl = GeoLight::twilightCalc(PAM_data$light$date, PAM_data$light$obs,
+#' twl = twilightCalc(PAM_data$light$date, PAM_data$light$obs,
 #'                              LightThreshold = 2, ask = FALSE)
 #'
 #' to_classify = create_summary_statistics(PAM_data,
@@ -73,7 +73,6 @@
 #'
 #' @importFrom stats aggregate sd kmeans median
 #' @importFrom data.table data.table
-#' @importFrom GeoLight twilightCalc
 #' @importFrom dplyr "%>%" distinct last
 #' @importFrom zoo na.approx
 #'
